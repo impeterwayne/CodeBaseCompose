@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
 }
 
@@ -23,7 +23,7 @@ android {
 
     buildFeatures {
         buildConfig = true
-        dataBinding = true
+        compose = true
     }
 
     buildTypes {
@@ -53,26 +53,40 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
-    implementation(project(":core:ui"))
     implementation(project(":core:common"))
+    implementation(project(":core:designsystem"))
 
     // ── Feature modules ──
     implementation(project(":feature:template"))
+    implementation(project(":feature:projects"))
+    implementation(project(":feature:inbox"))
+    implementation(project(":feature:settings"))
 
     // ── Android Core ──
     implementation("androidx.core:core-ktx:1.16.0")
-    implementation("androidx.appcompat:appcompat:1.7.1")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.activity:activity:1.10.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation("androidx.startup:startup-runtime:1.2.0")
     implementation("androidx.multidex:multidex:2.0.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.fragment:fragment-ktx:1.6.1")
+
+    // ── Compose ──
+    val composeBom = platform("androidx.compose:compose-bom:2025.03.00")
+    implementation(composeBom)
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation("androidx.navigation:navigation-compose:2.8.9")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+    debugImplementation("androidx.compose.ui:ui-tooling")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.53")
     ksp("com.google.dagger:hilt-compiler:2.53")
+
+    // ImmersionBar
+    implementation("com.geyifeng.immersionbar:immersionbar:3.2.2")
+    implementation("com.geyifeng.immersionbar:immersionbar-ktx:3.2.2")
 
     // MMKV (initialized in App.kt)
     implementation("com.tencent:mmkv:1.3.14")

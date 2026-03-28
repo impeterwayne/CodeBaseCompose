@@ -8,14 +8,16 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 apply("codebase.android.library")
                 apply("codebase.android.hilt")
+                apply("codebase.android.compose")
             }
 
             dependencies {
-                add("implementation", project(":core:ui"))
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:domain"))
                 add("implementation", project(":core:common"))
+                add("implementation", project(":core:designsystem"))
 
+                add("implementation", "androidx.hilt:hilt-navigation-compose:1.2.0")
                 add("implementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
                 add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
             }

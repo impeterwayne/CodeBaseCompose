@@ -21,6 +21,7 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.compose.gradlePlugin)
 }
 
 tasks {
@@ -43,6 +44,10 @@ gradlePlugin {
         register("androidHilt") {
             id = "codebase.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("androidCompose") {
+            id = "codebase.android.compose"
+            implementationClass = "AndroidComposeConventionPlugin"
         }
         register("jvmLibrary") {
             id = "codebase.jvm.library"

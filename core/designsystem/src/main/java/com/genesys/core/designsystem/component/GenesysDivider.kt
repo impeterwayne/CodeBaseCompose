@@ -1,0 +1,28 @@
+package com.genesys.core.designsystem.component
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import com.genesys.core.designsystem.theme.GenesysTheme
+
+@Composable
+fun GenesysDivider(
+    modifier: Modifier = Modifier,
+    color: Color? = null,
+    thickness: Dp? = null
+) {
+    val resolvedColor = color ?: GenesysTheme.colors.outlineVariant
+    val resolvedThickness = thickness ?: GenesysTheme.strokes.thin
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(resolvedThickness)
+            .background(resolvedColor)
+    )
+}

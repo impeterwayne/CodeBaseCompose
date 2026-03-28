@@ -1,7 +1,6 @@
 [versions]
 agp = "8.12.2"
 converterMoshi = "2.9.0"
-epoxy = "5.1.4"
 fragmentKtx = "1.6.1"
 glide = "4.15.1"
 gson = "2.13.1"
@@ -16,6 +15,7 @@ appcompat = "1.7.1"
 kotlinxCoroutinesCore = "1.7.3"
 lifecycleLivedataKtx = "2.6.1"
 lifecycleViewmodelKtx = "2.6.1"
+lifecycleRuntimeCompose = "2.8.7"
 lottie = "6.6.7"
 material = "1.12.0"
 activity = "1.10.1"
@@ -43,10 +43,19 @@ timber = "5.0.1"
 utilcodex = "1.31.1"
 xxpermissionKtx = "1.0.1"
 
+# Compose
+composeBom = "2025.03.00"
+activityCompose = "1.10.1"
+navigationCompose = "2.8.9"
+hiltNavigationCompose = "1.2.0"
+composeCompiler = "1.5.14"
+orbitMvi = "10.0.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
@@ -54,8 +63,6 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
-epoxy = { module = "com.airbnb.android:epoxy", version.ref = "epoxy" }
-epoxy-processor = { module = "com.airbnb.android:epoxy-processor", version.ref = "epoxy" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 immersionbar = { module = "com.geyifeng.immersionbar:immersionbar", version.ref = "immersionbar" }
@@ -95,10 +102,26 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 utilcodex = { module = "com.blankj:utilcodex", version.ref = "utilcodex" }
 xxpermission-ktx = { module = "io.github.impeterwayne:xxpermission-ktx", version.ref = "xxpermissionKtx" }
 
+# Compose
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbitMvi" }
+orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbitMvi" }
+orbit-test = { module = "org.orbit-mvi:orbit-test", version.ref = "orbitMvi" }
+
 # Gradle plugin libraries for build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -106,6 +129,6 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

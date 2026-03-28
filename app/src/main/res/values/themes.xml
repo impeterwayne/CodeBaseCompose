@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Codebase" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Genesys" parent="android:Theme.Material.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Codebase" parent="Base.Theme.Codebase" />
+    <style name="Theme.Genesys" parent="Base.Theme.Genesys" />
 </resources>

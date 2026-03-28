@@ -24,7 +24,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Codebase"
+rootProject.name = "GenesysCompose"
 
 include(":app")
 
@@ -34,8 +34,11 @@ include(":core:network")
 include(":core:database")
 include(":core:domain")
 include(":core:data")
-include(":core:ui")
 include(":core:common")
+include(":core:designsystem")
 
 // Feature modules
 include(":feature:template")
+include(":feature:projects")
+include(":feature:inbox")
+include(":feature:settings")

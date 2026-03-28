@@ -1,22 +1,12 @@
 plugins {
     id("codebase.android.feature")
-    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.genesys.feature.template"
-
-    buildFeatures {
-        dataBinding = true
-    }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
-    // Epoxy
-    implementation("com.airbnb.android:epoxy:5.1.4")
-    kapt("com.airbnb.android:epoxy-processor:5.1.4")
+    implementation("org.orbit-mvi:orbit-viewmodel:10.0.0")
+    implementation("org.orbit-mvi:orbit-compose:10.0.0")
 }

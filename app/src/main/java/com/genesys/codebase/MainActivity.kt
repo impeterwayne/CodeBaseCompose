@@ -1,27 +1,36 @@
 package com.genesys.codebase
 
 import android.os.Bundle
-import android.view.View
-import androidx.databinding.DataBindingUtil
-import com.genesys.codebase.databinding.ActivityMainBinding
-import com.genesys.core.common.base.BaseActivity
-import com.genesys.feature.template.main.MainFragment
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.codebase.navigation.AppShell
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : ComponentActivity() {
 
-    override fun getLazyViewBinding(): Lazy<ActivityMainBinding> = lazy {
-        DataBindingUtil.setContentView(this, R.layout.activity_main)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun statusBarInsetTargets(): List<View> = listOf(viewBinding.toolbar)
+        // Configure ImmersionBar before Compose content
+        immersionBar {
+            transparentBar()
+            statusBarDarkFont(true)
+            fitsSystemWindows(false)
+            hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
+            navigationBarEnable(false)
+        }
 
-    override fun initViews(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, MainFragment())
-                .commit()
+        enableEdgeToEdge()
+
+        setContent {
+            GenesysTheme {
+                AppShell()
+            }
         }
     }
 }
