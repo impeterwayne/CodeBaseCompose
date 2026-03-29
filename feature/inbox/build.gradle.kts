@@ -1,12 +1,17 @@
+import org.gradle.accessors.dm.LibrariesForLibs
+import org.gradle.kotlin.dsl.the
+
 plugins {
     id("codebase.android.feature")
 }
+
+val deps = the<LibrariesForLibs>()
 
 android {
     namespace = "com.genesys.feature.inbox"
 }
 
 dependencies {
-    implementation("org.orbit-mvi:orbit-viewmodel:10.0.0")
-    implementation("org.orbit-mvi:orbit-compose:10.0.0")
+    implementation(deps.orbitViewmodel)
+    implementation(deps.orbitCompose)
 }

@@ -1,7 +1,12 @@
+import org.gradle.accessors.dm.LibrariesForLibs
+import org.gradle.kotlin.dsl.the
+
 plugins {
     id("codebase.android.library")
-    id("org.jetbrains.kotlin.plugin.parcelize")
+    alias(libs.plugins.kotlinParcelize)
 }
+
+val deps = the<LibrariesForLibs>()
 
 android {
     namespace = "com.genesys.core.model"
@@ -9,9 +14,9 @@ android {
 
 dependencies {
     // Moshi annotations
-    implementation("com.squareup.moshi:moshi:1.15.1")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation(deps.moshi)
+    implementation(deps.moshiKotlin)
 
     // AndroidX annotations
-    implementation("androidx.core:core-ktx:1.16.0")
+    implementation(deps.androidxCoreKtx)
 }

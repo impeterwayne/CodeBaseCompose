@@ -7,7 +7,7 @@ import org.gradle.kotlin.dsl.dependencies
 class AndroidComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
+            pluginManager.apply(pluginId("kotlinCompose"))
 
             extensions.configure<LibraryExtension> {
                 buildFeatures {
@@ -16,15 +16,15 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                val bom = platform("androidx.compose:compose-bom:2025.03.00")
+                val bom = platform(library("composeBom"))
                 add("implementation", bom)
-                add("implementation", "androidx.compose.ui:ui")
-                add("implementation", "androidx.compose.ui:ui-graphics")
-                add("implementation", "androidx.compose.ui:ui-tooling-preview")
-                add("implementation", "androidx.compose.foundation:foundation")
-                add("implementation", "androidx.compose.runtime:runtime")
-                add("implementation", "androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
-                add("debugImplementation", "androidx.compose.ui:ui-tooling")
+                add("implementation", library("composeUi"))
+                add("implementation", library("composeUiGraphics"))
+                add("implementation", library("composeUiToolingPreview"))
+                add("implementation", library("composeFoundation"))
+                add("implementation", library("composeRuntime"))
+                add("implementation", library("androidxLifecycleRuntimeCompose"))
+                add("debugImplementation", library("composeUiTooling"))
             }
         }
     }

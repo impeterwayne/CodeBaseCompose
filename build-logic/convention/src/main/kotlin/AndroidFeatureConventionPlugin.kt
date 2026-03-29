@@ -17,9 +17,9 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:common"))
                 add("implementation", project(":core:designsystem"))
 
-                add("implementation", "androidx.hilt:hilt-navigation-compose:1.2.0")
-                add("implementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-                add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+                add("implementation", library("hiltNavigationCompose"))
+                add("implementation", library("lifecycleViewmodelKtx"))
+                add("implementation", library("kotlinxCoroutinesAndroid"))
             }
         }
     }

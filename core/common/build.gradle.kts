@@ -1,32 +1,34 @@
+import org.gradle.accessors.dm.LibrariesForLibs
+import org.gradle.kotlin.dsl.the
+
 plugins {
     id("codebase.android.library")
 }
+
+val deps = the<LibrariesForLibs>()
 
 android {
     namespace = "com.genesys.core.common"
 }
 
 dependencies {
-    // Timber
-    implementation("com.jakewharton.timber:timber:5.0.1")
-
     // AndroidX
-    implementation("androidx.core:core-ktx:1.16.0")
-    api("androidx.appcompat:appcompat:1.7.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation(deps.androidxCoreKtx)
+    api(deps.androidxAppcompat)
+    implementation(deps.lifecycleViewmodelKtx)
 
     // ImmersionBar
-    implementation("com.geyifeng.immersionbar:immersionbar:3.2.2")
-    implementation("com.geyifeng.immersionbar:immersionbar-ktx:3.2.2")
-    implementation("com.geyifeng.immersionbar:immersionbar-components:3.2.2")
+    implementation(deps.immersionbar)
+    implementation(deps.immersionbarKtx)
+    implementation(deps.immersionbarComponents)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(deps.kotlinxCoroutinesCore)
+    implementation(deps.kotlinxCoroutinesAndroid)
 
     // Gson (used by GsonExt)
-    implementation("com.google.code.gson:gson:2.13.1")
+    implementation(deps.gson)
 
     // Lifecycle runtime (used by FlowExt)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation(deps.androidxLifecycleRuntimeKtx)
 }
