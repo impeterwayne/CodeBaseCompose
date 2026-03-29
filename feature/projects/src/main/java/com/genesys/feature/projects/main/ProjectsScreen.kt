@@ -22,21 +22,8 @@ import com.genesys.core.designsystem.component.GenesysSectionHeader
 import com.genesys.core.designsystem.component.GenesysSecondaryButton
 import com.genesys.core.designsystem.component.GenesysText
 import com.genesys.core.designsystem.theme.GenesysTheme
-
-private data class ProjectMetric(
-    val label: String,
-    val value: String
-)
-
-private data class ProjectOverview(
-    val name: String,
-    val stage: String,
-    val dueDate: String,
-    val lead: String,
-    val summary: String,
-    val riskLabel: String,
-    val highlighted: Boolean
-)
+import com.genesys.core.model.projects.ProjectMetric
+import com.genesys.core.model.projects.ProjectOverview
 
 private val projectMetrics = listOf(
     ProjectMetric(label = "Active", value = "06"),

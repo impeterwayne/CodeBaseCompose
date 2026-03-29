@@ -1,5 +1,6 @@
-package com.genesys.feature.inbox.main
+package com.genesys.feature.inbox.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,71 +22,13 @@ import com.genesys.core.designsystem.component.GenesysSectionHeader
 import com.genesys.core.designsystem.component.GenesysSecondaryButton
 import com.genesys.core.designsystem.component.GenesysText
 import com.genesys.core.designsystem.theme.GenesysTheme
-
-private data class InboxThread(
-    val sender: String,
-    val subject: String,
-    val preview: String,
-    val time: String,
-    val category: String,
-    val unread: Boolean
-)
-
-private data class InboxGroup(
-    val title: String,
-    val subtitle: String,
-    val items: List<InboxThread>
-)
-
-private val inboxGroups = listOf(
-    InboxGroup(
-        title = "Today",
-        subtitle = "Priority queue",
-        items = listOf(
-            InboxThread(
-                sender = "Design Ops",
-                subject = "Homepage motion review",
-                preview = "Please approve the updated timing pass before the 4 PM handoff to engineering.",
-                time = "09:24",
-                category = "Approval",
-                unread = true
-            ),
-            InboxThread(
-                sender = "Client Team",
-                subject = "Revision notes for launch deck",
-                preview = "Round-two feedback is in. The pricing slide needs a lighter narrative and a tighter CTA.",
-                time = "10:12",
-                category = "Feedback",
-                unread = true
-            )
-        )
-    ),
-    InboxGroup(
-        title = "Earlier",
-        subtitle = "Follow-ups",
-        items = listOf(
-            InboxThread(
-                sender = "Marketing",
-                subject = "Campaign retro summary",
-                preview = "The retro notes are complete and the next sprint suggestions are ready for prioritization.",
-                time = "Yesterday",
-                category = "Recap",
-                unread = false
-            ),
-            InboxThread(
-                sender = "Automation",
-                subject = "Asset export completed",
-                preview = "All queued exports finished successfully and were published to the shared delivery folder.",
-                time = "Yesterday",
-                category = "System",
-                unread = false
-            )
-        )
-    )
-)
+import com.genesys.core.model.inbox.InboxFilter
+import com.genesys.core.model.inbox.InboxThreadUiModel
 
 @Composable
 fun InboxScreen(
+    state: InboxUiState,
+    onAction: (InboxAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     GenesysPageFrame(
@@ -98,22 +41,33 @@ fun InboxScreen(
             verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.lg)
         ) {
             item {
-                InboxHero()
+                InboxHero(
+                    state = state,
+                    onAction = onAction
+                )
             }
 
-            inboxGroups.forEach { group ->
+            if (state.visibleGroups.isEmpty()) {
                 item {
-                    GenesysSectionHeader(
-                        title = group.title,
-                        subtitle = group.subtitle
+                    InboxEmptyState(
+                        selectedFilter = state.selectedFilter
                     )
                 }
+            } else {
+                state.visibleGroups.forEach { group ->
+                    item(key = "${group.id}-header") {
+                        GenesysSectionHeader(
+                            title = group.title,
+                            subtitle = group.subtitle
+                        )
+                    }
 
-                items(
-                    items = group.items,
-                    key = { "${group.title}-${it.subject}" }
-                ) { thread ->
-                    InboxThreadCard(thread = thread)
+                    items(
+                        items = group.items,
+                        key = { it.id }
+                    ) { thread ->
+                        InboxThreadCard(thread = thread)
+                    }
                 }
             }
         }
@@ -121,7 +75,10 @@ fun InboxScreen(
 }
 
 @Composable
-private fun InboxHero() {
+private fun InboxHero(
+    state: InboxUiState,
+    onAction: (InboxAction) -> Unit
+) {
     GenesysPanel(
         tone = GenesysPanelTone.Heavy
     ) {
@@ -137,7 +94,7 @@ private fun InboxHero() {
                     color = GenesysTheme.colors.onPrimaryContainer
                 )
                 GenesysText(
-                    text = "Two approvals and one client response should be handled before end of day.",
+                    text = state.heroMessage,
                     style = GenesysTheme.typography.bodyLarge,
                     color = GenesysTheme.colors.onPrimaryContainer
                 )
@@ -146,9 +103,15 @@ private fun InboxHero() {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
             ) {
-                GenesysChip(text = "Urgent", selected = true)
-                GenesysChip(text = "Approvals", selected = false)
-                GenesysChip(text = "Mentions", selected = false)
+                InboxFilter.entries.forEach { filter ->
+                    GenesysChip(
+                        text = filter.label,
+                        selected = filter == state.selectedFilter,
+                        modifier = Modifier.clickable {
+                            onAction(InboxAction.SelectFilter(filter))
+                        }
+                    )
+                }
             }
 
             Row(
@@ -156,12 +119,12 @@ private fun InboxHero() {
             ) {
                 GenesysPrimaryButton(
                     text = "Open queue",
-                    onClick = {},
+                    onClick = { onAction(InboxAction.FocusPriorityQueue) },
                     modifier = Modifier.weight(1f)
                 )
                 GenesysSecondaryButton(
-                    text = "Mark all read",
-                    onClick = {},
+                    text = if (state.totalUnreadCount > 0) "Mark all read" else "All read",
+                    onClick = { onAction(InboxAction.MarkAllRead) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -170,8 +133,31 @@ private fun InboxHero() {
 }
 
 @Composable
+private fun InboxEmptyState(
+    selectedFilter: InboxFilter
+) {
+    GenesysPanel(
+        tone = GenesysPanelTone.Frame
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+        ) {
+            GenesysText(
+                text = "No threads in ${selectedFilter.label.lowercase()}",
+                style = GenesysTheme.typography.titleLarge
+            )
+            GenesysText(
+                text = "Switch filters or wait for the next message batch to land.",
+                style = GenesysTheme.typography.bodyLarge,
+                color = GenesysTheme.colors.outline
+            )
+        }
+    }
+}
+
+@Composable
 private fun InboxThreadCard(
-    thread: InboxThread
+    thread: InboxThreadUiModel
 ) {
     GenesysPanel(
         tone = GenesysPanelTone.Raised

@@ -22,19 +22,8 @@ import com.genesys.core.designsystem.component.GenesysSectionHeader
 import com.genesys.core.designsystem.component.GenesysSecondaryButton
 import com.genesys.core.designsystem.component.GenesysText
 import com.genesys.core.designsystem.theme.GenesysTheme
-
-private data class SettingItem(
-    val title: String,
-    val description: String,
-    val value: String,
-    val highlighted: Boolean
-)
-
-private data class SettingGroup(
-    val title: String,
-    val subtitle: String,
-    val items: List<SettingItem>
-)
+import com.genesys.core.model.settings.SettingGroup
+import com.genesys.core.model.settings.SettingItem
 
 private val settingGroups = listOf(
     SettingGroup(

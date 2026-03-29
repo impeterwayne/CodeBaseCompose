@@ -27,10 +27,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.genesys.core.designsystem.component.GenesysText
 import com.genesys.core.designsystem.theme.GenesysTheme
-import com.genesys.feature.inbox.main.InboxScreen
-import com.genesys.feature.projects.main.ProjectsScreen
-import com.genesys.feature.settings.main.SettingsScreen
-import com.genesys.feature.template.main.TemplateScreen
+import com.genesys.feature.inbox.navigation.InboxRoute
+import com.genesys.feature.projects.navigation.ProjectsRoute
+import com.genesys.feature.settings.navigation.SettingsRoute
+import com.genesys.feature.template.navigation.TemplateRoute
 
 private enum class AppDestination(
     val route: String,
@@ -67,16 +67,16 @@ fun AppShell(
                 modifier = Modifier.fillMaxSize()
             ) {
                 composable(AppDestination.Templates.route) {
-                    TemplateScreen()
+                    TemplateRoute()
                 }
                 composable(AppDestination.Projects.route) {
-                    ProjectsScreen()
+                    ProjectsRoute()
                 }
                 composable(AppDestination.Inbox.route) {
-                    InboxScreen()
+                    InboxRoute()
                 }
                 composable(AppDestination.Settings.route) {
-                    SettingsScreen()
+                    SettingsRoute()
                 }
             }
         }

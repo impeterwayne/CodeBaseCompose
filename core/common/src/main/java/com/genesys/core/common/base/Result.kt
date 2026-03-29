@@ -7,6 +7,8 @@ sealed class Result<T> {
     class Initial<T>() : Result<T>()
 }
 
+typealias ResultFlow<T> = Result<T>
+
 inline fun <T> Result<T>.doOnSuccess(
     crossinline action: (data: T) -> Unit
 ) {

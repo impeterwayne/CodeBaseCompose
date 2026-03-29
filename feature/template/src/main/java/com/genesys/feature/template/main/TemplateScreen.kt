@@ -14,13 +14,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.genesys.core.designsystem.component.GenesysChip
 import com.genesys.core.designsystem.component.GenesysDivider
 import com.genesys.core.designsystem.component.GenesysPageFrame
@@ -33,44 +30,21 @@ import com.genesys.core.designsystem.component.LoadingIndicator
 import com.genesys.core.designsystem.theme.GenesysTheme
 import com.genesys.core.model.template.Template
 import com.genesys.core.model.template.TemplateCollections
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
 
 private val TemplateCardWidth = 196.dp
 private val TemplateHeroHeight = 88.dp
 
 @Composable
 fun TemplateScreen(
-    viewModel: MainViewModel = hiltViewModel()
-) {
-    val state by viewModel.collectAsState()
-
-    viewModel.collectSideEffect { sideEffect ->
-        when (sideEffect) {
-            is MainSideEffect.OpenTemplate -> Unit
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.onEvent(MainEvent.LoadTemplates)
-    }
-
-    TemplateScreenContent(
-        state = state,
-        onRetry = { viewModel.onEvent(MainEvent.LoadTemplates) },
-        onTemplateClick = { template ->
-            viewModel.onEvent(MainEvent.OnTemplateClicked(template))
-        }
-    )
-}
-
-@Composable
-private fun TemplateScreenContent(
     state: MainUiState,
     onRetry: () -> Unit,
-    onTemplateClick: (Template) -> Unit
+    onTemplateClick: (Template) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    GenesysPageFrame(contentPadding = PaddingValues(0.dp)) {
+    GenesysPageFrame(
+        modifier = modifier,
+        contentPadding = PaddingValues(0.dp)
+    ) {
         when {
             state.isLoading -> {
                 LoadingIndicator(
@@ -94,6 +68,19 @@ private fun TemplateScreenContent(
             }
         }
     }
+}
+
+@Composable
+fun TemplateScreenContent(
+    state: MainUiState,
+    onRetry: () -> Unit,
+    onTemplateClick: (Template) -> Unit
+) {
+    TemplateScreen(
+        state = state,
+        onRetry = onRetry,
+        onTemplateClick = onTemplateClick
+    )
 }
 
 @Composable
