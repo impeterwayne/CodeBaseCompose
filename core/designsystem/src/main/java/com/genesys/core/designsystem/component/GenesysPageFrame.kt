@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.genesys.core.designsystem.theme.GenesysTheme
@@ -23,7 +24,7 @@ fun GenesysPageFrame(
         modifier = modifier
             .fillMaxSize()
             .background(GenesysTheme.colors.surfaceDim)
-            .padding(GenesysTheme.spacing.md)
+            .statusBarsPadding()
     ) {
         Box(
             modifier = Modifier

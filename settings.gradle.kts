@@ -36,6 +36,7 @@ include(":core:domain")
 include(":core:data")
 include(":core:common")
 include(":core:designsystem")
+include(":core:navigation")
 
 // Feature modules
 include(":feature:template")

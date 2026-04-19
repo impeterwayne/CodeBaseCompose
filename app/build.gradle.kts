@@ -76,7 +76,7 @@ dependencies {
     implementation(deps.composeUiGraphics)
     implementation(deps.composeUiToolingPreview)
     implementation(deps.activityCompose)
-    implementation(deps.navigationCompose)
+    implementation(project(":core:navigation"))
     implementation(deps.hiltNavigationCompose)
     implementation(deps.androidxLifecycleRuntimeCompose)
     debugImplementation(deps.composeUiTooling)

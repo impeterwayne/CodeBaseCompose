@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GenesysCompose</string>
+    <string name="nav_templates">Templates</string>
+    <string name="nav_badge_templates">TM</string>
+    <string name="nav_projects">Projects</string>
+    <string name="nav_badge_projects">PR</string>
+    <string name="nav_inbox">Inbox</string>
+    <string name="nav_badge_inbox">IN</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_badge_settings">ST</string>
 </resources>
