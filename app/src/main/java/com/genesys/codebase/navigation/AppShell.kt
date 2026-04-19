@@ -100,14 +100,18 @@ fun AppShell(
             }
         }
 
-        AppBottomBar(
-            currentDestination = currentDestination,
-            onDestinationSelected = { destination ->
-                if (currentDestination != destination) {
-                    currentDestination = destination
+        val showBottomBar = activeBackStack.last() == activeRootKey
+
+        if (showBottomBar) {
+            AppBottomBar(
+                currentDestination = currentDestination,
+                onDestinationSelected = { destination ->
+                    if (currentDestination != destination) {
+                        currentDestination = destination
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }
 

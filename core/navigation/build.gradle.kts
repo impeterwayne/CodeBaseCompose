@@ -5,6 +5,7 @@ plugins {
     id("codebase.android.library")
     id("codebase.android.compose")
     id("kotlin-parcelize")
+    alias(libs.plugins.kotlinSerialization)
 }
 
 val deps = the<LibrariesForLibs>()
@@ -20,4 +21,5 @@ dependencies {
     // It's common for navigation to depend on core types or compose
     implementation(deps.composeFoundation)
     implementation(deps.composeRuntime)
+    implementation(deps.kotlinxSerializationJson)
 }

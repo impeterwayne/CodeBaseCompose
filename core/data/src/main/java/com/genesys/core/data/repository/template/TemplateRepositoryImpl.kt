@@ -29,7 +29,6 @@ class TemplateRepositoryImpl @Inject constructor(
     override fun getAllTemplates(): Flow<Result<List<TemplateCollections>>> = flow {
         emit(Result.Loading())
 
-        // FAKE DATA EMISSION
         val fakeTemplates = listOf(
             Template(
                 id = "t1",
