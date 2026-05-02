@@ -18,7 +18,7 @@ fun GenesysText(
     overflow: TextOverflow = TextOverflow.Clip
 ) {
     val resolvedStyle = style ?: GenesysTheme.typography.bodyLarge
-    val resolvedColor = color ?: GenesysTheme.colors.onSurface
+    val resolvedColor = color ?: GenesysTheme.colorScheme.colorText
 
     BasicText(
         text = text,

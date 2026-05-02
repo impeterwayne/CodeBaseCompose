@@ -22,13 +22,13 @@ fun GenesysSectionHeader(
             GenesysText(
                 text = it.uppercase(Locale.ROOT),
                 style = GenesysTheme.typography.labelMedium,
-                color = GenesysTheme.colors.outline
+                color = GenesysTheme.colorScheme.colorBorder
             )
         }
         GenesysText(
             text = title,
             style = GenesysTheme.typography.headlineSmall,
-            color = GenesysTheme.colors.onSurface
+            color = GenesysTheme.colorScheme.colorText
         )
         GenesysDivider()
     }

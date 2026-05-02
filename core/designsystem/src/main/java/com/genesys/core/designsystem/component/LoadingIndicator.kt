@@ -27,7 +27,7 @@ fun LoadingIndicator(
             GenesysText(
                 text = title.uppercase(Locale.ROOT),
                 style = GenesysTheme.typography.labelLarge,
-                color = GenesysTheme.colors.primary
+                color = GenesysTheme.colorScheme.colorPrimary
             )
             GenesysDivider()
             GenesysText(

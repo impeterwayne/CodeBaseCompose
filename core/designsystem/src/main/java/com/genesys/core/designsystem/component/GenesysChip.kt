@@ -17,18 +17,18 @@ fun GenesysChip(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues? = null
 ) {
-    val colors = GenesysTheme.colors
+    val colors = GenesysTheme.colorScheme
     val resolvedContentPadding = contentPadding ?: PaddingValues(
         horizontal = GenesysTheme.spacing.sm,
         vertical = GenesysTheme.spacing.xs
     )
-    val backgroundColor = if (selected) colors.primary else colors.surfaceContainerLowest
-    val contentColor = if (selected) colors.onPrimary else colors.primary
+    val backgroundColor = if (selected) colors.colorPrimary else colors.colorBgContainerest
+    val contentColor = if (selected) colors.colorTextOnPrimary else colors.colorPrimary
 
     Box(
         modifier = modifier
             .background(backgroundColor)
-            .border(GenesysTheme.strokes.thin, colors.primary, GenesysTheme.shapes.small)
+            .border(GenesysTheme.strokes.thin, colors.colorPrimary, GenesysTheme.shapes.small)
             .padding(resolvedContentPadding)
     ) {
         GenesysText(

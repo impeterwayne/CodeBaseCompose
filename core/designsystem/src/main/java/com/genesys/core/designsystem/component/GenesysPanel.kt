@@ -19,7 +19,10 @@ import com.genesys.core.designsystem.theme.GenesysTheme
 enum class GenesysPanelTone {
     Frame,
     Raised,
-    Heavy
+    Heavy,
+    Error,
+    Warning,
+    Success
 }
 
 @Composable
@@ -31,7 +34,7 @@ fun GenesysPanel(
     onClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val colors = GenesysTheme.colors
+    val colors = GenesysTheme.colorScheme
     val strokes = GenesysTheme.strokes
     val shape = GenesysTheme.shapes.medium
     val resolvedContentPadding = contentPadding ?: PaddingValues(GenesysTheme.spacing.md)
@@ -42,20 +45,35 @@ fun GenesysPanel(
         GenesysPanelTone.Frame -> strokes.thin
         GenesysPanelTone.Raised -> strokes.thin
         GenesysPanelTone.Heavy -> strokes.medium
+        GenesysPanelTone.Error -> strokes.thin
+        GenesysPanelTone.Warning -> strokes.thin
+        GenesysPanelTone.Success -> strokes.thin
     }
 
     when (tone) {
         GenesysPanelTone.Frame -> {
-            backgroundColor = colors.surface
-            borderColor = colors.outlineVariant
+            backgroundColor = colors.colorBgContainer
+            borderColor = colors.colorBorderSecondary
         }
         GenesysPanelTone.Raised -> {
-            backgroundColor = colors.surfaceContainerLow
-            borderColor = colors.outline
+            backgroundColor = colors.colorBgContainer
+            borderColor = colors.colorBorder
         }
         GenesysPanelTone.Heavy -> {
-            backgroundColor = colors.primaryContainer
-            borderColor = colors.primary
+            backgroundColor = colors.colorPrimary
+            borderColor = colors.colorPrimary
+        }
+        GenesysPanelTone.Error -> {
+            backgroundColor = colors.colorBgElevated
+            borderColor = colors.colorError
+        }
+        GenesysPanelTone.Warning -> {
+            backgroundColor = colors.colorBgElevated
+            borderColor = colors.colorWarning
+        }
+        GenesysPanelTone.Success -> {
+            backgroundColor = colors.colorBgElevated
+            borderColor = colors.colorSuccess
         }
     }
 

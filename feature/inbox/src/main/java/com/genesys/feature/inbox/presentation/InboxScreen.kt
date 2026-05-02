@@ -91,12 +91,12 @@ private fun InboxHero(
                 GenesysText(
                     text = "Inbox",
                     style = GenesysTheme.typography.headlineSmall,
-                    color = GenesysTheme.colors.onPrimaryContainer
+                    color = GenesysTheme.colorScheme.colorTextOnPrimary
                 )
                 GenesysText(
                     text = state.heroMessage,
                     style = GenesysTheme.typography.bodyLarge,
-                    color = GenesysTheme.colors.onPrimaryContainer
+                    color = GenesysTheme.colorScheme.colorTextOnPrimary
                 )
             }
 
@@ -149,7 +149,7 @@ private fun InboxEmptyState(
             GenesysText(
                 text = "Switch filters or wait for the next message batch to land.",
                 style = GenesysTheme.typography.bodyLarge,
-                color = GenesysTheme.colors.outline
+                color = GenesysTheme.colorScheme.colorBorder
             )
         }
     }
@@ -176,7 +176,7 @@ private fun InboxThreadCard(
                 GenesysText(
                     text = thread.time,
                     style = GenesysTheme.typography.labelMedium,
-                    color = GenesysTheme.colors.outline
+                    color = GenesysTheme.colorScheme.colorBorder
                 )
             }
 

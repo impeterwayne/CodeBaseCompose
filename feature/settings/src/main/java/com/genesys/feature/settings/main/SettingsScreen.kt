@@ -132,12 +132,12 @@ private fun SettingsHero() {
                 GenesysText(
                     text = "Settings",
                     style = GenesysTheme.typography.headlineSmall,
-                    color = GenesysTheme.colors.onPrimaryContainer
+                    color = GenesysTheme.colorScheme.colorTextOnPrimary
                 )
                 GenesysText(
                     text = "Workspace controls are stable. One security change is queued for rollout this week.",
                     style = GenesysTheme.typography.bodyLarge,
-                    color = GenesysTheme.colors.onPrimaryContainer
+                    color = GenesysTheme.colorScheme.colorTextOnPrimary
                 )
             }
 
@@ -205,7 +205,7 @@ private fun SettingCard(
             GenesysText(
                 text = "Edit preference",
                 style = GenesysTheme.typography.labelMedium,
-                color = GenesysTheme.colors.outline
+                color = GenesysTheme.colorScheme.colorBorder
             )
         }
     }

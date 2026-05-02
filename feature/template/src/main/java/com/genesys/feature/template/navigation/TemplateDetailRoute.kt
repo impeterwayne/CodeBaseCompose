@@ -24,7 +24,7 @@ fun TemplateDetailRoute(
     GenesysPageFrame(
         modifier = modifier
             .fillMaxSize()
-            .background(GenesysTheme.colors.surfaceDim),
+            .background(GenesysTheme.colorScheme.colorBgElevated),
         contentPadding = PaddingValues(GenesysTheme.spacing.md)
     ) {
         Column(
@@ -39,7 +39,7 @@ fun TemplateDetailRoute(
                 GenesysText(
                     text = "Back to templates",
                     style = GenesysTheme.typography.labelLarge,
-                    color = GenesysTheme.colors.onSurface,
+                    color = GenesysTheme.colorScheme.colorText,
                     modifier = Modifier.padding(GenesysTheme.spacing.md)
                 )
             }
@@ -55,12 +55,12 @@ fun TemplateDetailRoute(
                     GenesysText(
                         text = "Template detail",
                         style = GenesysTheme.typography.headlineMedium,
-                        color = GenesysTheme.colors.onSurface
+                        color = GenesysTheme.colorScheme.colorText
                     )
                     GenesysText(
                         text = templateId,
                         style = GenesysTheme.typography.bodyLarge,
-                        color = GenesysTheme.colors.outline
+                        color = GenesysTheme.colorScheme.colorBorder
                     )
                 }
             }

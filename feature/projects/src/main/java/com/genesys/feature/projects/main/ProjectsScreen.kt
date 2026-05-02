@@ -109,12 +109,12 @@ private fun ProjectsHero() {
                 GenesysText(
                     text = "Projects",
                     style = GenesysTheme.typography.headlineSmall,
-                    color = GenesysTheme.colors.onPrimaryContainer
+                    color = GenesysTheme.colorScheme.colorTextOnPrimary
                 )
                 GenesysText(
                     text = "Three delivery lanes have pending milestones this week.",
                     style = GenesysTheme.typography.bodyLarge,
-                    color = GenesysTheme.colors.onPrimaryContainer
+                    color = GenesysTheme.colorScheme.colorTextOnPrimary
                 )
             }
 
@@ -168,7 +168,7 @@ private fun MetricCard(
             GenesysText(
                 text = label,
                 style = GenesysTheme.typography.labelMedium,
-                color = GenesysTheme.colors.outline
+                color = GenesysTheme.colorScheme.colorBorder
             )
         }
     }
@@ -201,7 +201,7 @@ private fun ProjectCard(
                     GenesysText(
                         text = "${project.stage} • ${project.dueDate}",
                         style = GenesysTheme.typography.labelMedium,
-                        color = GenesysTheme.colors.outline
+                        color = GenesysTheme.colorScheme.colorBorder
                     )
                 }
 
@@ -223,7 +223,7 @@ private fun ProjectCard(
                 GenesysText(
                     text = project.lead,
                     style = GenesysTheme.typography.labelMedium,
-                    color = GenesysTheme.colors.outline
+                    color = GenesysTheme.colorScheme.colorBorder
                 )
                 GenesysText(
                     text = "Open board",

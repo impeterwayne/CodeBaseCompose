@@ -16,7 +16,7 @@ fun GenesysDivider(
     color: Color? = null,
     thickness: Dp? = null
 ) {
-    val resolvedColor = color ?: GenesysTheme.colors.outlineVariant
+    val resolvedColor = color ?: GenesysTheme.colorScheme.colorBorderSecondary
     val resolvedThickness = thickness ?: GenesysTheme.strokes.thin
 
     Box(

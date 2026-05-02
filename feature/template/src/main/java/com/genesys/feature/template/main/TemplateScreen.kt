@@ -52,9 +52,9 @@ fun TemplateScreen(
                 )
             }
 
-            state.errorMessage != null -> {
+            state.colorErrorMessage != null -> {
                 ErrorState(
-                    message = state.errorMessage ?: "Something went wrong",
+                    message = state.colorErrorMessage ?: "Something went wrong",
                     onRetry = onRetry,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -165,14 +165,14 @@ private fun TemplateItem(
                 GenesysText(
                     text = template.name,
                     style = GenesysTheme.typography.titleLarge,
-                    color = GenesysTheme.colors.onSurface,
+                    color = GenesysTheme.colorScheme.colorText,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 GenesysText(
                     text = if (template.premium) "Premium template" else "Template",
                     style = GenesysTheme.typography.labelMedium,
-                    color = GenesysTheme.colors.outline
+                    color = GenesysTheme.colorScheme.colorBorder
                 )
             }
         }
@@ -185,14 +185,14 @@ private fun TemplateHero(
     modifier: Modifier = Modifier
 ) {
     val heroBackground = if (template.premium) {
-        GenesysTheme.colors.primaryContainer
+        GenesysTheme.colorScheme.colorPrimary
     } else {
-        GenesysTheme.colors.surfaceContainer
+        GenesysTheme.colorScheme.colorBgElevated
     }
     val heroContent = if (template.premium) {
-        GenesysTheme.colors.onPrimaryContainer
+        GenesysTheme.colorScheme.colorTextOnPrimary
     } else {
-        GenesysTheme.colors.primary
+        GenesysTheme.colorScheme.colorPrimary
     }
 
     Box(

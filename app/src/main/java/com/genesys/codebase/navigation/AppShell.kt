@@ -77,7 +77,7 @@ fun AppShell(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(GenesysTheme.colors.surfaceDim)
+            .background(GenesysTheme.colorScheme.colorBgElevated)
     ) {
         Box(
             modifier = Modifier.weight(1f)
@@ -124,10 +124,10 @@ private fun AppBottomBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(GenesysTheme.colors.surfaceContainerHighest)
+            .background(GenesysTheme.colorScheme.colorBgFill)
             .border(
                 width = GenesysTheme.strokes.thin,
-                color = GenesysTheme.colors.outline,
+                color = GenesysTheme.colorScheme.colorBorder,
                 shape = GenesysTheme.shapes.large
             )
             .navigationBarsPadding()
@@ -158,19 +158,19 @@ private fun BottomBarItem(
     modifier: Modifier = Modifier
 ) {
     val containerColor = if (selected) {
-        GenesysTheme.colors.primaryContainer
+        GenesysTheme.colorScheme.colorPrimary
     } else {
-        GenesysTheme.colors.surface
+        GenesysTheme.colorScheme.colorBgContainer
     }
     val contentColor = if (selected) {
-        GenesysTheme.colors.onPrimaryContainer
+        GenesysTheme.colorScheme.colorTextOnPrimary
     } else {
-        GenesysTheme.colors.onSurface
+        GenesysTheme.colorScheme.colorText
     }
     val badgeColor = if (selected) {
-        GenesysTheme.colors.surface
+        GenesysTheme.colorScheme.colorBgContainer
     } else {
-        GenesysTheme.colors.surfaceContainerLow
+        GenesysTheme.colorScheme.colorBgContainer
     }
 
     Column(
@@ -179,7 +179,7 @@ private fun BottomBarItem(
             .background(containerColor)
             .border(
                 width = GenesysTheme.strokes.thin,
-                color = if (selected) GenesysTheme.colors.primary else GenesysTheme.colors.outlineVariant,
+                color = if (selected) GenesysTheme.colorScheme.colorPrimary else GenesysTheme.colorScheme.colorBorderSecondary,
                 shape = GenesysTheme.shapes.medium
             )
             .clickable(onClick = onClick)
@@ -196,7 +196,7 @@ private fun BottomBarItem(
                 .background(badgeColor)
                 .border(
                     width = GenesysTheme.strokes.thin,
-                    color = if (selected) GenesysTheme.colors.surface else GenesysTheme.colors.outlineVariant,
+                    color = if (selected) GenesysTheme.colorScheme.colorBgContainer else GenesysTheme.colorScheme.colorBorderSecondary,
                     shape = GenesysTheme.shapes.small
                 ),
             contentAlignment = Alignment.Center
@@ -204,7 +204,7 @@ private fun BottomBarItem(
             GenesysText(
                 text = stringResource(destination.badgeRes),
                 style = GenesysTheme.typography.labelSmall,
-                color = GenesysTheme.colors.onSurface
+                color = GenesysTheme.colorScheme.colorText
             )
         }
 

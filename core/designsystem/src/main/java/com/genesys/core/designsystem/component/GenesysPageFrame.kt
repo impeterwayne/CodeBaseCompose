@@ -23,16 +23,16 @@ fun GenesysPageFrame(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(GenesysTheme.colors.surfaceDim)
+            .background(GenesysTheme.colorScheme.colorBgElevated)
             .statusBarsPadding()
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(GenesysTheme.colors.surface)
+                .background(GenesysTheme.colorScheme.colorBgContainer)
                 .border(
                     width = GenesysTheme.strokes.thin,
-                    color = GenesysTheme.colors.outlineVariant,
+                    color = GenesysTheme.colorScheme.colorBorderSecondary,
                     shape = GenesysTheme.shapes.large
                 )
                 .padding(resolvedContentPadding),

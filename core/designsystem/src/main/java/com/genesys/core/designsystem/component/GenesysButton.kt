@@ -21,7 +21,7 @@ fun GenesysPrimaryButton(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues? = null
 ) {
-    val colors = GenesysTheme.colors
+    val colors = GenesysTheme.colorScheme
     val resolvedContentPadding = contentPadding ?: PaddingValues(
         horizontal = GenesysTheme.spacing.lg,
         vertical = GenesysTheme.spacing.sm
@@ -31,7 +31,7 @@ fun GenesysPrimaryButton(
     Box(
         modifier = modifier
             .clip(GenesysTheme.shapes.medium)
-            .background(colors.primary)
+            .background(colors.colorPrimary)
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
@@ -42,7 +42,7 @@ fun GenesysPrimaryButton(
         GenesysText(
             text = text.uppercase(Locale.ROOT),
             style = GenesysTheme.typography.labelLarge,
-            color = colors.onPrimary
+            color = colors.colorTextOnPrimary
         )
     }
 }
@@ -54,7 +54,7 @@ fun GenesysSecondaryButton(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues? = null
 ) {
-    val colors = GenesysTheme.colors
+    val colors = GenesysTheme.colorScheme
     val resolvedContentPadding = contentPadding ?: PaddingValues(
         horizontal = GenesysTheme.spacing.lg,
         vertical = GenesysTheme.spacing.sm
@@ -64,10 +64,10 @@ fun GenesysSecondaryButton(
     Box(
         modifier = modifier
             .clip(GenesysTheme.shapes.medium)
-            .background(colors.surface)
+            .background(colors.colorBgContainer)
             .border(
                 width = GenesysTheme.strokes.medium,
-                color = colors.primary,
+                color = colors.colorPrimary,
                 shape = GenesysTheme.shapes.medium
             )
             .clickable(
@@ -80,7 +80,7 @@ fun GenesysSecondaryButton(
         GenesysText(
             text = text.uppercase(Locale.ROOT),
             style = GenesysTheme.typography.labelLarge,
-            color = colors.primary
+            color = colors.colorPrimary
         )
     }
 }

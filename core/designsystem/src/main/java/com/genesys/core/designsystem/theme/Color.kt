@@ -1,71 +1,85 @@
 package com.genesys.core.designsystem.theme
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-
-private val PaperWhite = Color(0xFFF9F9F9)
-private val AbsoluteWhite = Color(0xFFFFFFFF)
-private val AbsoluteBlack = Color(0xFF000000)
-private val PaperFrame = Color(0xFFDADADA)
-private val SurfaceContainerLow = Color(0xFFF3F3F4)
-private val SurfaceContainer = Color(0xFFEEEEEE)
-private val SurfaceContainerHighest = Color(0xFFE2E2E2)
-private val InkBlock = Color(0xFF3B3B3B)
-private val Outline = Color(0xFF777777)
-private val OutlineVariant = Color(0xFFC6C6C6)
-private val EditorialInk = Color(0xFF1A1C1C)
+import androidx.compose.ui.res.colorResource
+import com.genesys.core.designsystem.R
 
 @Immutable
-data class GenesysColors(
-    val background: Color,
-    val surface: Color,
-    val surfaceDim: Color,
-    val primary: Color,
-    val onSurface: Color,
-    val onPrimary: Color,
-    val surfaceContainerLowest: Color,
-    val surfaceContainerLow: Color,
-    val surfaceContainer: Color,
-    val surfaceContainerHighest: Color,
-    val outline: Color,
-    val outlineVariant: Color,
-    val primaryContainer: Color,
-    val onPrimaryContainer: Color
+data class AppColorScheme(
+    val colorBgLayout: Color,
+    val colorBgContainer: Color,
+    val colorBgElevated: Color,
+    val colorBgFill: Color,
+    
+    val colorText: Color,
+    val colorTextSecondary: Color,
+    
+    val colorBorder: Color,
+    val colorBorderSecondary: Color,
+    
+    val colorPrimary: Color,
+    val colorTextOnPrimary: Color,
+
+    val colorError: Color,
+    val colorTextOnError: Color,
+
+    val colorSuccess: Color,
+    val colorTextOnSuccess: Color,
+
+    val colorWarning: Color,
+    val colorTextOnWarning: Color,
+
+    val colorInfo: Color,
+    val colorTextOnInfo: Color
 )
 
-internal val lightColors = GenesysColors(
-    background = PaperWhite,
-    surface = PaperWhite,
-    surfaceDim = PaperFrame,
-    primary = AbsoluteBlack,
-    onSurface = EditorialInk,
-    onPrimary = AbsoluteWhite,
-    surfaceContainerLowest = AbsoluteWhite,
-    surfaceContainerLow = SurfaceContainerLow,
-    surfaceContainer = SurfaceContainer,
-    surfaceContainerHighest = SurfaceContainerHighest,
-    outline = Outline,
-    outlineVariant = OutlineVariant,
-    primaryContainer = InkBlock,
-    onPrimaryContainer = AbsoluteWhite
+@Composable
+internal fun lightColorScheme() = AppColorScheme(
+    colorBgLayout = colorResource(id = R.color.antd_light_bg_layout),
+    colorBgContainer = colorResource(id = R.color.antd_light_bg_container),
+    colorBgElevated = colorResource(id = R.color.antd_light_bg_elevated),
+    colorBgFill = colorResource(id = R.color.antd_light_bg_fill),
+    colorText = colorResource(id = R.color.antd_light_text),
+    colorTextSecondary = colorResource(id = R.color.antd_light_text_secondary),
+    colorBorder = colorResource(id = R.color.antd_light_border),
+    colorBorderSecondary = colorResource(id = R.color.antd_light_border_secondary),
+    colorPrimary = colorResource(id = R.color.antd_light_primary),
+    colorTextOnPrimary = colorResource(id = R.color.antd_light_text_on_primary),
+    colorError = colorResource(id = R.color.antd_light_error),
+    colorTextOnError = colorResource(id = R.color.antd_light_text_on_error),
+    colorSuccess = colorResource(id = R.color.antd_light_success),
+    colorTextOnSuccess = colorResource(id = R.color.antd_light_text_on_success),
+    colorWarning = colorResource(id = R.color.antd_light_warning),
+    colorTextOnWarning = colorResource(id = R.color.antd_light_text_on_warning),
+    colorInfo = colorResource(id = R.color.antd_light_info),
+    colorTextOnInfo = colorResource(id = R.color.antd_light_text_on_info)
 )
 
-internal val darkColors = GenesysColors(
-    background = EditorialInk,
-    surface = EditorialInk,
-    surfaceDim = AbsoluteBlack,
-    primary = AbsoluteWhite,
-    onSurface = PaperWhite,
-    onPrimary = AbsoluteBlack,
-    surfaceContainerLowest = AbsoluteBlack,
-    surfaceContainerLow = Color(0xFF121212),
-    surfaceContainer = Color(0xFF222222),
-    surfaceContainerHighest = InkBlock,
-    outline = OutlineVariant,
-    outlineVariant = InkBlock,
-    primaryContainer = SurfaceContainerHighest,
-    onPrimaryContainer = AbsoluteBlack
+@Composable
+internal fun darkColorScheme() = AppColorScheme(
+    colorBgLayout = colorResource(id = R.color.antd_dark_bg_layout),
+    colorBgContainer = colorResource(id = R.color.antd_dark_bg_container),
+    colorBgElevated = colorResource(id = R.color.antd_dark_bg_elevated),
+    colorBgFill = colorResource(id = R.color.antd_dark_bg_fill),
+    colorText = colorResource(id = R.color.antd_dark_text),
+    colorTextSecondary = colorResource(id = R.color.antd_dark_text_secondary),
+    colorBorder = colorResource(id = R.color.antd_dark_border),
+    colorBorderSecondary = colorResource(id = R.color.antd_dark_border_secondary),
+    colorPrimary = colorResource(id = R.color.antd_dark_primary),
+    colorTextOnPrimary = colorResource(id = R.color.antd_dark_text_on_primary),
+    colorError = colorResource(id = R.color.antd_dark_error),
+    colorTextOnError = colorResource(id = R.color.antd_dark_text_on_error),
+    colorSuccess = colorResource(id = R.color.antd_dark_success),
+    colorTextOnSuccess = colorResource(id = R.color.antd_dark_text_on_success),
+    colorWarning = colorResource(id = R.color.antd_dark_warning),
+    colorTextOnWarning = colorResource(id = R.color.antd_dark_text_on_warning),
+    colorInfo = colorResource(id = R.color.antd_dark_info),
+    colorTextOnInfo = colorResource(id = R.color.antd_dark_text_on_info)
 )
 
-internal val LocalGenesysColors = staticCompositionLocalOf { lightColors }
+internal val LocalAppColorScheme = staticCompositionLocalOf<AppColorScheme> {
+    error("No AppColorScheme provided")
+}

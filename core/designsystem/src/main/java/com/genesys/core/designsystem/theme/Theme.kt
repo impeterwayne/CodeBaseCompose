@@ -33,8 +33,8 @@ internal val defaultShapes = GenesysShapes(
 internal val LocalGenesysShapes = staticCompositionLocalOf { defaultShapes }
 
 object GenesysTheme {
-    val colors: GenesysColors
-        @Composable get() = LocalGenesysColors.current
+    val colorScheme: AppColorScheme
+        @Composable get() = LocalAppColorScheme.current
     val typography: GenesysTypography
         @Composable get() = LocalGenesysTypography.current
     val shapes: GenesysShapes
@@ -50,7 +50,7 @@ fun GenesysTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) darkColors else lightColors
+    val colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -61,7 +61,7 @@ fun GenesysTheme(
     }
 
     CompositionLocalProvider(
-        LocalGenesysColors provides colors,
+        LocalAppColorScheme provides colorScheme,
         LocalGenesysTypography provides defaultTypography,
         LocalGenesysShapes provides defaultShapes,
         LocalGenesysSpacing provides defaultSpacing,

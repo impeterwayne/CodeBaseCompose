@@ -21,13 +21,13 @@ fun ErrorState(
     ) {
         GenesysPanel(
             modifier = Modifier.fillMaxWidth(0.78f),
-            tone = GenesysPanelTone.Frame,
+            tone = GenesysPanelTone.Error,
             verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.md)
         ) {
             GenesysText(
                 text = "Archive Unavailable",
                 style = GenesysTheme.typography.titleLarge,
-                color = GenesysTheme.colors.primary
+                color = GenesysTheme.colorScheme.colorError
             )
             GenesysDivider()
             GenesysText(
