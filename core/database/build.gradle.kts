@@ -27,9 +27,8 @@ dependencies {
     ksp(deps.androidxRoomCompiler)
     implementation(deps.androidxRoomKtx)
 
-    // Moshi (for type converters)
-    implementation(deps.moshi)
-    implementation(deps.moshiKotlin)
+    // Gson (for type converters)
+    implementation(deps.gson)
 
     // Coroutines
     implementation(deps.kotlinxCoroutinesCore)

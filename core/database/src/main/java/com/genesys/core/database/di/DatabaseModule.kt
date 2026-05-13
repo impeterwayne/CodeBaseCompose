@@ -5,8 +5,7 @@ import androidx.room.Room
 import com.genesys.core.database.TemplateDatabase
 import com.genesys.core.database.converters.TemplateListConverter
 import com.genesys.core.database.dao.TemplateCollectionsDao
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +40,5 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    fun provideGson(): Gson = Gson()
 }

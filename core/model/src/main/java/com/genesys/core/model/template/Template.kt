@@ -1,27 +1,27 @@
 package com.genesys.core.model.template
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Keep
 data class Template(
-    @Json(name = "categoryDocumentId")
+    @SerializedName("categoryDocumentId")
     val categoryDocumentId: String = "",
-    @Json(name = "id")
+    @SerializedName("id")
     val id: String = "",
-    @Json(name = "name")
+    @SerializedName("name")
     val name: String = "",
-    @Json(name = "premium")
+    @SerializedName("premium")
     val premium: Boolean = false,
-    @Json(name = "ratio")
+    @SerializedName("ratio")
     val ratio: String = "1:1",
-    @Json(name = "resource")
+    @SerializedName("resource")
     val resource: String = "",
-    @Json(name = "sort")
+    @SerializedName("sort")
     val sort: Int = 0,
-    @Json(name = "thumbnail")
+    @SerializedName("thumbnail")
     val thumbnail: String = ""
 ) : Parcelable

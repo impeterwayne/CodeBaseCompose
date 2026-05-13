@@ -1,21 +1,21 @@
 package com.genesys.core.model.template
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Keep
 data class TemplateCollections(
-    @Json(name = "code")
+    @SerializedName("code")
     val code: String = "",
-    @Json(name = "id")
+    @SerializedName("id")
     val id: String = "",
-    @Json(name = "items")
+    @SerializedName("items")
     val templates: List<Template> = listOf(),
-    @Json(name = "name")
+    @SerializedName("name")
     val name: String = "",
-    @Json(name = "sort")
+    @SerializedName("sort")
     val sort: Int = 0
 ) : Parcelable

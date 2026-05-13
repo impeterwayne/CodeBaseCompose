@@ -1,10 +1,10 @@
 package com.genesys.core.model.pagination
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
 data class Meta(
-    @Json(name = "pagination")
+    @SerializedName("pagination")
     val pagination: Pagination = Pagination()
 )

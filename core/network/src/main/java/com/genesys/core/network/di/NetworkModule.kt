@@ -4,8 +4,6 @@ import android.content.Context
 import com.genesys.core.network.BuildConfig
 import com.genesys.core.network.service.ApiService
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +13,7 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -24,10 +22,6 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private const val CACHE_SIZE = (10 * 1024 * 1024).toLong()
-
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
 
     @Singleton
     @Provides
@@ -51,7 +45,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
         .baseUrl(BuildConfig.BASE_URL)
         .client(okHttpClient)

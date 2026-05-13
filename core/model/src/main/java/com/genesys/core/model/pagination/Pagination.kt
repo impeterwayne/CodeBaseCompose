@@ -1,16 +1,16 @@
 package com.genesys.core.model.pagination
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
 data class Pagination(
-    @Json(name = "page")
+    @SerializedName("page")
     val page: Int = 0,
-    @Json(name = "pageCount")
+    @SerializedName("pageCount")
     val pageCount: Int = 0,
-    @Json(name = "pageSize")
+    @SerializedName("pageSize")
     val pageSize: Int = 0,
-    @Json(name = "total")
+    @SerializedName("total")
     val total: Int = 0
 )

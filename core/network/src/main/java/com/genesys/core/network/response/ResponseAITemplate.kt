@@ -1,14 +1,14 @@
 package com.genesys.core.network.response
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.genesys.core.model.pagination.Meta
 import com.genesys.core.model.template.TemplateCollections
 
 @Keep
 data class ResponseAITemplate(
-    @Json(name = "data")
+    @SerializedName("data")
     val `data`: List<TemplateCollections> = listOf(),
-    @Json(name = "meta")
+    @SerializedName("meta")
     val meta: Meta = Meta()
 )

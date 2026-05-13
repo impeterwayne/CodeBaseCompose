@@ -31,15 +31,12 @@ dependencies {
     // Retrofit
     implementation(deps.retrofit)
     implementation(deps.retrofit2KotlinCoroutinesAdapter)
-    implementation(deps.converterMoshi)
+    implementation(deps.converterGson)
 
     // Sandwich
     implementation(deps.sandwich)
     implementation(deps.sandwichRetrofit)
 
-    // Moshi
-    ksp(deps.moshiKotlinCodegen)
-    implementation(deps.moshi)
-    implementation(deps.moshiKotlin)
-    implementation(deps.moshiAdapters)
+    // Gson
+    implementation(deps.gson)
 }
