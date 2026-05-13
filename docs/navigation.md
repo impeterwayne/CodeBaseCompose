@@ -104,3 +104,60 @@ fun MyFeatureGraph(
 
 - **Bottom Bar Visibility**: The `AppBottomBar` is dynamically shown or hidden based on whether the `activeNavigator.canPop` is true. This means the bottom bar is only visible on the root screen of any tab, and hides when you navigate deeper into a stack.
 - **Back Handler**: The root `NavHost` automatically handles system back button presses, first attempting to pop the active stack (`appState.handleBack()`), and if that fails (meaning the user is at a root tab), it navigates back to the primary starting tab (`Templates`) before exiting the app.
+
+## Cross-Feature Navigation
+
+In a modularized architecture, feature modules (e.g., `feature-template`, `feature-projects`) should not depend on each other directly to prevent tight coupling and circular dependencies.
+
+If a feature graph needs to navigate to or display a screen from another feature module, the orchestration must happen in the `app` module (where `NavHost` lives, as it depends on all features).
+
+### Injecting Screens via Composable Lambda (Recommended)
+
+If a graph needs to display a specific screen from another module without switching tabs, inject that screen as a `@Composable` parameter. This allows the graph to render the route inside its own `entryProvider` without knowing about the other module.
+
+**1. Update the Target Graph:**
+Update your feature graph to accept the external screen as a lambda parameter.
+
+```kotlin
+@Composable
+fun TemplateGraph(
+    backStack: NavBackStack<NavKey>,
+    navigator: AppNavigator,
+    // Inject the external screen here!
+    projectSelectorScreen: @Composable (projectId: String, onBack: () -> Unit) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val entries = entryProvider<NavKey> {
+        // ... existing local entries ...
+        
+        // Map the external route to the injected lambda
+        entry<Route.ProjectSelector> { destination ->
+            projectSelectorScreen(
+                projectId = destination.projectId, 
+                onBack = navigator::popIfPossible
+            )
+        }
+    }
+    // ...
+}
+```
+
+**2. Provide the Screen in `NavHost.kt`:**
+Because `NavHost.kt` resides in the `app` module, it has access to all feature module screens and can wire them together.
+
+```kotlin
+TopLevelDestination.Templates -> TemplateGraph(
+    backStack = backStack,
+    navigator = navigator,
+    projectSelectorScreen = { projectId, onBack ->
+        // Directly call the composable from the other feature module
+        com.genesys.feature.projects.ui.ProjectSelectorScreen(
+            projectId = projectId,
+            onBack = onBack
+        )
+    },
+    modifier = fillModifier
+)
+```
+
+Alternatively, if you need to perform top-level navigation (i.e. switching bottom tabs), pass a standard callback like `onNavigateToProjects: () -> Unit` to your graph, and call `appState.selectDestination(TopLevelDestination.Projects)` from within `NavHost.kt`.
