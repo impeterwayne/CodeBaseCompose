@@ -10,30 +10,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.core.designsystem.theme.AppTheme
 
 @Composable
-fun GenesysPageFrame(
+fun AppPageFrame(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues? = null,
     content: @Composable BoxScope.() -> Unit
 ) {
-    val resolvedContentPadding = contentPadding ?: PaddingValues(GenesysTheme.spacing.md)
+    val resolvedContentPadding = contentPadding ?: PaddingValues(AppTheme.spacing.md)
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(GenesysTheme.colorScheme.colorBgElevated)
+            .background(AppTheme.colorScheme.colorBgElevated)
             .statusBarsPadding()
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(GenesysTheme.colorScheme.colorBgContainer)
+                .background(AppTheme.colorScheme.colorBgContainer)
                 .border(
-                    width = GenesysTheme.strokes.thin,
-                    color = GenesysTheme.colorScheme.colorBorderSecondary,
-                    shape = GenesysTheme.shapes.large
+                    width = AppTheme.strokes.thin,
+                    color = AppTheme.colorScheme.colorBorderSecondary,
+                    shape = AppTheme.shapes.large
                 )
                 .padding(resolvedContentPadding),
             content = content

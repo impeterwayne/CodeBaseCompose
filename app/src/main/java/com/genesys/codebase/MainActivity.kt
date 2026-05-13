@@ -3,9 +3,8 @@ package com.genesys.codebase
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import com.genesys.core.designsystem.theme.GenesysTheme
-import com.genesys.codebase.navigation.AppShell
+import com.genesys.core.designsystem.theme.AppTheme
+import com.genesys.codebase.navigation.NavHost
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,8 +14,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Configure ImmersionBar before Compose content
         immersionBar {
             transparentBar()
             statusBarDarkFont(true)
@@ -25,11 +22,9 @@ class MainActivity : ComponentActivity() {
             navigationBarEnable(false)
         }
 
-        enableEdgeToEdge()
-
         setContent {
-            GenesysTheme {
-                AppShell()
+            AppTheme {
+                NavHost()
             }
         }
     }

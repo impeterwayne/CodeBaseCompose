@@ -16,18 +16,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.genesys.core.designsystem.component.GenesysChip
-import com.genesys.core.designsystem.component.GenesysDivider
-import com.genesys.core.designsystem.component.GenesysPageFrame
-import com.genesys.core.designsystem.component.GenesysPanel
-import com.genesys.core.designsystem.component.GenesysPanelTone
-import com.genesys.core.designsystem.component.GenesysSectionHeader
-import com.genesys.core.designsystem.component.GenesysText
+import com.genesys.feature.template.R
+import com.genesys.core.designsystem.component.AppChip
+import com.genesys.core.designsystem.component.AppDivider
+import com.genesys.core.designsystem.component.AppPageFrame
+import com.genesys.core.designsystem.component.AppPanel
+import com.genesys.core.designsystem.component.AppPanelTone
+import com.genesys.core.designsystem.component.AppSectionHeader
+import com.genesys.core.designsystem.component.AppText
 import com.genesys.core.designsystem.component.ErrorState
 import com.genesys.core.designsystem.component.LoadingIndicator
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.template.Template
 import com.genesys.core.model.template.TemplateCollections
 
@@ -41,7 +44,7 @@ fun TemplateScreen(
     onTemplateClick: (Template) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    GenesysPageFrame(
+    AppPageFrame(
         modifier = modifier,
         contentPadding = PaddingValues(0.dp)
     ) {
@@ -52,9 +55,9 @@ fun TemplateScreen(
                 )
             }
 
-            state.colorErrorMessage != null -> {
+            state.errorMessage != null -> {
                 ErrorState(
-                    message = state.colorErrorMessage ?: "Something went wrong",
+                    message = state.errorMessage ?: stringResource(R.string.template_error_generic),
                     onRetry = onRetry,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -91,8 +94,8 @@ private fun TemplateCollectionsList(
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = GenesysTheme.spacing.lg),
-        verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xxl)
+        contentPadding = PaddingValues(vertical = AppTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xxl)
     ) {
         items(
             items = collections,
@@ -114,17 +117,17 @@ private fun CollectionSection(
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.md)
+        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
     ) {
-        GenesysSectionHeader(
+        AppSectionHeader(
             title = collection.name,
-            subtitle = "${collection.templates.size} templates",
-            modifier = Modifier.padding(horizontal = GenesysTheme.spacing.md)
+            subtitle = stringResource(R.string.template_count, collection.templates.size),
+            modifier = Modifier.padding(horizontal = AppTheme.spacing.md)
         )
 
         LazyRow(
-            contentPadding = PaddingValues(horizontal = GenesysTheme.spacing.md),
-            horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+            contentPadding = PaddingValues(horizontal = AppTheme.spacing.md),
+            horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
             items(
                 items = collection.templates,
@@ -145,34 +148,40 @@ private fun TemplateItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    GenesysPanel(
+    AppPanel(
         modifier = modifier.width(TemplateCardWidth),
-        tone = GenesysPanelTone.Raised,
+        tone = AppPanelTone.Raised,
         contentPadding = PaddingValues(0.dp),
-        onClick = onClick
+        onClick = onClick,
+        onClickLabel = stringResource(R.string.template_open_label),
+        role = Role.Button
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
             TemplateHero(template = template)
-            GenesysDivider()
+            AppDivider()
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(GenesysTheme.spacing.md),
-                verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+                    .padding(AppTheme.spacing.md),
+                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
             ) {
-                GenesysText(
+                AppText(
                     text = template.name,
-                    style = GenesysTheme.typography.titleLarge,
-                    color = GenesysTheme.colorScheme.colorText,
+                    style = AppTheme.typography.titleLarge,
+                    color = AppTheme.colorScheme.colorText,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                GenesysText(
-                    text = if (template.premium) "Premium template" else "Template",
-                    style = GenesysTheme.typography.labelMedium,
-                    color = GenesysTheme.colorScheme.colorBorder
+                AppText(
+                    text = if (template.premium) {
+                        stringResource(R.string.template_premium_label)
+                    } else {
+                        stringResource(R.string.template_standard_label)
+                    },
+                    style = AppTheme.typography.labelMedium,
+                    color = AppTheme.colorScheme.colorBorder
                 )
             }
         }
@@ -185,14 +194,14 @@ private fun TemplateHero(
     modifier: Modifier = Modifier
 ) {
     val heroBackground = if (template.premium) {
-        GenesysTheme.colorScheme.colorPrimary
+        AppTheme.colorScheme.colorPrimary
     } else {
-        GenesysTheme.colorScheme.colorBgElevated
+        AppTheme.colorScheme.colorBgElevated
     }
     val heroContent = if (template.premium) {
-        GenesysTheme.colorScheme.colorTextOnPrimary
+        AppTheme.colorScheme.colorTextOnPrimary
     } else {
-        GenesysTheme.colorScheme.colorPrimary
+        AppTheme.colorScheme.colorPrimary
     }
 
     Box(
@@ -200,27 +209,27 @@ private fun TemplateHero(
             .fillMaxWidth()
             .height(TemplateHeroHeight)
             .background(heroBackground)
-            .padding(GenesysTheme.spacing.md)
+            .padding(AppTheme.spacing.md)
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
             if (template.premium) {
-                GenesysChip(
-                    text = "Premium",
+                AppChip(
+                    text = stringResource(R.string.template_premium_chip),
                     selected = true
                 )
             }
-            GenesysText(
+            AppText(
                 text = template.ratio,
-                style = GenesysTheme.typography.headlineMedium,
+                style = AppTheme.typography.headlineMedium,
                 color = heroContent
             )
         }
 
         if (!template.premium) {
-            GenesysChip(
-                text = "Standard",
+            AppChip(
+                text = stringResource(R.string.template_standard_chip),
                 selected = false,
                 modifier = Modifier.align(Alignment.TopEnd)
             )

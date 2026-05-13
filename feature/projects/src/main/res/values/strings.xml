@@ -1,0 +1,8 @@
+<resources>
+    <string name="projects_current_work_title">Current work</string>
+    <string name="projects_current_work_subtitle">Projects</string>
+    <string name="projects_title">Projects</string>
+    <string name="projects_hero_message">Three delivery lanes have pending milestones this week.</string>
+    <string name="projects_create_brief_unavailable">Brief creation unavailable</string>
+    <string name="projects_calendar_unavailable">Calendar unavailable</string>
+</resources>

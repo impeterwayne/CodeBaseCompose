@@ -5,8 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.genesys.core.navigation.GenesysNavigator
-import com.genesys.core.navigation.GenesysScreen
+import com.genesys.core.navigation.AppNavigator
+import com.genesys.core.navigation.Route
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
@@ -19,9 +19,9 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun TemplateRoute(
+fun TemplateGraph(
     backStack: NavBackStack<NavKey>,
-    navigator: GenesysNavigator,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = hiltViewModel()
 ) {
@@ -30,7 +30,7 @@ fun TemplateRoute(
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             is MainSideEffect.OpenTemplate -> {
-                navigator.navigate(GenesysScreen.TemplateDetail(sideEffect.templateId))
+                navigator.navigate(Route.TemplateDetail(sideEffect.templateId))
             }
         }
     }
@@ -40,7 +40,7 @@ fun TemplateRoute(
     }
 
     val entries = entryProvider<NavKey> {
-        entry<GenesysScreen.Templates> {
+        entry<Route.Templates> {
             TemplateScreen(
                 state = state,
                 onRetry = { viewModel.onEvent(MainEvent.LoadTemplates) },
@@ -51,14 +51,10 @@ fun TemplateRoute(
             )
         }
 
-        entry<GenesysScreen.TemplateDetail> { destination ->
-            TemplateDetailRoute(
+        entry<Route.TemplateDetail> { destination ->
+            TemplateDetailScreen(
                 templateId = destination.templateId,
-                onBack = {
-                    if (backStack.last() != GenesysScreen.Templates) {
-                        navigator.popBackStack()
-                    }
-                },
+                onBack = navigator::popIfPossible,
                 modifier = modifier
             )
         }
@@ -66,11 +62,7 @@ fun TemplateRoute(
 
     NavDisplay(
         backStack = backStack,
-        onBack = {
-            if (backStack.last() != GenesysScreen.Templates) {
-                navigator.popBackStack()
-            }
-        },
+        onBack = navigator::popIfPossible,
         entryProvider = entries,
         modifier = modifier
     )

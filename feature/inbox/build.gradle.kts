@@ -12,6 +12,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:navigation"))
     implementation(deps.orbitViewmodel)
     implementation(deps.orbitCompose)
 }

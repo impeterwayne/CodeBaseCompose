@@ -14,9 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.genesys.core.designsystem.theme.GenesysTheme
+import androidx.compose.ui.semantics.Role
+import com.genesys.core.designsystem.theme.AppTheme
 
-enum class GenesysPanelTone {
+enum class AppPanelTone {
     Frame,
     Raised,
     Heavy,
@@ -26,52 +27,54 @@ enum class GenesysPanelTone {
 }
 
 @Composable
-fun GenesysPanel(
+fun AppPanel(
     modifier: Modifier = Modifier,
-    tone: GenesysPanelTone = GenesysPanelTone.Raised,
+    tone: AppPanelTone = AppPanelTone.Raised,
     contentPadding: PaddingValues? = null,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     onClick: (() -> Unit)? = null,
+    onClickLabel: String? = null,
+    role: Role? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val colors = GenesysTheme.colorScheme
-    val strokes = GenesysTheme.strokes
-    val shape = GenesysTheme.shapes.medium
-    val resolvedContentPadding = contentPadding ?: PaddingValues(GenesysTheme.spacing.md)
+    val colors = AppTheme.colorScheme
+    val strokes = AppTheme.strokes
+    val shape = AppTheme.shapes.medium
+    val resolvedContentPadding = contentPadding ?: PaddingValues(AppTheme.spacing.md)
     val interactionSource = remember { MutableInteractionSource() }
     val backgroundColor: Color
     val borderColor: Color
     val borderWidth = when (tone) {
-        GenesysPanelTone.Frame -> strokes.thin
-        GenesysPanelTone.Raised -> strokes.thin
-        GenesysPanelTone.Heavy -> strokes.medium
-        GenesysPanelTone.Error -> strokes.thin
-        GenesysPanelTone.Warning -> strokes.thin
-        GenesysPanelTone.Success -> strokes.thin
+        AppPanelTone.Frame -> strokes.thin
+        AppPanelTone.Raised -> strokes.thin
+        AppPanelTone.Heavy -> strokes.medium
+        AppPanelTone.Error -> strokes.thin
+        AppPanelTone.Warning -> strokes.thin
+        AppPanelTone.Success -> strokes.thin
     }
 
     when (tone) {
-        GenesysPanelTone.Frame -> {
+        AppPanelTone.Frame -> {
             backgroundColor = colors.colorBgContainer
             borderColor = colors.colorBorderSecondary
         }
-        GenesysPanelTone.Raised -> {
+        AppPanelTone.Raised -> {
             backgroundColor = colors.colorBgContainer
             borderColor = colors.colorBorder
         }
-        GenesysPanelTone.Heavy -> {
+        AppPanelTone.Heavy -> {
             backgroundColor = colors.colorPrimary
             borderColor = colors.colorPrimary
         }
-        GenesysPanelTone.Error -> {
+        AppPanelTone.Error -> {
             backgroundColor = colors.colorBgElevated
             borderColor = colors.colorError
         }
-        GenesysPanelTone.Warning -> {
+        AppPanelTone.Warning -> {
             backgroundColor = colors.colorBgElevated
             borderColor = colors.colorWarning
         }
-        GenesysPanelTone.Success -> {
+        AppPanelTone.Success -> {
             backgroundColor = colors.colorBgElevated
             borderColor = colors.colorSuccess
         }
@@ -87,6 +90,8 @@ fun GenesysPanel(
                     Modifier.clickable(
                         interactionSource = interactionSource,
                         indication = null,
+                        onClickLabel = onClickLabel,
+                        role = role,
                         onClick = onClick
                     )
                 } else {

@@ -1,0 +1,12 @@
+<resources>
+    <string name="template_error_generic">Something went wrong</string>
+    <string name="template_count">%1$d templates</string>
+    <string name="template_premium_label">Premium template</string>
+    <string name="template_standard_label">Template</string>
+    <string name="template_premium_chip">Premium</string>
+    <string name="template_standard_chip">Standard</string>
+    <string name="template_detail_back">Back to templates</string>
+    <string name="template_detail_title">Template detail</string>
+    <string name="template_open_label">Open template</string>
+    <string name="template_back_label">Back to templates</string>
+</resources>

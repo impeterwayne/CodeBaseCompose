@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data class GenesysSpacing(
+data class AppSpacing(
     val xxs: Dp,
     val xs: Dp,
     val sm: Dp,
@@ -16,7 +16,7 @@ data class GenesysSpacing(
     val xxl: Dp
 )
 
-internal val defaultSpacing = GenesysSpacing(
+internal val defaultSpacing = AppSpacing(
     xxs = 4.dp,
     xs = 8.dp,
     sm = 12.dp,
@@ -26,4 +26,4 @@ internal val defaultSpacing = GenesysSpacing(
     xxl = 40.dp
 )
 
-internal val LocalGenesysSpacing = staticCompositionLocalOf { defaultSpacing }
+internal val LocalAppSpacing = staticCompositionLocalOf { defaultSpacing }

@@ -11,17 +11,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.genesys.core.designsystem.component.GenesysChip
-import com.genesys.core.designsystem.component.GenesysPageFrame
-import com.genesys.core.designsystem.component.GenesysPanel
-import com.genesys.core.designsystem.component.GenesysPanelTone
-import com.genesys.core.designsystem.component.GenesysPrimaryButton
-import com.genesys.core.designsystem.component.GenesysSectionHeader
-import com.genesys.core.designsystem.component.GenesysSecondaryButton
-import com.genesys.core.designsystem.component.GenesysText
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.feature.projects.R
+import com.genesys.core.designsystem.component.AppChip
+import com.genesys.core.designsystem.component.AppPageFrame
+import com.genesys.core.designsystem.component.AppPanel
+import com.genesys.core.designsystem.component.AppPanelTone
+import com.genesys.core.designsystem.component.AppPrimaryButton
+import com.genesys.core.designsystem.component.AppSectionHeader
+import com.genesys.core.designsystem.component.AppSecondaryButton
+import com.genesys.core.designsystem.component.AppText
+import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.projects.ProjectMetric
 import com.genesys.core.model.projects.ProjectOverview
 
@@ -65,23 +67,23 @@ private val projectOverviews = listOf(
 fun ProjectsScreen(
     modifier: Modifier = Modifier
 ) {
-    GenesysPageFrame(
+    AppPageFrame(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(0.dp)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(GenesysTheme.spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.lg)
+            contentPadding = PaddingValues(AppTheme.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg)
         ) {
             item {
                 ProjectsHero()
             }
 
             item {
-                GenesysSectionHeader(
-                    title = "Current work",
-                    subtitle = "Projects"
+                AppSectionHeader(
+                    title = stringResource(R.string.projects_current_work_title),
+                    subtitle = stringResource(R.string.projects_current_work_subtitle)
                 )
             }
 
@@ -97,29 +99,29 @@ fun ProjectsScreen(
 
 @Composable
 private fun ProjectsHero() {
-    GenesysPanel(
-        tone = GenesysPanelTone.Heavy
+    AppPanel(
+        tone = AppPanelTone.Heavy
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.md)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
             ) {
-                GenesysText(
-                    text = "Projects",
-                    style = GenesysTheme.typography.headlineSmall,
-                    color = GenesysTheme.colorScheme.colorTextOnPrimary
+                AppText(
+                    text = stringResource(R.string.projects_title),
+                    style = AppTheme.typography.headlineSmall,
+                    color = AppTheme.colorScheme.colorTextOnPrimary
                 )
-                GenesysText(
-                    text = "Three delivery lanes have pending milestones this week.",
-                    style = GenesysTheme.typography.bodyLarge,
-                    color = GenesysTheme.colorScheme.colorTextOnPrimary
+                AppText(
+                    text = stringResource(R.string.projects_hero_message),
+                    style = AppTheme.typography.bodyLarge,
+                    color = AppTheme.colorScheme.colorTextOnPrimary
                 )
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
                 projectMetrics.forEach { metric ->
                     MetricCard(
@@ -131,17 +133,19 @@ private fun ProjectsHero() {
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
-                GenesysPrimaryButton(
-                    text = "Create brief",
+                AppPrimaryButton(
+                    text = stringResource(R.string.projects_create_brief_unavailable),
                     onClick = {},
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = false
                 )
-                GenesysSecondaryButton(
-                    text = "View calendar",
+                AppSecondaryButton(
+                    text = stringResource(R.string.projects_calendar_unavailable),
                     onClick = {},
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = false
                 )
             }
         }
@@ -154,21 +158,21 @@ private fun MetricCard(
     value: String,
     modifier: Modifier = Modifier
 ) {
-    GenesysPanel(
+    AppPanel(
         modifier = modifier,
-        tone = GenesysPanelTone.Frame
+        tone = AppPanelTone.Frame
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
         ) {
-            GenesysText(
+            AppText(
                 text = value,
-                style = GenesysTheme.typography.headlineSmall
+                style = AppTheme.typography.headlineSmall
             )
-            GenesysText(
+            AppText(
                 text = label,
-                style = GenesysTheme.typography.labelMedium,
-                color = GenesysTheme.colorScheme.colorBorder
+                style = AppTheme.typography.labelMedium,
+                color = AppTheme.colorScheme.colorBorder
             )
         }
     }
@@ -178,56 +182,57 @@ private fun MetricCard(
 private fun ProjectCard(
     project: ProjectOverview
 ) {
-    GenesysPanel(
-        tone = GenesysPanelTone.Raised
+    AppPanel(
+        tone = AppPanelTone.Raised
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.md)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+                    verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
                 ) {
-                    GenesysText(
+                    AppText(
                         text = project.name,
-                        style = GenesysTheme.typography.titleLarge,
+                        style = AppTheme.typography.titleLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    GenesysText(
+                    AppText(
                         text = "${project.stage} • ${project.dueDate}",
-                        style = GenesysTheme.typography.labelMedium,
-                        color = GenesysTheme.colorScheme.colorBorder
+                        style = AppTheme.typography.labelMedium,
+                        color = AppTheme.colorScheme.colorBorder
                     )
                 }
 
-                GenesysChip(
+                AppChip(
                     text = project.riskLabel,
                     selected = project.highlighted
                 )
             }
 
-            GenesysText(
+            AppText(
                 text = project.summary,
-                style = GenesysTheme.typography.bodyLarge
+                style = AppTheme.typography.bodyLarge
             )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                GenesysText(
+                AppText(
                     text = project.lead,
-                    style = GenesysTheme.typography.labelMedium,
-                    color = GenesysTheme.colorScheme.colorBorder
+                    style = AppTheme.typography.labelMedium,
+                    color = AppTheme.colorScheme.colorBorder
                 )
-                GenesysText(
-                    text = "Open board",
-                    style = GenesysTheme.typography.labelMedium
+                AppText(
+                    text = stringResource(R.string.projects_current_work_subtitle),
+                    style = AppTheme.typography.labelMedium,
+                    color = AppTheme.colorScheme.colorBorder
                 )
             }
         }

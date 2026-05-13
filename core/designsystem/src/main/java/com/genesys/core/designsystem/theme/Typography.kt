@@ -11,7 +11,7 @@ private val EditorialFontFamily = FontFamily.Serif
 private val UtilityFontFamily = FontFamily.SansSerif
 
 @Immutable
-data class GenesysTypography(
+data class AppTypography(
     val displayLarge: TextStyle,
     val displayMedium: TextStyle,
     val displaySmall: TextStyle,
@@ -29,7 +29,7 @@ data class GenesysTypography(
     val labelSmall: TextStyle
 )
 
-internal val defaultTypography = GenesysTypography(
+internal val defaultTypography = AppTypography(
     displayLarge = TextStyle(
         fontFamily = EditorialFontFamily,
         fontWeight = FontWeight.Normal,
@@ -131,4 +131,4 @@ internal val defaultTypography = GenesysTypography(
     )
 )
 
-internal val LocalGenesysTypography = staticCompositionLocalOf { defaultTypography }
+internal val LocalAppTypography = staticCompositionLocalOf { defaultTypography }

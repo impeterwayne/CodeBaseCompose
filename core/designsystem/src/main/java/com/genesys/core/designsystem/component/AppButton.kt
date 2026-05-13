@@ -11,75 +11,86 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.genesys.core.designsystem.theme.GenesysTheme
+import androidx.compose.ui.semantics.Role
+import com.genesys.core.designsystem.theme.AppTheme
 import java.util.Locale
 
 @Composable
-fun GenesysPrimaryButton(
+fun AppPrimaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues? = null
+    contentPadding: PaddingValues? = null,
+    enabled: Boolean = true,
+    onClickLabel: String? = text
 ) {
-    val colors = GenesysTheme.colorScheme
+    val colors = AppTheme.colorScheme
     val resolvedContentPadding = contentPadding ?: PaddingValues(
-        horizontal = GenesysTheme.spacing.lg,
-        vertical = GenesysTheme.spacing.sm
+        horizontal = AppTheme.spacing.lg,
+        vertical = AppTheme.spacing.sm
     )
     val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = modifier
-            .clip(GenesysTheme.shapes.medium)
+            .clip(AppTheme.shapes.medium)
             .background(colors.colorPrimary)
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
+                enabled = enabled,
+                onClickLabel = onClickLabel,
+                role = Role.Button,
                 onClick = onClick
             )
             .padding(resolvedContentPadding)
     ) {
-        GenesysText(
+        AppText(
             text = text.uppercase(Locale.ROOT),
-            style = GenesysTheme.typography.labelLarge,
+            style = AppTheme.typography.labelLarge,
             color = colors.colorTextOnPrimary
         )
     }
 }
 
 @Composable
-fun GenesysSecondaryButton(
+fun AppSecondaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues? = null
+    contentPadding: PaddingValues? = null,
+    enabled: Boolean = true,
+    onClickLabel: String? = text
 ) {
-    val colors = GenesysTheme.colorScheme
+    val colors = AppTheme.colorScheme
     val resolvedContentPadding = contentPadding ?: PaddingValues(
-        horizontal = GenesysTheme.spacing.lg,
-        vertical = GenesysTheme.spacing.sm
+        horizontal = AppTheme.spacing.lg,
+        vertical = AppTheme.spacing.sm
     )
     val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = modifier
-            .clip(GenesysTheme.shapes.medium)
+            .clip(AppTheme.shapes.medium)
             .background(colors.colorBgContainer)
             .border(
-                width = GenesysTheme.strokes.medium,
+                width = AppTheme.strokes.medium,
                 color = colors.colorPrimary,
-                shape = GenesysTheme.shapes.medium
+                shape = AppTheme.shapes.medium
             )
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
+                enabled = enabled,
+                onClickLabel = onClickLabel,
+                role = Role.Button,
                 onClick = onClick
             )
             .padding(resolvedContentPadding)
     ) {
-        GenesysText(
+        AppText(
             text = text.uppercase(Locale.ROOT),
-            style = GenesysTheme.typography.labelLarge,
+            style = AppTheme.typography.labelLarge,
             color = colors.colorPrimary
         )
     }

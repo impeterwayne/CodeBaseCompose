@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GenesysCompose</string>
+    <string name="app_name">AppCompose</string>
     <string name="nav_templates">Templates</string>
     <string name="nav_badge_templates">TM</string>
     <string name="nav_projects">Projects</string>
@@ -8,4 +8,36 @@
     <string name="nav_badge_inbox">IN</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_badge_settings">ST</string>
+    <string name="template_error_generic">Something went wrong</string>
+    <string name="template_count">%1$d templates</string>
+    <string name="template_premium_label">Premium template</string>
+    <string name="template_standard_label">Template</string>
+    <string name="template_premium_chip">Premium</string>
+    <string name="template_standard_chip">Standard</string>
+    <string name="template_detail_back">Back to templates</string>
+    <string name="template_detail_title">Template detail</string>
+    <string name="template_open_label">Open template</string>
+    <string name="template_back_label">Back to templates</string>
+    <string name="projects_current_work_title">Current work</string>
+    <string name="projects_current_work_subtitle">Projects</string>
+    <string name="projects_title">Projects</string>
+    <string name="projects_hero_message">Three delivery lanes have pending milestones this week.</string>
+    <string name="projects_create_brief_unavailable">Brief creation unavailable</string>
+    <string name="projects_calendar_unavailable">Calendar unavailable</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_hero_message">Workspace controls are stable. One security change is queued for rollout this week.</string>
+    <string name="settings_workspace_live">Workspace live</string>
+    <string name="settings_2fa_enforced">2FA enforced</string>
+    <string name="settings_manage_team_unavailable">Team management unavailable</string>
+    <string name="settings_export_policy_unavailable">Policy export unavailable</string>
+    <string name="settings_edit_unavailable">Preference editing unavailable</string>
+    <string name="inbox_title">Inbox</string>
+    <string name="inbox_open_queue">Open queue</string>
+    <string name="inbox_mark_all_read">Mark all read</string>
+    <string name="inbox_all_read">All read</string>
+    <string name="inbox_no_threads">No threads in %1$s</string>
+    <string name="inbox_empty_message">Switch filters or wait for the next message batch to land.</string>
+    <string name="inbox_unread">Unread</string>
+    <string name="inbox_read">Read</string>
+    <string name="inbox_select_filter_label">Select filter</string>
 </resources>

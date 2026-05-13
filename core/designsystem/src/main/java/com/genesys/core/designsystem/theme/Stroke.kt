@@ -6,16 +6,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data class GenesysStrokes(
+data class AppStrokes(
     val thin: Dp,
     val medium: Dp,
     val thick: Dp
 )
 
-internal val defaultStrokes = GenesysStrokes(
+internal val defaultStrokes = AppStrokes(
     thin = 1.dp,
     medium = 2.dp,
     thick = 3.dp
 )
 
-internal val LocalGenesysStrokes = staticCompositionLocalOf { defaultStrokes }
+internal val LocalAppStrokes = staticCompositionLocalOf { defaultStrokes }

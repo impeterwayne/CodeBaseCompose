@@ -6,10 +6,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.core.designsystem.theme.AppTheme
 
 @Composable
-fun GenesysText(
+fun AppText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle? = null,
@@ -17,8 +17,8 @@ fun GenesysText(
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip
 ) {
-    val resolvedStyle = style ?: GenesysTheme.typography.bodyLarge
-    val resolvedColor = color ?: GenesysTheme.colorScheme.colorText
+    val resolvedStyle = style ?: AppTheme.typography.bodyLarge
+    val resolvedColor = color ?: AppTheme.colorScheme.colorText
 
     BasicText(
         text = text,

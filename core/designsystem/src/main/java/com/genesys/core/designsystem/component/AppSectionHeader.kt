@@ -5,31 +5,31 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.core.designsystem.theme.AppTheme
 import java.util.Locale
 
 @Composable
-fun GenesysSectionHeader(
+fun AppSectionHeader(
     title: String,
     subtitle: String? = null,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
     ) {
         subtitle?.let {
-            GenesysText(
+            AppText(
                 text = it.uppercase(Locale.ROOT),
-                style = GenesysTheme.typography.labelMedium,
-                color = GenesysTheme.colorScheme.colorBorder
+                style = AppTheme.typography.labelMedium,
+                color = AppTheme.colorScheme.colorBorder
             )
         }
-        GenesysText(
+        AppText(
             text = title,
-            style = GenesysTheme.typography.headlineSmall,
-            color = GenesysTheme.colorScheme.colorText
+            style = AppTheme.typography.headlineSmall,
+            color = AppTheme.colorScheme.colorText
         )
-        GenesysDivider()
+        AppDivider()
     }
 }

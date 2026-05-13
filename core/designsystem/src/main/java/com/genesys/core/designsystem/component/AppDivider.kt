@@ -8,16 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.core.designsystem.theme.AppTheme
 
 @Composable
-fun GenesysDivider(
+fun AppDivider(
     modifier: Modifier = Modifier,
     color: Color? = null,
     thickness: Dp? = null
 ) {
-    val resolvedColor = color ?: GenesysTheme.colorScheme.colorBorderSecondary
-    val resolvedThickness = thickness ?: GenesysTheme.strokes.thin
+    val resolvedColor = color ?: AppTheme.colorScheme.colorBorderSecondary
+    val resolvedThickness = thickness ?: AppTheme.strokes.thin
 
     Box(
         modifier = modifier

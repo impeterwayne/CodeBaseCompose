@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 
 @Immutable
-data class GenesysShapes(
+data class AppShapes(
     val extraSmall: Shape,
     val small: Shape,
     val medium: Shape,
@@ -22,7 +22,7 @@ data class GenesysShapes(
     val extraLarge: Shape
 )
 
-internal val defaultShapes = GenesysShapes(
+internal val defaultShapes = AppShapes(
     extraSmall = RoundedCornerShape(0.dp),
     small = RoundedCornerShape(0.dp),
     medium = RoundedCornerShape(0.dp),
@@ -30,23 +30,23 @@ internal val defaultShapes = GenesysShapes(
     extraLarge = RoundedCornerShape(0.dp)
 )
 
-internal val LocalGenesysShapes = staticCompositionLocalOf { defaultShapes }
+internal val LocalAppShapes = staticCompositionLocalOf { defaultShapes }
 
-object GenesysTheme {
+object AppTheme {
     val colorScheme: AppColorScheme
         @Composable get() = LocalAppColorScheme.current
-    val typography: GenesysTypography
-        @Composable get() = LocalGenesysTypography.current
-    val shapes: GenesysShapes
-        @Composable get() = LocalGenesysShapes.current
-    val spacing: GenesysSpacing
-        @Composable get() = LocalGenesysSpacing.current
-    val strokes: GenesysStrokes
-        @Composable get() = LocalGenesysStrokes.current
+    val typography: AppTypography
+        @Composable get() = LocalAppTypography.current
+    val shapes: AppShapes
+        @Composable get() = LocalAppShapes.current
+    val spacing: AppSpacing
+        @Composable get() = LocalAppSpacing.current
+    val strokes: AppStrokes
+        @Composable get() = LocalAppStrokes.current
 }
 
 @Composable
-fun GenesysTheme(
+fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -62,10 +62,10 @@ fun GenesysTheme(
 
     CompositionLocalProvider(
         LocalAppColorScheme provides colorScheme,
-        LocalGenesysTypography provides defaultTypography,
-        LocalGenesysShapes provides defaultShapes,
-        LocalGenesysSpacing provides defaultSpacing,
-        LocalGenesysStrokes provides defaultStrokes,
+        LocalAppTypography provides defaultTypography,
+        LocalAppShapes provides defaultShapes,
+        LocalAppSpacing provides defaultSpacing,
+        LocalAppStrokes provides defaultStrokes,
         content = content
     )
 }

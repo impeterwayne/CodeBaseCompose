@@ -1,6 +1,5 @@
 package com.genesys.feature.inbox.presentation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,17 +10,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.genesys.core.designsystem.component.GenesysChip
-import com.genesys.core.designsystem.component.GenesysPageFrame
-import com.genesys.core.designsystem.component.GenesysPanel
-import com.genesys.core.designsystem.component.GenesysPanelTone
-import com.genesys.core.designsystem.component.GenesysPrimaryButton
-import com.genesys.core.designsystem.component.GenesysSectionHeader
-import com.genesys.core.designsystem.component.GenesysSecondaryButton
-import com.genesys.core.designsystem.component.GenesysText
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.feature.inbox.R
+import com.genesys.core.designsystem.component.AppChip
+import com.genesys.core.designsystem.component.AppPageFrame
+import com.genesys.core.designsystem.component.AppPanel
+import com.genesys.core.designsystem.component.AppPanelTone
+import com.genesys.core.designsystem.component.AppPrimaryButton
+import com.genesys.core.designsystem.component.AppSectionHeader
+import com.genesys.core.designsystem.component.AppSecondaryButton
+import com.genesys.core.designsystem.component.AppText
+import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.inbox.InboxFilter
 import com.genesys.core.model.inbox.InboxThreadUiModel
 
@@ -31,14 +33,14 @@ fun InboxScreen(
     onAction: (InboxAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    GenesysPageFrame(
+    AppPageFrame(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(0.dp)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(GenesysTheme.spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.lg)
+            contentPadding = PaddingValues(AppTheme.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg)
         ) {
             item {
                 InboxHero(
@@ -56,7 +58,7 @@ fun InboxScreen(
             } else {
                 state.visibleGroups.forEach { group ->
                     item(key = "${group.id}-header") {
-                        GenesysSectionHeader(
+                        AppSectionHeader(
                             title = group.title,
                             subtitle = group.subtitle
                         )
@@ -79,51 +81,55 @@ private fun InboxHero(
     state: InboxUiState,
     onAction: (InboxAction) -> Unit
 ) {
-    GenesysPanel(
-        tone = GenesysPanelTone.Heavy
+    AppPanel(
+        tone = AppPanelTone.Heavy
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.md)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
             ) {
-                GenesysText(
-                    text = "Inbox",
-                    style = GenesysTheme.typography.headlineSmall,
-                    color = GenesysTheme.colorScheme.colorTextOnPrimary
+                AppText(
+                    text = stringResource(R.string.inbox_title),
+                    style = AppTheme.typography.headlineSmall,
+                    color = AppTheme.colorScheme.colorTextOnPrimary
                 )
-                GenesysText(
+                AppText(
                     text = state.heroMessage,
-                    style = GenesysTheme.typography.bodyLarge,
-                    color = GenesysTheme.colorScheme.colorTextOnPrimary
+                    style = AppTheme.typography.bodyLarge,
+                    color = AppTheme.colorScheme.colorTextOnPrimary
                 )
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
                 InboxFilter.entries.forEach { filter ->
-                    GenesysChip(
+                    AppChip(
                         text = filter.label,
                         selected = filter == state.selectedFilter,
-                        modifier = Modifier.clickable {
-                            onAction(InboxAction.SelectFilter(filter))
-                        }
+                        onClick = { onAction(InboxAction.SelectFilter(filter)) },
+                        onClickLabel = stringResource(R.string.inbox_select_filter_label),
+                        role = Role.Tab
                     )
                 }
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
-                GenesysPrimaryButton(
-                    text = "Open queue",
+                AppPrimaryButton(
+                    text = stringResource(R.string.inbox_open_queue),
                     onClick = { onAction(InboxAction.FocusPriorityQueue) },
                     modifier = Modifier.weight(1f)
                 )
-                GenesysSecondaryButton(
-                    text = if (state.totalUnreadCount > 0) "Mark all read" else "All read",
+                AppSecondaryButton(
+                    text = if (state.totalUnreadCount > 0) {
+                        stringResource(R.string.inbox_mark_all_read)
+                    } else {
+                        stringResource(R.string.inbox_all_read)
+                    },
                     onClick = { onAction(InboxAction.MarkAllRead) },
                     modifier = Modifier.weight(1f)
                 )
@@ -136,20 +142,20 @@ private fun InboxHero(
 private fun InboxEmptyState(
     selectedFilter: InboxFilter
 ) {
-    GenesysPanel(
-        tone = GenesysPanelTone.Frame
+    AppPanel(
+        tone = AppPanelTone.Frame
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
         ) {
-            GenesysText(
-                text = "No threads in ${selectedFilter.label.lowercase()}",
-                style = GenesysTheme.typography.titleLarge
+            AppText(
+                text = stringResource(R.string.inbox_no_threads, selectedFilter.label.lowercase()),
+                style = AppTheme.typography.titleLarge
             )
-            GenesysText(
-                text = "Switch filters or wait for the next message batch to land.",
-                style = GenesysTheme.typography.bodyLarge,
-                color = GenesysTheme.colorScheme.colorBorder
+            AppText(
+                text = stringResource(R.string.inbox_empty_message),
+                style = AppTheme.typography.bodyLarge,
+                color = AppTheme.colorScheme.colorBorder
             )
         }
     }
@@ -159,48 +165,52 @@ private fun InboxEmptyState(
 private fun InboxThreadCard(
     thread: InboxThreadUiModel
 ) {
-    GenesysPanel(
-        tone = GenesysPanelTone.Raised
+    AppPanel(
+        tone = AppPanelTone.Raised
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                GenesysText(
+                AppText(
                     text = thread.sender,
-                    style = GenesysTheme.typography.labelLarge
+                    style = AppTheme.typography.labelLarge
                 )
-                GenesysText(
+                AppText(
                     text = thread.time,
-                    style = GenesysTheme.typography.labelMedium,
-                    color = GenesysTheme.colorScheme.colorBorder
+                    style = AppTheme.typography.labelMedium,
+                    color = AppTheme.colorScheme.colorBorder
                 )
             }
 
-            GenesysText(
+            AppText(
                 text = thread.subject,
-                style = GenesysTheme.typography.titleLarge,
+                style = AppTheme.typography.titleLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
-            GenesysText(
+            AppText(
                 text = thread.preview,
-                style = GenesysTheme.typography.bodyLarge
+                style = AppTheme.typography.bodyLarge
             )
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
-                GenesysChip(
+                AppChip(
                     text = thread.category,
                     selected = thread.unread
                 )
-                GenesysChip(
-                    text = if (thread.unread) "Unread" else "Read",
+                AppChip(
+                    text = if (thread.unread) {
+                        stringResource(R.string.inbox_unread)
+                    } else {
+                        stringResource(R.string.inbox_read)
+                    },
                     selected = thread.unread
                 )
             }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.core.designsystem.theme.AppTheme
 import java.util.Locale
 
 @Composable
@@ -19,20 +19,20 @@ fun LoadingIndicator(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        GenesysPanel(
+        AppPanel(
             modifier = Modifier.fillMaxWidth(0.72f),
-            tone = GenesysPanelTone.Frame,
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+            tone = AppPanelTone.Frame,
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
-            GenesysText(
+            AppText(
                 text = title.uppercase(Locale.ROOT),
-                style = GenesysTheme.typography.labelLarge,
-                color = GenesysTheme.colorScheme.colorPrimary
+                style = AppTheme.typography.labelLarge,
+                color = AppTheme.colorScheme.colorPrimary
             )
-            GenesysDivider()
-            GenesysText(
+            AppDivider()
+            AppText(
                 text = message,
-                style = GenesysTheme.typography.bodyLarge
+                style = AppTheme.typography.bodyLarge
             )
         }
     }

@@ -87,6 +87,7 @@ dependencies {
 
     // ImmersionBar
     implementation(deps.immersionbar)
+    implementation(deps.immersionbarComponents)
     implementation(deps.immersionbarKtx)
 
     // MMKV

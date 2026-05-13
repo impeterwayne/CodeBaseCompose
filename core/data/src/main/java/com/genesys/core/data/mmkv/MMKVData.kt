@@ -14,7 +14,7 @@ object MMKVData {
         }
 
     object MyMMKV {
-        private const val STORAGE_ID = "genesys_mmkv"
+        private const val STORAGE_ID = "app_mmkv"
         private val storage by lazy { MMKV.mmkvWithID(STORAGE_ID) }
 
         fun init(context: Context) {

@@ -11,17 +11,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.genesys.core.designsystem.component.GenesysChip
-import com.genesys.core.designsystem.component.GenesysPageFrame
-import com.genesys.core.designsystem.component.GenesysPanel
-import com.genesys.core.designsystem.component.GenesysPanelTone
-import com.genesys.core.designsystem.component.GenesysPrimaryButton
-import com.genesys.core.designsystem.component.GenesysSectionHeader
-import com.genesys.core.designsystem.component.GenesysSecondaryButton
-import com.genesys.core.designsystem.component.GenesysText
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.feature.settings.R
+import com.genesys.core.designsystem.component.AppChip
+import com.genesys.core.designsystem.component.AppPageFrame
+import com.genesys.core.designsystem.component.AppPanel
+import com.genesys.core.designsystem.component.AppPanelTone
+import com.genesys.core.designsystem.component.AppPrimaryButton
+import com.genesys.core.designsystem.component.AppSectionHeader
+import com.genesys.core.designsystem.component.AppSecondaryButton
+import com.genesys.core.designsystem.component.AppText
+import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.settings.SettingGroup
 import com.genesys.core.model.settings.SettingItem
 
@@ -86,14 +88,14 @@ private val settingGroups = listOf(
 fun SettingsScreen(
     modifier: Modifier = Modifier
 ) {
-    GenesysPageFrame(
+    AppPageFrame(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(0.dp)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(GenesysTheme.spacing.lg),
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.lg)
+            contentPadding = PaddingValues(AppTheme.spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.lg)
         ) {
             item {
                 SettingsHero()
@@ -101,7 +103,7 @@ fun SettingsScreen(
 
             settingGroups.forEach { group ->
                 item {
-                    GenesysSectionHeader(
+                    AppSectionHeader(
                         title = group.title,
                         subtitle = group.subtitle
                     )
@@ -120,46 +122,48 @@ fun SettingsScreen(
 
 @Composable
 private fun SettingsHero() {
-    GenesysPanel(
-        tone = GenesysPanelTone.Heavy
+    AppPanel(
+        tone = AppPanelTone.Heavy
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.md)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
             ) {
-                GenesysText(
-                    text = "Settings",
-                    style = GenesysTheme.typography.headlineSmall,
-                    color = GenesysTheme.colorScheme.colorTextOnPrimary
+                AppText(
+                    text = stringResource(R.string.settings_title),
+                    style = AppTheme.typography.headlineSmall,
+                    color = AppTheme.colorScheme.colorTextOnPrimary
                 )
-                GenesysText(
-                    text = "Workspace controls are stable. One security change is queued for rollout this week.",
-                    style = GenesysTheme.typography.bodyLarge,
-                    color = GenesysTheme.colorScheme.colorTextOnPrimary
+                AppText(
+                    text = stringResource(R.string.settings_hero_message),
+                    style = AppTheme.typography.bodyLarge,
+                    color = AppTheme.colorScheme.colorTextOnPrimary
                 )
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
-                GenesysChip(text = "Workspace live", selected = true)
-                GenesysChip(text = "2FA enforced", selected = false)
+                AppChip(text = stringResource(R.string.settings_workspace_live), selected = true)
+                AppChip(text = stringResource(R.string.settings_2fa_enforced), selected = false)
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
-                GenesysPrimaryButton(
-                    text = "Manage team",
+                AppPrimaryButton(
+                    text = stringResource(R.string.settings_manage_team_unavailable),
                     onClick = {},
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = false
                 )
-                GenesysSecondaryButton(
-                    text = "Export policy",
+                AppSecondaryButton(
+                    text = stringResource(R.string.settings_export_policy_unavailable),
                     onClick = {},
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = false
                 )
             }
         }
@@ -170,42 +174,42 @@ private fun SettingsHero() {
 private fun SettingCard(
     setting: SettingItem
 ) {
-    GenesysPanel(
-        tone = if (setting.highlighted) GenesysPanelTone.Raised else GenesysPanelTone.Frame
+    AppPanel(
+        tone = if (setting.highlighted) AppPanelTone.Raised else AppPanelTone.Frame
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.sm)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.xs)
+                    verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
                 ) {
-                    GenesysText(
+                    AppText(
                         text = setting.title,
-                        style = GenesysTheme.typography.titleLarge,
+                        style = AppTheme.typography.titleLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    GenesysText(
+                    AppText(
                         text = setting.description,
-                        style = GenesysTheme.typography.bodyLarge
+                        style = AppTheme.typography.bodyLarge
                     )
                 }
 
-                GenesysChip(
+                AppChip(
                     text = setting.value,
                     selected = setting.highlighted
                 )
             }
 
-            GenesysText(
-                text = "Edit preference",
-                style = GenesysTheme.typography.labelMedium,
-                color = GenesysTheme.colorScheme.colorBorder
+            AppText(
+                text = stringResource(R.string.settings_edit_unavailable),
+                style = AppTheme.typography.labelMedium,
+                color = AppTheme.colorScheme.colorBorder
             )
         }
     }

@@ -1,0 +1,9 @@
+<resources>
+    <string name="settings_title">Settings</string>
+    <string name="settings_hero_message">Workspace controls are stable. One security change is queued for rollout this week.</string>
+    <string name="settings_workspace_live">Workspace live</string>
+    <string name="settings_2fa_enforced">2FA enforced</string>
+    <string name="settings_manage_team_unavailable">Team management unavailable</string>
+    <string name="settings_export_policy_unavailable">Policy export unavailable</string>
+    <string name="settings_edit_unavailable">Preference editing unavailable</string>
+</resources>

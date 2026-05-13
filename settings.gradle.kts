@@ -24,7 +24,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GenesysCompose"
+rootProject.name = "Compose Template"
 
 include(":app")
 

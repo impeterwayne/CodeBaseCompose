@@ -5,26 +5,26 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-sealed interface GenesysScreen : NavKey, Parcelable {
+sealed interface Route : NavKey, Parcelable {
     @Serializable
     @Parcelize
-    data object Templates : GenesysScreen
+    data object Templates : Route
 
     @Serializable
     @Parcelize
     data class TemplateDetail(
         val templateId: String
-    ) : GenesysScreen
+    ) : Route
 
     @Serializable
     @Parcelize
-    data object Projects : GenesysScreen
+    data object Projects : Route
 
     @Serializable
     @Parcelize
-    data object Inbox : GenesysScreen
+    data object Inbox : Route
 
     @Serializable
     @Parcelize
-    data object Settings : GenesysScreen
+    data object Settings : Route
 }

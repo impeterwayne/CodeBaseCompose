@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.genesys.core.designsystem.theme.GenesysTheme
+import com.genesys.core.designsystem.theme.AppTheme
 
 @Composable
 fun ErrorState(
@@ -19,22 +19,22 @@ fun ErrorState(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        GenesysPanel(
+        AppPanel(
             modifier = Modifier.fillMaxWidth(0.78f),
-            tone = GenesysPanelTone.Error,
-            verticalArrangement = Arrangement.spacedBy(GenesysTheme.spacing.md)
+            tone = AppPanelTone.Error,
+            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
         ) {
-            GenesysText(
+            AppText(
                 text = "Archive Unavailable",
-                style = GenesysTheme.typography.titleLarge,
-                color = GenesysTheme.colorScheme.colorError
+                style = AppTheme.typography.titleLarge,
+                color = AppTheme.colorScheme.colorError
             )
-            GenesysDivider()
-            GenesysText(
+            AppDivider()
+            AppText(
                 text = message,
-                style = GenesysTheme.typography.bodyLarge
+                style = AppTheme.typography.bodyLarge
             )
-            GenesysSecondaryButton(
+            AppSecondaryButton(
                 text = retryText,
                 onClick = onRetry,
                 modifier = Modifier.align(Alignment.CenterHorizontally)

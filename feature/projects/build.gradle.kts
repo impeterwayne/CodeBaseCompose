@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.genesys.feature.projects"
 }
+
+dependencies {
+    implementation(project(":core:navigation"))
+}
