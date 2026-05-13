@@ -1,11 +1,8 @@
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.kotlin.dsl.the
 
 plugins {
     id("codebase.android.library")
 }
 
-val deps = the<LibrariesForLibs>()
 
 android {
     namespace = "com.genesys.core.common"
@@ -13,22 +10,22 @@ android {
 
 dependencies {
     // AndroidX
-    implementation(deps.androidxCoreKtx)
-    api(deps.androidxAppcompat)
-    implementation(deps.lifecycleViewmodelKtx)
+    implementation(libs.androidxCoreKtx)
+    api(libs.androidxAppcompat)
+    implementation(libs.lifecycleViewmodelKtx)
 
     // ImmersionBar
-    implementation(deps.immersionbar)
-    implementation(deps.immersionbarKtx)
-    implementation(deps.immersionbarComponents)
+    implementation(libs.immersionbar)
+    implementation(libs.immersionbarKtx)
+    implementation(libs.immersionbarComponents)
 
     // Coroutines
-    implementation(deps.kotlinxCoroutinesCore)
-    implementation(deps.kotlinxCoroutinesAndroid)
+    implementation(libs.kotlinxCoroutinesCore)
+    implementation(libs.kotlinxCoroutinesAndroid)
 
     // Gson (used by GsonExt)
-    implementation(deps.gson)
+    implementation(libs.gson)
 
     // Lifecycle runtime (used by FlowExt)
-    implementation(deps.androidxLifecycleRuntimeKtx)
+    implementation(libs.androidxLifecycleRuntimeKtx)
 }

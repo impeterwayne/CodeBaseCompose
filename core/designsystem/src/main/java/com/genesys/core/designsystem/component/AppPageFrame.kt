@@ -31,9 +31,9 @@ fun AppPageFrame(
                 .fillMaxSize()
                 .background(AppTheme.colorScheme.colorBgContainer)
                 .border(
-                    width = AppTheme.strokes.thin,
+                    width = AppTheme.strokes.stroke1,
                     color = AppTheme.colorScheme.colorBorderSecondary,
-                    shape = AppTheme.shapes.large
+                    shape = AppTheme.shapes.shape8
                 )
                 .padding(resolvedContentPadding),
             content = content

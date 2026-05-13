@@ -1,5 +1,3 @@
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.kotlin.dsl.the
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -10,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlinParcelize)
 }
 
-val deps = the<LibrariesForLibs>()
+
 
 android {
     namespace = "com.genesys.codebase"
@@ -65,39 +63,39 @@ dependencies {
     implementation(project(":feature:settings"))
 
     // AndroidX
-    implementation(deps.androidxCoreKtx)
-    implementation(deps.androidxStartupRuntime)
-    implementation(deps.androidxMultidex)
+    implementation(libs.androidxCoreKtx)
+    implementation(libs.androidxStartupRuntime)
+    implementation(libs.androidxMultidex)
 
     // Compose
-    implementation(platform(deps.composeBom))
-    implementation(deps.composeFoundation)
-    implementation(deps.composeUi)
-    implementation(deps.composeUiGraphics)
-    implementation(deps.composeUiToolingPreview)
-    implementation(deps.activityCompose)
+    implementation(platform(libs.composeBom))
+    implementation(libs.composeFoundation)
+    implementation(libs.composeUi)
+    implementation(libs.composeUiGraphics)
+    implementation(libs.composeUiToolingPreview)
+    implementation(libs.activityCompose)
     implementation(project(":core:navigation"))
-    implementation(deps.hiltNavigationCompose)
-    implementation(deps.androidxLifecycleRuntimeCompose)
-    debugImplementation(deps.composeUiTooling)
+    implementation(libs.hiltNavigationCompose)
+    implementation(libs.androidxLifecycleRuntimeCompose)
+    debugImplementation(libs.composeUiTooling)
 
     // Hilt
-    implementation(deps.hiltAndroid)
-    ksp(deps.hiltCompiler)
+    implementation(libs.hiltAndroid)
+    ksp(libs.hiltCompiler)
 
     // ImmersionBar
-    implementation(deps.immersionbar)
-    implementation(deps.immersionbarComponents)
-    implementation(deps.immersionbarKtx)
+    implementation(libs.immersionbar)
+    implementation(libs.immersionbarComponents)
+    implementation(libs.immersionbarKtx)
 
     // MMKV
-    implementation(deps.mmkv)
+    implementation(libs.mmkv)
 
     // Timber
-    implementation(deps.timber)
+    implementation(libs.timber)
 
     // Testing
-    testImplementation(deps.junit)
-    androidTestImplementation(deps.androidxJunit)
-    androidTestImplementation(deps.androidxEspressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidxJunit)
+    androidTestImplementation(libs.androidxEspressoCore)
 }

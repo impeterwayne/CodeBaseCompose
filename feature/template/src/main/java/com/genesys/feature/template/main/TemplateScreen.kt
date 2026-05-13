@@ -214,12 +214,6 @@ private fun TemplateHero(
         Column(
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
-            if (template.premium) {
-                AppChip(
-                    text = stringResource(R.string.template_premium_chip),
-                    selected = true
-                )
-            }
             AppText(
                 text = template.ratio,
                 style = AppTheme.typography.headlineMedium,
@@ -227,7 +221,13 @@ private fun TemplateHero(
             )
         }
 
-        if (!template.premium) {
+        if (template.premium) {
+            AppChip(
+                text = stringResource(R.string.template_premium_chip),
+                selected = true,
+                modifier = Modifier.align(Alignment.TopEnd)
+            )
+        } else {
             AppChip(
                 text = stringResource(R.string.template_standard_chip),
                 selected = false,

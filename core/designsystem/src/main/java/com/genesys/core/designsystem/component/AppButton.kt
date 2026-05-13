@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import com.genesys.core.designsystem.theme.AppTheme
-import java.util.Locale
+import androidx.compose.foundation.LocalIndication
 
 @Composable
 fun AppPrimaryButton(
@@ -33,11 +33,11 @@ fun AppPrimaryButton(
 
     Box(
         modifier = modifier
-            .clip(AppTheme.shapes.medium)
+            .clip(AppTheme.shapes.shape6)
             .background(colors.colorPrimary)
             .clickable(
                 interactionSource = interactionSource,
-                indication = null,
+                indication = LocalIndication.current,
                 enabled = enabled,
                 onClickLabel = onClickLabel,
                 role = Role.Button,
@@ -46,7 +46,7 @@ fun AppPrimaryButton(
             .padding(resolvedContentPadding)
     ) {
         AppText(
-            text = text.uppercase(Locale.ROOT),
+            text = text,
             style = AppTheme.typography.labelLarge,
             color = colors.colorTextOnPrimary
         )
@@ -71,16 +71,16 @@ fun AppSecondaryButton(
 
     Box(
         modifier = modifier
-            .clip(AppTheme.shapes.medium)
+            .clip(AppTheme.shapes.shape6)
             .background(colors.colorBgContainer)
             .border(
-                width = AppTheme.strokes.medium,
+                width = AppTheme.strokes.stroke2,
                 color = colors.colorPrimary,
-                shape = AppTheme.shapes.medium
+                shape = AppTheme.shapes.shape6
             )
             .clickable(
                 interactionSource = interactionSource,
-                indication = null,
+                indication = LocalIndication.current,
                 enabled = enabled,
                 onClickLabel = onClickLabel,
                 role = Role.Button,
@@ -89,7 +89,7 @@ fun AppSecondaryButton(
             .padding(resolvedContentPadding)
     ) {
         AppText(
-            text = text.uppercase(Locale.ROOT),
+            text = text,
             style = AppTheme.typography.labelLarge,
             color = colors.colorPrimary
         )

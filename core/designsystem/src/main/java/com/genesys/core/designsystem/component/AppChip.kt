@@ -12,8 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import com.genesys.core.designsystem.theme.AppTheme
-import java.util.Locale
-
+import androidx.compose.foundation.LocalIndication
 @Composable
 fun AppChip(
     text: String,
@@ -36,12 +35,12 @@ fun AppChip(
     Box(
         modifier = modifier
             .background(backgroundColor)
-            .border(AppTheme.strokes.thin, colors.colorPrimary, AppTheme.shapes.small)
+            .border(AppTheme.strokes.stroke1, colors.colorPrimary, AppTheme.shapes.shape4)
             .then(
                 if (onClick != null) {
                     Modifier.clickable(
                         interactionSource = interactionSource,
-                        indication = null,
+                        indication = LocalIndication.current,
                         onClickLabel = onClickLabel,
                         role = role,
                         onClick = onClick
@@ -53,7 +52,7 @@ fun AppChip(
             .padding(resolvedContentPadding)
     ) {
         AppText(
-            text = text.uppercase(Locale.ROOT),
+            text = text,
             style = AppTheme.typography.labelSmall,
             color = contentColor
         )

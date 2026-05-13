@@ -7,8 +7,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-private val EditorialFontFamily = FontFamily.Serif
-private val UtilityFontFamily = FontFamily.SansSerif
+private val EditorialFontFamily = FontFamily.Default
+private val UtilityFontFamily = FontFamily.Default
 
 @Immutable
 data class AppTypography(

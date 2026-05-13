@@ -35,9 +35,9 @@ fun AppBottomBar(
             .fillMaxWidth()
             .background(AppTheme.colorScheme.colorBgFill)
             .border(
-                width = AppTheme.strokes.thin,
+                width = AppTheme.strokes.stroke1,
                 color = AppTheme.colorScheme.colorBorder,
-                shape = AppTheme.shapes.large
+                shape = AppTheme.shapes.shape8
             )
             .navigationBarsPadding()
             .padding(
@@ -69,12 +69,12 @@ private fun BottomBarItem(
 
     Column(
         modifier = modifier
-            .clip(AppTheme.shapes.medium)
+            .clip(AppTheme.shapes.shape6)
             .background(containerColor)
             .border(
-                width = AppTheme.strokes.thin,
+                width = AppTheme.strokes.stroke1,
                 color = if (selected) AppTheme.colorScheme.colorPrimary else AppTheme.colorScheme.colorBorderSecondary,
-                shape = AppTheme.shapes.medium
+                shape = AppTheme.shapes.shape6
             )
             .clickable(onClick = onClick)
             .padding(
@@ -89,9 +89,9 @@ private fun BottomBarItem(
                 .size(28.dp)
                 .background(AppTheme.colorScheme.colorBgContainer)
                 .border(
-                    width = AppTheme.strokes.thin,
+                    width = AppTheme.strokes.stroke1,
                     color = if (selected) AppTheme.colorScheme.colorBgContainer else AppTheme.colorScheme.colorBorderSecondary,
-                    shape = AppTheme.shapes.small
+                    shape = AppTheme.shapes.shape4
                 ),
             contentAlignment = Alignment.Center
         ) {

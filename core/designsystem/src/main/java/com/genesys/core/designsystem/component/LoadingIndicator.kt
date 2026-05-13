@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.genesys.core.designsystem.theme.AppTheme
-import java.util.Locale
 
 @Composable
 fun LoadingIndicator(
@@ -25,7 +24,7 @@ fun LoadingIndicator(
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
             AppText(
-                text = title.uppercase(Locale.ROOT),
+                text = title,
                 style = AppTheme.typography.labelLarge,
                 color = AppTheme.colorScheme.colorPrimary
             )

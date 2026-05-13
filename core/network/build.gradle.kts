@@ -1,12 +1,9 @@
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.kotlin.dsl.the
 
 plugins {
     id("codebase.android.library")
     id("codebase.android.hilt")
 }
 
-val deps = the<LibrariesForLibs>()
 
 android {
     namespace = "com.genesys.core.network"
@@ -24,19 +21,19 @@ dependencies {
     implementation(project(":core:model"))
 
     // OkHttp
-    implementation(platform(deps.okhttpBom))
-    implementation(deps.okhttp)
-    implementation(deps.loggingInterceptor)
+    implementation(platform(libs.okhttpBom))
+    implementation(libs.okhttp)
+    implementation(libs.loggingInterceptor)
 
     // Retrofit
-    implementation(deps.retrofit)
-    implementation(deps.retrofit2KotlinCoroutinesAdapter)
-    implementation(deps.converterGson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2KotlinCoroutinesAdapter)
+    implementation(libs.converterGson)
 
     // Sandwich
-    implementation(deps.sandwich)
-    implementation(deps.sandwichRetrofit)
+    implementation(libs.sandwich)
+    implementation(libs.sandwichRetrofit)
 
     // Gson
-    implementation(deps.gson)
+    implementation(libs.gson)
 }

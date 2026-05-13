@@ -1,5 +1,3 @@
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.kotlin.dsl.the
 
 plugins {
     id("codebase.android.library")
@@ -7,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlinParcelize)
 }
 
-val deps = the<LibrariesForLibs>()
 
 android {
     namespace = "com.genesys.core.database"
@@ -23,14 +20,14 @@ dependencies {
     implementation(project(":core:model"))
 
     // Room
-    implementation(deps.androidxRoomRuntime)
-    ksp(deps.androidxRoomCompiler)
-    implementation(deps.androidxRoomKtx)
+    implementation(libs.androidxRoomRuntime)
+    ksp(libs.androidxRoomCompiler)
+    implementation(libs.androidxRoomKtx)
 
     // Gson (for type converters)
-    implementation(deps.gson)
+    implementation(libs.gson)
 
     // Coroutines
-    implementation(deps.kotlinxCoroutinesCore)
-    implementation(deps.kotlinxCoroutinesAndroid)
+    implementation(libs.kotlinxCoroutinesCore)
+    implementation(libs.kotlinxCoroutinesAndroid)
 }

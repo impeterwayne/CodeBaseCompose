@@ -1,12 +1,9 @@
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.kotlin.dsl.the
 
 plugins {
     id("codebase.android.library")
     id("codebase.android.hilt")
 }
 
-val deps = the<LibrariesForLibs>()
 
 android {
     namespace = "com.genesys.core.data"
@@ -20,13 +17,13 @@ dependencies {
     implementation(project(":core:common"))
 
     // MMKV
-    implementation(deps.mmkv)
+    implementation(libs.mmkv)
 
     // Coroutines
-    implementation(deps.kotlinxCoroutinesCore)
-    implementation(deps.kotlinxCoroutinesAndroid)
+    implementation(libs.kotlinxCoroutinesCore)
+    implementation(libs.kotlinxCoroutinesAndroid)
 
     // Sandwich
-    implementation(deps.sandwich)
-    implementation(deps.sandwichRetrofit)
+    implementation(libs.sandwich)
+    implementation(libs.sandwichRetrofit)
 }

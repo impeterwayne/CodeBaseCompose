@@ -7,15 +7,15 @@ import androidx.compose.ui.unit.dp
 
 @Immutable
 data class AppStrokes(
-    val thin: Dp,
-    val medium: Dp,
-    val thick: Dp
+    val stroke1: Dp,
+    val stroke2: Dp,
+    val stroke3: Dp
 )
 
 internal val defaultStrokes = AppStrokes(
-    thin = 1.dp,
-    medium = 2.dp,
-    thick = 3.dp
+    stroke1 = 1.dp,
+    stroke2 = 2.dp,
+    stroke3 = 3.dp
 )
 
 internal val LocalAppStrokes = staticCompositionLocalOf { defaultStrokes }

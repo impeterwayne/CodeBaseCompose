@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import com.genesys.core.designsystem.theme.AppTheme
+import androidx.compose.foundation.LocalIndication
 
 enum class AppPanelTone {
     Frame,
@@ -39,18 +40,18 @@ fun AppPanel(
 ) {
     val colors = AppTheme.colorScheme
     val strokes = AppTheme.strokes
-    val shape = AppTheme.shapes.medium
+    val shape = AppTheme.shapes.shape6
     val resolvedContentPadding = contentPadding ?: PaddingValues(AppTheme.spacing.md)
     val interactionSource = remember { MutableInteractionSource() }
     val backgroundColor: Color
     val borderColor: Color
     val borderWidth = when (tone) {
-        AppPanelTone.Frame -> strokes.thin
-        AppPanelTone.Raised -> strokes.thin
-        AppPanelTone.Heavy -> strokes.medium
-        AppPanelTone.Error -> strokes.thin
-        AppPanelTone.Warning -> strokes.thin
-        AppPanelTone.Success -> strokes.thin
+        AppPanelTone.Frame -> strokes.stroke1
+        AppPanelTone.Raised -> strokes.stroke1
+        AppPanelTone.Heavy -> strokes.stroke2
+        AppPanelTone.Error -> strokes.stroke1
+        AppPanelTone.Warning -> strokes.stroke1
+        AppPanelTone.Success -> strokes.stroke1
     }
 
     when (tone) {
@@ -89,7 +90,7 @@ fun AppPanel(
                 if (onClick != null) {
                     Modifier.clickable(
                         interactionSource = interactionSource,
-                        indication = null,
+                        indication = LocalIndication.current,
                         onClickLabel = onClickLabel,
                         role = role,
                         onClick = onClick

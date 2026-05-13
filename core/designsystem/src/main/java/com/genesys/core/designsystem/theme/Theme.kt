@@ -15,19 +15,19 @@ import androidx.core.view.WindowCompat
 
 @Immutable
 data class AppShapes(
-    val extraSmall: Shape,
-    val small: Shape,
-    val medium: Shape,
-    val large: Shape,
-    val extraLarge: Shape
+    val shape2: Shape,
+    val shape4: Shape,
+    val shape6: Shape,
+    val shape8: Shape,
+    val shape12: Shape
 )
 
 internal val defaultShapes = AppShapes(
-    extraSmall = RoundedCornerShape(0.dp),
-    small = RoundedCornerShape(0.dp),
-    medium = RoundedCornerShape(0.dp),
-    large = RoundedCornerShape(0.dp),
-    extraLarge = RoundedCornerShape(0.dp)
+    shape2 = RoundedCornerShape(2.dp),
+    shape4 = RoundedCornerShape(4.dp),
+    shape6 = RoundedCornerShape(6.dp),
+    shape8 = RoundedCornerShape(8.dp),
+    shape12 = RoundedCornerShape(12.dp)
 )
 
 internal val LocalAppShapes = staticCompositionLocalOf { defaultShapes }

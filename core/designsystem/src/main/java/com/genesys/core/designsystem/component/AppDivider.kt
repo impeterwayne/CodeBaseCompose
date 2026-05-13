@@ -17,7 +17,7 @@ fun AppDivider(
     thickness: Dp? = null
 ) {
     val resolvedColor = color ?: AppTheme.colorScheme.colorBorderSecondary
-    val resolvedThickness = thickness ?: AppTheme.strokes.thin
+    val resolvedThickness = thickness ?: AppTheme.strokes.stroke1
 
     Box(
         modifier = modifier
