@@ -1,4 +1,4 @@
-package com.genesys.core.model.pagination
+package com.genesys.core.network.dto.pagination
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep

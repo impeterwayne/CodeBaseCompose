@@ -1,6 +1,6 @@
 package com.genesys.core.network.service
 
-import com.genesys.core.network.response.ResponseAITemplate
+import com.genesys.core.network.dto.template.ResponseAITemplate
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.ResponseBody
 import retrofit2.http.GET

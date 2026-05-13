@@ -1,22 +1,24 @@
 package com.genesys.feature.inbox.presentation
 
-import androidx.lifecycle.ViewModel
+import com.genesys.core.common.base.BaseViewModel
 import com.genesys.core.model.inbox.InboxFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
+import com.genesys.core.domain.usecase.inbox.GetInboxGroupsUseCase
 
 @HiltViewModel
-class InboxViewModel @Inject constructor() : ViewModel(), ContainerHost<InboxUiState, Nothing> {
+class InboxViewModel @Inject constructor(
+    private val getInboxGroupsUseCase: GetInboxGroupsUseCase
+) : BaseViewModel<InboxUiState, InboxSideEffect, InboxAction>() {
 
-    override val container = container<InboxUiState, Nothing>(
+    override val container = container<InboxUiState, InboxSideEffect>(
         InboxUiState(
-            groups = sampleInboxGroups
+            groups = getInboxGroupsUseCase()
         )
     )
 
-    fun onAction(action: InboxAction) {
+    override fun onAction(action: InboxAction) {
         when (action) {
             is InboxAction.SelectFilter -> selectFilter(action.filter)
             InboxAction.FocusPriorityQueue -> focusPriorityQueue()

@@ -27,6 +27,10 @@ import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.inbox.InboxFilter
 import com.genesys.core.model.inbox.InboxThreadUiModel
 
+import com.genesys.feature.inbox.presentation.components.InboxHero
+import com.genesys.feature.inbox.presentation.components.InboxEmptyState
+import com.genesys.feature.inbox.presentation.components.InboxThreadCard
+
 @Composable
 fun InboxScreen(
     state: InboxUiState,
@@ -71,148 +75,6 @@ fun InboxScreen(
                         InboxThreadCard(thread = thread)
                     }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun InboxHero(
-    state: InboxUiState,
-    onAction: (InboxAction) -> Unit
-) {
-    AppPanel(
-        tone = AppPanelTone.Heavy
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
-            ) {
-                AppText(
-                    text = stringResource(R.string.inbox_title),
-                    style = AppTheme.typography.headlineSmall,
-                    color = AppTheme.colorScheme.colorTextOnPrimary
-                )
-                AppText(
-                    text = state.heroMessage,
-                    style = AppTheme.typography.bodyLarge,
-                    color = AppTheme.colorScheme.colorTextOnPrimary
-                )
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-            ) {
-                InboxFilter.entries.forEach { filter ->
-                    AppChip(
-                        text = filter.label,
-                        selected = filter == state.selectedFilter,
-                        onClick = { onAction(InboxAction.SelectFilter(filter)) },
-                        onClickLabel = stringResource(R.string.inbox_select_filter_label),
-                        role = Role.Tab
-                    )
-                }
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-            ) {
-                AppPrimaryButton(
-                    text = stringResource(R.string.inbox_open_queue),
-                    onClick = { onAction(InboxAction.FocusPriorityQueue) },
-                    modifier = Modifier.weight(1f)
-                )
-                AppSecondaryButton(
-                    text = if (state.totalUnreadCount > 0) {
-                        stringResource(R.string.inbox_mark_all_read)
-                    } else {
-                        stringResource(R.string.inbox_all_read)
-                    },
-                    onClick = { onAction(InboxAction.MarkAllRead) },
-                    modifier = Modifier.weight(1f)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun InboxEmptyState(
-    selectedFilter: InboxFilter
-) {
-    AppPanel(
-        tone = AppPanelTone.Frame
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
-        ) {
-            AppText(
-                text = stringResource(R.string.inbox_no_threads, selectedFilter.label.lowercase()),
-                style = AppTheme.typography.titleLarge
-            )
-            AppText(
-                text = stringResource(R.string.inbox_empty_message),
-                style = AppTheme.typography.bodyLarge,
-                color = AppTheme.colorScheme.colorBorder
-            )
-        }
-    }
-}
-
-@Composable
-private fun InboxThreadCard(
-    thread: InboxThreadUiModel
-) {
-    AppPanel(
-        tone = AppPanelTone.Raised
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                AppText(
-                    text = thread.sender,
-                    style = AppTheme.typography.labelLarge
-                )
-                AppText(
-                    text = thread.time,
-                    style = AppTheme.typography.labelMedium,
-                    color = AppTheme.colorScheme.colorBorder
-                )
-            }
-
-            AppText(
-                text = thread.subject,
-                style = AppTheme.typography.titleLarge,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            AppText(
-                text = thread.preview,
-                style = AppTheme.typography.bodyLarge
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-            ) {
-                AppChip(
-                    text = thread.category,
-                    selected = thread.unread
-                )
-                AppChip(
-                    text = if (thread.unread) {
-                        stringResource(R.string.inbox_unread)
-                    } else {
-                        stringResource(R.string.inbox_read)
-                    },
-                    selected = thread.unread
-                )
             }
         }
     }

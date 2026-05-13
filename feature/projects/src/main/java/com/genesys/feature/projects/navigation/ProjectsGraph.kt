@@ -10,15 +10,27 @@ import com.genesys.core.navigation.AppNavigator
 import com.genesys.core.navigation.Route
 import com.genesys.feature.projects.main.ProjectsScreen
 
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.genesys.feature.projects.main.ProjectsViewModel
+import org.orbitmvi.orbit.compose.collectAsState
+
 @Composable
 fun ProjectsGraph(
     backStack: NavBackStack<NavKey>,
     navigator: AppNavigator,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ProjectsViewModel = hiltViewModel()
 ) {
+    val state by viewModel.collectAsState()
+
     val entries = entryProvider<NavKey> {
         entry<Route.Projects> {
-            ProjectsScreen(modifier = modifier)
+            ProjectsScreen(
+                state = state,
+                onAction = viewModel::onAction,
+                modifier = modifier
+            )
         }
     }
 

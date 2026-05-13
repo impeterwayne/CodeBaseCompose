@@ -1,25 +1,24 @@
 package com.genesys.feature.template.main
 
-import androidx.lifecycle.ViewModel
+import com.genesys.core.common.base.BaseViewModel
 import com.genesys.core.common.base.Result
 import com.genesys.core.domain.usecase.template.GetAllTemplatesUseCase
 import com.genesys.core.model.template.Template
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getAllTemplatesUseCase: GetAllTemplatesUseCase
-) : ViewModel(), ContainerHost<MainUiState, MainSideEffect> {
+) : BaseViewModel<MainUiState, MainSideEffect, MainAction>() {
 
     override val container = container<MainUiState, MainSideEffect>(MainUiState())
 
-    fun onEvent(event: MainEvent) {
-        when (event) {
-            MainEvent.LoadTemplates -> loadTemplates()
-            is MainEvent.OnTemplateClicked -> onTemplateClicked(event.template)
+    override fun onAction(action: MainAction) {
+        when (action) {
+            MainAction.LoadTemplates -> loadTemplates()
+            is MainAction.OnTemplateClicked -> onTemplateClicked(action.template)
         }
     }
 

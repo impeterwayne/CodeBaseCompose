@@ -10,15 +10,27 @@ import com.genesys.core.navigation.AppNavigator
 import com.genesys.core.navigation.Route
 import com.genesys.feature.settings.main.SettingsScreen
 
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.genesys.feature.settings.main.SettingsViewModel
+import org.orbitmvi.orbit.compose.collectAsState
+
 @Composable
 fun SettingsGraph(
     backStack: NavBackStack<NavKey>,
     navigator: AppNavigator,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: SettingsViewModel = hiltViewModel()
 ) {
+    val state by viewModel.collectAsState()
+
     val entries = entryProvider<NavKey> {
         entry<Route.Settings> {
-            SettingsScreen(modifier = modifier)
+            SettingsScreen(
+                state = state,
+                onAction = viewModel::onAction,
+                modifier = modifier
+            )
         }
     }
 

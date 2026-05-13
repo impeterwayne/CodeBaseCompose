@@ -11,7 +11,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.genesys.feature.template.main.MainEvent
+import com.genesys.feature.template.main.MainAction
 import com.genesys.feature.template.main.MainSideEffect
 import com.genesys.feature.template.main.MainViewModel
 import com.genesys.feature.template.main.TemplateScreen
@@ -36,16 +36,16 @@ fun TemplateGraph(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.onEvent(MainEvent.LoadTemplates)
+        viewModel.onAction(MainAction.LoadTemplates)
     }
 
     val entries = entryProvider<NavKey> {
         entry<Route.Templates> {
             TemplateScreen(
                 state = state,
-                onRetry = { viewModel.onEvent(MainEvent.LoadTemplates) },
+                onRetry = { viewModel.onAction(MainAction.LoadTemplates) },
                 onTemplateClick = { template ->
-                    viewModel.onEvent(MainEvent.OnTemplateClicked(template))
+                    viewModel.onAction(MainAction.OnTemplateClicked(template))
                 },
                 modifier = modifier
             )

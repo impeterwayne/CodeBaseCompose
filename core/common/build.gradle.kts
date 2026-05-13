@@ -28,4 +28,7 @@ dependencies {
 
     // Lifecycle runtime (used by FlowExt)
     implementation(libs.androidxLifecycleRuntimeKtx)
+
+    // Orbit MVI
+    api(libs.orbitViewmodel)
 }

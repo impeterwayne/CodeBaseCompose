@@ -2,6 +2,9 @@ package com.genesys.core.common.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.genesys.core.common.base.mvi.Action
+import com.genesys.core.common.base.mvi.SideEffect
+import com.genesys.core.common.base.mvi.UiState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -12,21 +15,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.ContainerHost
 
-
-abstract class BaseViewModel<Event : BaseViewModel.IEvent>() : ViewModel() {
+abstract class BaseViewModel<STATE : UiState, SIDE_EFFECT : SideEffect, ACTION : Action>() : ViewModel(), ContainerHost<STATE, SIDE_EFFECT> {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { context, throwable ->
         println("IViewModel: with $context: $throwable")
     }
 
-    private val _purchaseState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    internal var purchaseState: StateFlow<Boolean> = _purchaseState.asStateFlow()
-    internal val purchaseStateValue: Boolean
-        get() = purchaseState.value
-
     private val _networkState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     internal val networkState: StateFlow<Boolean> = _networkState.asStateFlow()
+
     internal val networkStateValue: Boolean
         get() = networkState.value
 
@@ -46,9 +45,7 @@ abstract class BaseViewModel<Event : BaseViewModel.IEvent>() : ViewModel() {
         )
     }
 
-    abstract fun onEvent(state: Event)
-
-    interface IEvent
+    abstract fun onAction(action: ACTION)
 
     override fun onCleared() {
         super.onCleared()

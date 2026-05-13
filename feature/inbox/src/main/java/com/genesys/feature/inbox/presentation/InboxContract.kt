@@ -1,5 +1,8 @@
 package com.genesys.feature.inbox.presentation
 
+import com.genesys.core.common.base.mvi.UiState
+import com.genesys.core.common.base.mvi.Action
+import com.genesys.core.common.base.mvi.SideEffect
 import com.genesys.core.model.inbox.InboxFilter
 import com.genesys.core.model.inbox.InboxGroupUiModel
 import com.genesys.core.model.inbox.InboxThreadUiModel
@@ -7,7 +10,7 @@ import com.genesys.core.model.inbox.InboxThreadUiModel
 data class InboxUiState(
     val selectedFilter: InboxFilter = InboxFilter.Urgent,
     val groups: List<InboxGroupUiModel> = emptyList()
-) {
+) : UiState {
     val visibleGroups: List<InboxGroupUiModel>
         get() = groups.mapNotNull { group ->
             val filteredItems = group.items.filter { thread ->
@@ -52,8 +55,10 @@ data class InboxUiState(
         }
 }
 
-sealed interface InboxAction {
+sealed interface InboxAction : Action {
     data class SelectFilter(val filter: InboxFilter) : InboxAction
     data object FocusPriorityQueue : InboxAction
     data object MarkAllRead : InboxAction
 }
+
+sealed interface InboxSideEffect : SideEffect

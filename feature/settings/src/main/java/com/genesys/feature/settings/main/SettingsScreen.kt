@@ -27,67 +27,16 @@ import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.settings.SettingGroup
 import com.genesys.core.model.settings.SettingItem
 
-private val settingGroups = listOf(
-    SettingGroup(
-        title = "Workspace",
-        subtitle = "Operations",
-        items = listOf(
-            SettingItem(
-                title = "Default project view",
-                description = "Choose the landing view shown when opening a project workspace.",
-                value = "Board",
-                highlighted = true
-            ),
-            SettingItem(
-                title = "Shared review mode",
-                description = "Keep external review links enabled for current collaborators.",
-                value = "Enabled",
-                highlighted = true
-            )
-        )
-    ),
-    SettingGroup(
-        title = "Notifications",
-        subtitle = "Signal control",
-        items = listOf(
-            SettingItem(
-                title = "Approval reminders",
-                description = "Receive reminders when pending approvals are close to their due time.",
-                value = "Every 2 hours",
-                highlighted = false
-            ),
-            SettingItem(
-                title = "Digest delivery",
-                description = "Bundle low-priority updates into a single summary instead of individual pings.",
-                value = "08:30 daily",
-                highlighted = false
-            )
-        )
-    ),
-    SettingGroup(
-        title = "Security",
-        subtitle = "Access",
-        items = listOf(
-            SettingItem(
-                title = "Session verification",
-                description = "Require a fresh verification step before downloading client delivery assets.",
-                value = "Required",
-                highlighted = true
-            ),
-            SettingItem(
-                title = "Device trust window",
-                description = "How long a signed-in device stays trusted before a new verification challenge.",
-                value = "14 days",
-                highlighted = false
-            )
-        )
-    )
-)
+import com.genesys.feature.settings.main.components.SettingsHero
+import com.genesys.feature.settings.main.components.SettingCard
 
 @Composable
 fun SettingsScreen(
+    state: SettingsUiState,
+    onAction: (SettingsAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     AppPageFrame(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(0.dp)
@@ -101,7 +50,7 @@ fun SettingsScreen(
                 SettingsHero()
             }
 
-            settingGroups.forEach { group ->
+            state.groups.forEach { group ->
                 item {
                     AppSectionHeader(
                         title = group.title,
@@ -116,101 +65,6 @@ fun SettingsScreen(
                     SettingCard(setting = setting)
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun SettingsHero() {
-    AppPanel(
-        tone = AppPanelTone.Heavy
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
-            ) {
-                AppText(
-                    text = stringResource(R.string.settings_title),
-                    style = AppTheme.typography.headlineSmall,
-                    color = AppTheme.colorScheme.colorTextOnPrimary
-                )
-                AppText(
-                    text = stringResource(R.string.settings_hero_message),
-                    style = AppTheme.typography.bodyLarge,
-                    color = AppTheme.colorScheme.colorTextOnPrimary
-                )
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-            ) {
-                AppChip(text = stringResource(R.string.settings_workspace_live), selected = true)
-                AppChip(text = stringResource(R.string.settings_2fa_enforced), selected = false)
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-            ) {
-                AppPrimaryButton(
-                    text = stringResource(R.string.settings_manage_team_unavailable),
-                    onClick = {},
-                    modifier = Modifier.weight(1f),
-                    enabled = false
-                )
-                AppSecondaryButton(
-                    text = stringResource(R.string.settings_export_policy_unavailable),
-                    onClick = {},
-                    modifier = Modifier.weight(1f),
-                    enabled = false
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun SettingCard(
-    setting: SettingItem
-) {
-    AppPanel(
-        tone = if (setting.highlighted) AppPanelTone.Raised else AppPanelTone.Frame
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)
-                ) {
-                    AppText(
-                        text = setting.title,
-                        style = AppTheme.typography.titleLarge,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    AppText(
-                        text = setting.description,
-                        style = AppTheme.typography.bodyLarge
-                    )
-                }
-
-                AppChip(
-                    text = setting.value,
-                    selected = setting.highlighted
-                )
-            }
-
-            AppText(
-                text = stringResource(R.string.settings_edit_unavailable),
-                style = AppTheme.typography.labelMedium,
-                color = AppTheme.colorScheme.colorBorder
-            )
         }
     }
 }
