@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -38,5 +39,15 @@ fun AppPageFrame(
                 .padding(resolvedContentPadding),
             content = content
         )
+    }
+}
+
+@Preview
+@Composable
+private fun AppPageFramePreview() {
+    AppTheme {
+        AppPageFrame {
+            AppText("Page Frame Content")
+        }
     }
 }

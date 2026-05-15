@@ -1,5 +1,6 @@
 package com.genesys.feature.template.navigation
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -70,5 +71,16 @@ fun TemplateDetailScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TemplateDetailScreenPreview() {
+    AppTheme {
+        TemplateDetailScreen(
+            templateId = "123",
+            onBack = {}
+        )
     }
 }

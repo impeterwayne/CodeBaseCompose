@@ -1,5 +1,7 @@
 package com.genesys.feature.settings.main
 
+import androidx.compose.ui.tooling.preview.Preview
+import com.genesys.feature.settings.main.SettingsUiState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -66,5 +68,13 @@ fun SettingsScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SettingsScreenPreview() {
+    AppTheme {
+        SettingsScreen(state = com.genesys.feature.settings.main.SettingsUiState(), onAction = {})
     }
 }

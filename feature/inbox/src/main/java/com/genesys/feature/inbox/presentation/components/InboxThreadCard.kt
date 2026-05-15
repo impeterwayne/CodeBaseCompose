@@ -1,5 +1,6 @@
 package com.genesys.feature.inbox.presentation.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -70,5 +71,24 @@ fun InboxThreadCard(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun InboxThreadCardPreview() {
+    AppTheme {
+        InboxThreadCard(
+            thread = com.genesys.core.model.inbox.InboxThreadUiModel(
+                id = "1",
+                sender = "Alice",
+                subject = "Hello",
+                preview = "Just checking in...",
+                time = "10:00 AM",
+                category = "General",
+                unread = true,
+                filters = setOf(com.genesys.core.model.inbox.InboxFilter.Urgent)
+            )
+        )
     }
 }

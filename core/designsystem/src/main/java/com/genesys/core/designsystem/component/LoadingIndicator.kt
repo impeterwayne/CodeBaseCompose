@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,5 +35,13 @@ fun LoadingIndicator(
                 style = AppTheme.typography.bodyLarge
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LoadingIndicatorPreview() {
+    AppTheme {
+        LoadingIndicator()
     }
 }

@@ -1,5 +1,6 @@
 package com.genesys.feature.settings.main.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -62,5 +63,13 @@ fun SettingsHero() {
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SettingsHeroPreview() {
+    AppTheme {
+        SettingsHero()
     }
 }

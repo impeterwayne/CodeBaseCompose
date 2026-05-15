@@ -1,5 +1,6 @@
 package com.genesys.feature.projects.main
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -65,5 +66,13 @@ fun ProjectsScreen(
                 ProjectCard(project = project)
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ProjectsScreenPreview() {
+    AppTheme {
+        ProjectsScreen(state = ProjectsUiState(), onAction = {})
     }
 }

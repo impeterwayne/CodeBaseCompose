@@ -1,5 +1,6 @@
 package com.genesys.feature.inbox.presentation.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -78,5 +79,13 @@ fun InboxHero(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun InboxHeroPreview() {
+    AppTheme {
+        InboxHero(state = com.genesys.feature.inbox.presentation.InboxUiState(), onAction = {})
     }
 }

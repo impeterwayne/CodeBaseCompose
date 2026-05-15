@@ -1,5 +1,6 @@
 package com.genesys.feature.settings.main.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -58,5 +59,20 @@ fun SettingCard(
                 color = AppTheme.colorScheme.colorBorder
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SettingCardPreview() {
+    AppTheme {
+        SettingCard(
+            setting = com.genesys.core.model.settings.SettingItem(
+                title = "Dark Mode",
+                description = "Enable dark theme",
+                value = "On",
+                highlighted = false
+            )
+        )
     }
 }

@@ -1,5 +1,7 @@
 package com.genesys.feature.inbox.presentation
 
+import androidx.compose.ui.tooling.preview.Preview
+import com.genesys.feature.inbox.presentation.InboxUiState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -77,5 +79,13 @@ fun InboxScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun InboxScreenPreview() {
+    AppTheme {
+        InboxScreen(state = InboxUiState(), onAction = {})
     }
 }

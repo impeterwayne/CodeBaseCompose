@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,4 +28,12 @@ fun AppText(
         maxLines = maxLines,
         overflow = overflow
     )
+}
+
+@Preview
+@Composable
+private fun AppTextPreview() {
+    AppTheme {
+        AppText(text = "Hello World")
+    }
 }

@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,5 +32,13 @@ fun AppSectionHeader(
             color = AppTheme.colorScheme.colorText
         )
         AppDivider()
+    }
+}
+
+@Preview
+@Composable
+private fun AppSectionHeaderPreview() {
+    AppTheme {
+        AppSectionHeader(title = "Section Title", subtitle = "Section Subtitle")
     }
 }

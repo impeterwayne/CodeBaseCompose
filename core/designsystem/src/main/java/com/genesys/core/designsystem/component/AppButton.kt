@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -93,5 +94,21 @@ fun AppSecondaryButton(
             style = AppTheme.typography.labelLarge,
             color = colors.colorPrimary
         )
+    }
+}
+
+@Preview
+@Composable
+private fun AppPrimaryButtonPreview() {
+    AppTheme {
+        AppPrimaryButton(text = "Primary Button", onClick = {})
+    }
+}
+
+@Preview
+@Composable
+private fun AppSecondaryButtonPreview() {
+    AppTheme {
+        AppSecondaryButton(text = "Secondary Button", onClick = {})
     }
 }

@@ -1,5 +1,6 @@
 package com.genesys.feature.template.main.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,5 +32,16 @@ fun TemplateCollectionsList(
                 onTemplateClick = onTemplateClick
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TemplateCollectionsListPreview() {
+    AppTheme {
+        TemplateCollectionsList(
+            collections = listOf(com.genesys.core.model.template.TemplateCollections(name = "Featured", templates = listOf())),
+            onTemplateClick = {}
+        )
     }
 }

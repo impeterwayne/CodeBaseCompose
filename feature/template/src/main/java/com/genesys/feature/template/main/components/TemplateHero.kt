@@ -1,5 +1,6 @@
 package com.genesys.feature.template.main.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -66,5 +67,15 @@ fun TemplateHero(
                 modifier = Modifier.align(Alignment.TopEnd)
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TemplateHeroPreview() {
+    AppTheme {
+        TemplateHero(
+            template = com.genesys.core.model.template.Template(name = "Hero Template")
+        )
     }
 }

@@ -1,5 +1,6 @@
 package com.genesys.feature.template.main.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -65,5 +66,16 @@ fun TemplateItem(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TemplateItemPreview() {
+    AppTheme {
+        TemplateItem(
+            template = com.genesys.core.model.template.Template(name = "Item Template"),
+            onClick = {}
+        )
     }
 }

@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -56,5 +57,21 @@ fun AppChip(
             style = AppTheme.typography.labelSmall,
             color = contentColor
         )
+    }
+}
+
+@Preview
+@Composable
+private fun AppChipPreview() {
+    AppTheme {
+        AppChip(text = "Selected Chip", selected = true, onClick = {})
+    }
+}
+
+@Preview
+@Composable
+private fun AppChipUnselectedPreview() {
+    AppTheme {
+        AppChip(text = "Unselected Chip", selected = false, onClick = {})
     }
 }

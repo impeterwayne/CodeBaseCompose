@@ -1,5 +1,6 @@
 package com.genesys.feature.inbox.presentation.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -31,5 +32,13 @@ fun InboxEmptyState(
                 color = AppTheme.colorScheme.colorBorder
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun InboxEmptyStatePreview() {
+    AppTheme {
+        InboxEmptyState(selectedFilter = com.genesys.core.model.inbox.InboxFilter.Urgent)
     }
 }

@@ -1,5 +1,6 @@
 package com.genesys.feature.template.main.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -46,5 +47,16 @@ fun CollectionSection(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun CollectionSectionPreview() {
+    AppTheme {
+        CollectionSection(
+            collection = com.genesys.core.model.template.TemplateCollections(name = "Featured", templates = listOf()),
+            onTemplateClick = {}
+        )
     }
 }

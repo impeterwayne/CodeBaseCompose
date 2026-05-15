@@ -1,5 +1,6 @@
 package com.genesys.feature.projects.main.components
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -69,5 +70,18 @@ fun ProjectsHero(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ProjectsHeroPreview() {
+    AppTheme {
+        ProjectsHero(
+            metrics = listOf(
+                com.genesys.core.model.projects.ProjectMetric(label = "Active", value = "12"),
+                com.genesys.core.model.projects.ProjectMetric(label = "Completed", value = "30")
+            )
+        )
     }
 }

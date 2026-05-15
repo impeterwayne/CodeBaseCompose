@@ -1,5 +1,7 @@
 package com.genesys.feature.template.main
 
+import androidx.compose.ui.tooling.preview.Preview
+import com.genesys.core.designsystem.theme.AppTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -60,4 +62,12 @@ fun TemplateScreenContent(
         onRetry = onRetry,
         onTemplateClick = onTemplateClick
     )
+}
+
+@Preview
+@Composable
+private fun TemplateScreenPreview() {
+    AppTheme {
+        TemplateScreen(state = com.genesys.feature.template.main.MainUiState(), onRetry = {}, onTemplateClick = {})
+    }
 }

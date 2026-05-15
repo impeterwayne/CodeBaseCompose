@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,5 +41,13 @@ fun ErrorState(
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ErrorStatePreview() {
+    AppTheme {
+        ErrorState(message = "An error occurred", onRetry = {})
     }
 }

@@ -1,5 +1,6 @@
 package com.genesys.core.designsystem.component
 
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -103,4 +104,14 @@ fun AppPanel(
         verticalArrangement = verticalArrangement,
         content = content
     )
+}
+
+@Preview
+@Composable
+private fun AppPanelPreview() {
+    AppTheme {
+        AppPanel {
+            AppText("Panel Content")
+        }
+    }
 }
