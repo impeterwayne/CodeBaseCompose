@@ -16,8 +16,8 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:common"))
 
-    // MMKV
-    implementation(libs.mmkv)
+    // Datastore
+    implementation(project(":core:datastore"))
 
     // Coroutines
     implementation(libs.kotlinxCoroutinesCore)

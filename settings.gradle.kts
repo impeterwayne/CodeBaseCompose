@@ -37,6 +37,7 @@ include(":core:data")
 include(":core:common")
 include(":core:designsystem")
 include(":core:navigation")
+include(":core:datastore")
 
 // Feature modules
 include(":feature:template")

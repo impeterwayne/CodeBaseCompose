@@ -88,8 +88,8 @@ dependencies {
     implementation(libs.immersionbarComponents)
     implementation(libs.immersionbarKtx)
 
-    // MMKV
-    implementation(libs.mmkv)
+    // Datastore
+    implementation(project(":core:datastore"))
 
     // Timber
     implementation(libs.timber)

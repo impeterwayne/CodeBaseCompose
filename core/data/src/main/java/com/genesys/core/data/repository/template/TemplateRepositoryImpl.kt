@@ -4,7 +4,7 @@ import android.R.attr.data
 import android.R.id.message
 import com.genesys.core.common.TimeUtils
 import com.genesys.core.common.base.Result
-import com.genesys.core.data.mmkv.MMKVData
+import com.genesys.core.datastore.MMKVData
 import com.genesys.core.database.dao.TemplateCollectionsDao
 import com.genesys.core.database.entity.mapper.asDomain
 import com.genesys.core.database.entity.mapper.asEntity

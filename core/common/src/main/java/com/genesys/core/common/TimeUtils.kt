@@ -5,7 +5,7 @@ package com.genesys.core.common
  * @created : 5/21/2025
  *
  * TimeUtils provides time-range validation for data fetching.
- * Note: The lastFetchTime must be provided by the caller (e.g., from MMKVData in :core:data).
+ * Note: The lastFetchTime must be provided by the caller (e.g., from MMKVData in :core:datastore).
  **/
 object TimeUtils {
     private const val ONE_DAY_IN_MILLI_SEC: Long = 24 * 60 * 60 * 1000 // 1 day in milliseconds
