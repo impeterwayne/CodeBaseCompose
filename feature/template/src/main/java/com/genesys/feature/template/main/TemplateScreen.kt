@@ -68,6 +68,6 @@ fun TemplateScreenContent(
 @Composable
 private fun TemplateScreenPreview() {
     AppTheme {
-        TemplateScreen(state = com.genesys.feature.template.main.MainUiState(), onRetry = {}, onTemplateClick = {})
+        TemplateScreen(state = MainUiState(), onRetry = {}, onTemplateClick = {})
     }
 }

@@ -40,7 +40,7 @@ fun TemplateCollectionsList(
 private fun TemplateCollectionsListPreview() {
     AppTheme {
         TemplateCollectionsList(
-            collections = listOf(com.genesys.core.model.template.TemplateCollections(name = "Featured", templates = listOf())),
+            collections = listOf(TemplateCollections(name = "Featured", templates = listOf())),
             onTemplateClick = {}
         )
     }

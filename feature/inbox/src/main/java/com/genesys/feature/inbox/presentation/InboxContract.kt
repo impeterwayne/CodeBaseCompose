@@ -46,10 +46,13 @@ data class InboxUiState(
             totalUnreadCount == 0 -> "Inbox is clear. All priority threads have been reviewed."
             approvalCount > 0 && mentionCount > 0 ->
                 "$approvalCount approvals and $mentionCount mentions are still waiting on a response."
+
             approvalCount > 0 ->
                 "$approvalCount approvals should be handled before the next delivery handoff."
+
             mentionCount > 0 ->
                 "$mentionCount mentions still need a reply from your queue."
+
             else ->
                 "$totalUnreadCount unread threads are still active in your queue."
         }

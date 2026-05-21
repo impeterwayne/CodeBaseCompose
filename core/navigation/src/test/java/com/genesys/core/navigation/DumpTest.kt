@@ -1,9 +1,5 @@
 package com.genesys.core.navigation
 
-import androidx.navigation3.ui.NavDisplayKt
-import androidx.navigation3.runtime.NavBackStack
-import kotlin.reflect.full.declaredFunctions
-import kotlin.reflect.full.valueParameters
 
 fun printNavDisplayParams() {
     println("NavDisplay parameters:")

@@ -15,6 +15,9 @@ class MainViewModel @Inject constructor(
 
     override val container = container<MainUiState, MainSideEffect>(MainUiState())
 
+    init {
+        loadTemplates()
+    }
     override fun onAction(action: MainAction) {
         when (action) {
             MainAction.LoadTemplates -> loadTemplates()

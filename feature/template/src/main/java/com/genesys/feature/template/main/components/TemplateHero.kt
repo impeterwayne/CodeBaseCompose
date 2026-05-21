@@ -75,7 +75,7 @@ fun TemplateHero(
 private fun TemplateHeroPreview() {
     AppTheme {
         TemplateHero(
-            template = com.genesys.core.model.template.Template(name = "Hero Template")
+            template = Template(name = "Hero Template")
         )
     }
 }

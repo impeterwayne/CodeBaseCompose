@@ -1,4 +1,4 @@
-package com.genesys.feature.template.navigation
+package com.genesys.feature.template.main
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background

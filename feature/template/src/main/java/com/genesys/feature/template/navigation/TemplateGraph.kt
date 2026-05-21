@@ -14,6 +14,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.genesys.feature.template.main.MainAction
 import com.genesys.feature.template.main.MainSideEffect
 import com.genesys.feature.template.main.MainViewModel
+import com.genesys.feature.template.main.TemplateDetailScreen
 import com.genesys.feature.template.main.TemplateScreen
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -34,11 +35,6 @@ fun TemplateGraph(
             }
         }
     }
-
-    LaunchedEffect(Unit) {
-        viewModel.onAction(MainAction.LoadTemplates)
-    }
-
     val entries = entryProvider<NavKey> {
         entry<Route.Templates> {
             TemplateScreen(

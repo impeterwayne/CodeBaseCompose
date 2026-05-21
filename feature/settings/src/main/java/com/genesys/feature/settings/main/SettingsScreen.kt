@@ -28,7 +28,6 @@ import com.genesys.core.designsystem.component.AppText
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.settings.SettingGroup
 import com.genesys.core.model.settings.SettingItem
-
 import com.genesys.feature.settings.main.components.SettingsHero
 import com.genesys.feature.settings.main.components.SettingCard
 
@@ -75,6 +74,6 @@ fun SettingsScreen(
 @Composable
 private fun SettingsScreenPreview() {
     AppTheme {
-        SettingsScreen(state = com.genesys.feature.settings.main.SettingsUiState(), onAction = {})
+        SettingsScreen(state = SettingsUiState(), onAction = {})
     }
 }
