@@ -1,4 +1,4 @@
-package com.genesys.feature.pokedex.main
+package com.genesys.feature.pokedex.presentation.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,20 +8,54 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.genesys.core.designsystem.component.AppPageFrame
 import com.genesys.core.designsystem.component.ErrorState
 import com.genesys.core.designsystem.component.LoadingIndicator
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.Pokemon
+import com.genesys.core.navigation.AppNavigator
+import com.genesys.core.navigation.Route
 import com.genesys.feature.pokedex.R
-import com.genesys.feature.pokedex.main.components.PokemonGrid
-import com.genesys.feature.pokedex.main.components.PokemonSearchBar
-import com.genesys.feature.pokedex.main.components.PokedexHeader
+import com.genesys.feature.pokedex.presentation.list.components.PokemonGrid
+import com.genesys.feature.pokedex.presentation.list.components.PokemonSearchBar
+import com.genesys.feature.pokedex.presentation.list.components.PokedexHeader
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
+
+@Composable
+fun PokedexRoute(
+    navigator: AppNavigator,
+    modifier: Modifier = Modifier,
+    viewModel: PokedexViewModel = hiltViewModel()
+) {
+    val state by viewModel.collectAsState()
+
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is PokedexSideEffect.OpenPokedexDetail -> {
+                navigator.navigate(Route.PokedexDetail(sideEffect.pokedexId))
+            }
+        }
+    }
+
+    PokedexScreen(
+        state = state,
+        onRetry = { viewModel.onAction(PokedexAction.LoadPokedex) },
+        onLoadNextPage = { viewModel.onAction(PokedexAction.LoadNextPage) },
+        onSearchQueryChanged = { query -> viewModel.onAction(PokedexAction.OnSearchQueryChanged(query)) },
+        onPokemonClick = { pokemon ->
+            viewModel.onAction(PokedexAction.OnPokemonClicked(pokemon))
+        },
+        modifier = modifier
+    )
+}
 
 @Composable
 fun PokedexScreen(

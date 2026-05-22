@@ -1,4 +1,4 @@
-package com.genesys.feature.pokedex.main.components
+package com.genesys.feature.pokedex.presentation.list.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

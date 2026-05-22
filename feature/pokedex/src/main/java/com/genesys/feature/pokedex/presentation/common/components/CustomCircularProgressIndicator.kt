@@ -1,4 +1,4 @@
-package com.genesys.feature.pokedex.main.components
+package com.genesys.feature.pokedex.presentation.common.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

@@ -1,4 +1,4 @@
-package com.genesys.feature.pokedex.main
+package com.genesys.feature.pokedex.presentation.list
 
 import com.genesys.core.common.base.mvi.Action
 import com.genesys.core.common.base.mvi.SideEffect

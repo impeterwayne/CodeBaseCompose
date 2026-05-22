@@ -1,4 +1,4 @@
-package com.genesys.feature.pokedex.main.components
+package com.genesys.feature.pokedex.presentation.detail.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +33,7 @@ import com.genesys.core.designsystem.component.AppPanelTone
 import com.genesys.core.designsystem.component.AppText
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.PokemonInfo
+import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.skydoves.landscapist.glide.GlideImage
 
 /**

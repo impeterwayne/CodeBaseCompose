@@ -121,6 +121,7 @@ fun NavHost(
                 TopLevelDestination.Feature1 -> Feature1Graph(backStack, navigator, fillModifier)
                 TopLevelDestination.Feature2 -> Feature2Graph(backStack, navigator, fillModifier)
                 TopLevelDestination.Feature3 -> Feature3Graph(backStack, navigator, fillModifier)
+                else -> {}
             }
         }
 

@@ -1,4 +1,4 @@
-package com.genesys.feature.pokedex.main
+package com.genesys.feature.pokedex.presentation.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,26 +25,27 @@ import com.genesys.core.designsystem.component.LoadingIndicator
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.PokemonInfo
 import com.genesys.feature.pokedex.R
-import com.genesys.feature.pokedex.main.components.PokemonDetailContent
+import com.genesys.feature.pokedex.presentation.detail.components.PokemonDetailContent
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
-fun PokedexDetailScreen(
+fun PokedexDetailRoute(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.collectAsState()
 
-    PokedexDetailScreenContent(
+    PokedexDetailScreen(
         uiState = uiState,
         onBack = onBack,
-        onRetry = { viewModel.loadPokemonDetail() },
+        onRetry = { viewModel.onAction(DetailAction.LoadPokemonDetail) },
         modifier = modifier
     )
 }
 
 @Composable
-fun PokedexDetailScreenContent(
+fun PokedexDetailScreen(
     uiState: DetailUiState,
     onBack: () -> Unit,
     onRetry: () -> Unit,
@@ -149,7 +150,7 @@ private fun DetailStateContent(
 @Composable
 fun PokedexDetailScreenSuccessLightPreview() {
     AppTheme(darkTheme = false) {
-        PokedexDetailScreenContent(
+        PokedexDetailScreen(
             uiState = DetailUiState.Success(
                 pokemonInfo = PokemonInfo(
                     id = 1,
@@ -174,7 +175,7 @@ fun PokedexDetailScreenSuccessLightPreview() {
 @Composable
 fun PokedexDetailScreenSuccessDarkPreview() {
     AppTheme(darkTheme = true) {
-        PokedexDetailScreenContent(
+        PokedexDetailScreen(
             uiState = DetailUiState.Success(
                 pokemonInfo = PokemonInfo(
                     id = 1,

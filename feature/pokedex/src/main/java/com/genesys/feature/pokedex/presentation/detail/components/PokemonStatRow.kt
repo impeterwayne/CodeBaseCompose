@@ -1,4 +1,4 @@
-package com.genesys.feature.pokedex.main.components
+package com.genesys.feature.pokedex.presentation.detail.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.genesys.core.designsystem.component.AppText
 import com.genesys.core.designsystem.theme.AppTheme
+import com.genesys.feature.pokedex.presentation.common.components.CustomLinearProgressIndicator
 
 @Composable
 fun PokemonStatRow(
