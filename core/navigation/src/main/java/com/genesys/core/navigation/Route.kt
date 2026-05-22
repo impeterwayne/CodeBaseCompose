@@ -18,13 +18,13 @@ sealed interface Route : NavKey, Parcelable {
 
     @Serializable
     @Parcelize
-    data object Projects : Route
+    data object Feature1 : Route
 
     @Serializable
     @Parcelize
-    data object Inbox : Route
+    data object Feature2 : Route
 
     @Serializable
     @Parcelize
-    data object Settings : Route
+    data object Feature3 : Route
 }

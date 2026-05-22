@@ -2,7 +2,7 @@
 
 SkillHub is structured around a decoupled, modularized modern Android codebase. It leverages **Modular Clean Architecture**, **Orbit MVI (Model-View-Intent)** for state management, **Jetpack Navigation 3** for type-safe native navigation, and **Dagger Hilt** for dependency injection.
 
-This document outlines the architectural patterns, modules, data flow, and provides an exhaustive developer guide detailing how to build new screen flows matching the project's standard reference implementation, **`:feature:template`**.
+This document outlines the architectural patterns, modules, data flow, and provides an exhaustive developer guide detailing how to build new screen flows matching the project's standard reference implementation, **`:feature:pokedex`**.
 
 ---
 
@@ -37,40 +37,68 @@ This document outlines the architectural patterns, modules, data flow, and provi
 The codebase is organized into highly specialized Gradle sub-modules to preserve strict dependency boundaries and fast builds:
 
 ```mermaid
-graph TD
-    subgraph App Shell
-        A[app]
+flowchart TD
+    subgraph AppShell ["App Shell"]
+        A["app"]
     end
 
-    subgraph Feature Modules
-        F1[feature:template]
-        F2[feature:projects]
-        F3[feature:inbox]
-        F4[feature:settings]
+    subgraph FeatureModules ["Feature Modules"]
+        F1[":feature:pokedex"]
+        F2[":feature:feature1"]
+        F3[":feature:feature2"]
+        F4[":feature:feature3"]
     end
 
-    subgraph Core Shared Layer
-        C_Nav[core:navigation]
-        C_DS[core:designsystem]
-        C_Dom[core:domain]
-        C_Dat[core:data]
-        C_Db[core:database]
-        C_Net[core:network]
-        C_Ds[core:datastore]
-        C_Mod[core:model]
-        C_Com[core:common]
+    subgraph CoreShared ["Core Shared Layer"]
+        C_Nav[":core:navigation"]
+        C_DS[":core:designsystem"]
+        C_Dom[":core:domain"]
+        C_Dat[":core:data"]
+        C_Db[":core:database"]
+        C_Net[":core:network"]
+        C_Ds[":core:datastore"]
+        C_Mod[":core:model"]
+        C_Com[":core:common"]
     end
 
-    A --> F1 & F2 & F3 & F4
-    F1 & F2 & F3 & F4 --> C_Nav & C_DS & C_Dom
+    A --> F1
+    A --> F2
+    A --> F3
+    A --> F4
+
+    F1 --> C_Nav
+    F1 --> C_DS
+    F1 --> C_Dom
+
+    F2 --> C_Nav
+    F2 --> C_DS
+    F2 --> C_Dom
+
+    F3 --> C_Nav
+    F3 --> C_DS
+    F3 --> C_Dom
+
+    F4 --> C_Nav
+    F4 --> C_DS
+    F4 --> C_Dom
+
     C_Dom --> C_Dat
-    C_Dat --> C_Db & C_Net & C_Ds & C_Mod
-    C_Db & C_Net & C_Ds & C_Nav & C_DS --> C_Com
+
+    C_Dat --> C_Db
+    C_Dat --> C_Net
+    C_Dat --> C_Ds
+    C_Dat --> C_Mod
+
+    C_Db --> C_Com
+    C_Net --> C_Com
+    C_Ds --> C_Com
+    C_Nav --> C_Com
+    C_DS --> C_Com
 ```
 
 ---
 
-## 🚀 4. MVI Pattern Reference Tutorial (How to implement features like `:feature:template`)
+## 🚀 4. MVI Pattern Reference Tutorial (How to implement features like `:feature:pokedex`)
 
 This section is the **Gold Standard Reference Guide** for building new screens in SkillHub. All new feature additions **MUST** strictly follow this exact 5-step MVI structure.
 
@@ -80,33 +108,33 @@ Add the Serializable and Parcelable route to the sealed interface `Route` in `:c
 ```kotlin
 @Serializable
 @Parcelize
-data object Templates : Route
+data object Pokedex : Route
 
 @Serializable
 @Parcelize
-data class TemplateDetail(val templateId: String) : Route
+data class PokedexDetail(val name: String) : Route
 ```
 
 ### Step 2: Define the MVI Contract (`[Feature]Contract.kt`)
-Create your MVI contract in your feature package (e.g. `com.genesys.feature.template.main.MainContract.kt`). It declares:
+Create your MVI contract in your feature package (e.g. `com.genesys.feature.pokedex.PokedexContract.kt`). It declares:
 * **`UiState`**: Immutable state representation of the screen.
 * **`Action`**: User intents (clicks, typing, lifecycle triggers) sent to the ViewModel.
 * **`SideEffect`**: One-off events (like navigating, popping, displaying a snackbar) that are not kept in state.
 
 ```kotlin
-data class MainUiState(
-    val templateCollections: List<TemplateCollections> = emptyList(),
+data class PokedexUiState(
+    val pokedexCollections: List<PokedexCollections> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 ) : UiState
 
-sealed interface MainAction : Action {
-    data object LoadTemplates : MainAction
-    data class OnTemplateClicked(val template: Template) : MainAction
+sealed interface PokedexAction : Action {
+    data object LoadPokedex : PokedexAction
+    data class OnPokemonClicked(val name: String) : PokedexAction
 }
 
-sealed interface MainSideEffect : SideEffect {
-    data class OpenTemplate(val templateId: String) : MainSideEffect
+sealed interface PokedexSideEffect : SideEffect {
+    data class OpenPokemonDetail(val name: String) : PokedexSideEffect
 }
 ```
 
@@ -115,34 +143,34 @@ Inherit from `BaseViewModel` (from `:core:common`). Inject your UseCases, overri
 
 ```kotlin
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val getAllTemplatesUseCase: GetAllTemplatesUseCase
-) : BaseViewModel<MainUiState, MainSideEffect, MainAction>() {
+class PokedexViewModel @Inject constructor(
+    private val getAllPokedexUseCase: GetAllPokedexUseCase
+) : BaseViewModel<PokedexUiState, PokedexSideEffect, PokedexAction>() {
 
     // Initialize state container
-    override val container = container<MainUiState, MainSideEffect>(MainUiState())
+    override val container = container<PokedexUiState, PokedexSideEffect>(PokedexUiState())
 
     init {
-        loadTemplates()
+        loadPokedex()
     }
 
-    override fun onAction(action: MainAction) {
+    override fun onAction(action: PokedexAction) {
         when (action) {
-            MainAction.LoadTemplates -> loadTemplates()
-            is MainAction.OnTemplateClicked -> onTemplateClicked(action.template)
+            PokedexAction.LoadPokedex -> loadPokedex()
+            is PokedexAction.OnPokemonClicked -> onPokemonClicked(action.name)
         }
     }
 
-    private fun loadTemplates() = intent {
+    private fun loadPokedex() = intent {
         if (state.isLoading) return@intent
         
-        getAllTemplatesUseCase().collect { result ->
+        getAllPokedexUseCase(page = 0).collect { result ->
             when (result) {
                 is Result.Loading -> reduce {
                     state.copy(isLoading = true, errorMessage = null)
                 }
                 is Result.Success -> reduce {
-                    state.copy(templateCollections = result.data, isLoading = false, errorMessage = null)
+                    state.copy(pokedexCollections = result.data ?: emptyList(), isLoading = false, errorMessage = null)
                 }
                 is Result.Error -> reduce {
                     state.copy(isLoading = false, errorMessage = result.msg ?: "Failed")
@@ -152,8 +180,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun onTemplateClicked(template: Template) = intent {
-        postSideEffect(MainSideEffect.OpenTemplate(template.id))
+    private fun onPokemonClicked(name: String) = intent {
+        postSideEffect(PokedexSideEffect.OpenPokemonDetail(name))
     }
 }
 ```
@@ -163,10 +191,10 @@ A purely stateless composable that receives a `UiState` and outputs events via c
 
 ```kotlin
 @Composable
-fun TemplateScreen(
-    state: MainUiState,
+fun PokedexScreen(
+    state: PokedexUiState,
     onRetry: () -> Unit,
-    onTemplateClick: (Template) -> Unit,
+    onPokemonClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     AppPageFrame(
@@ -179,15 +207,15 @@ fun TemplateScreen(
             }
             state.errorMessage != null -> {
                 ErrorState(
-                    message = state.errorMessage ?: "Failed to load templates",
+                    message = state.errorMessage ?: "Failed to load pokemon",
                     onRetry = onRetry,
                     modifier = Modifier.fillMaxSize()
                 )
             }
             else -> {
-                TemplateCollectionsList(
-                    collections = state.templateCollections,
-                    onTemplateClick = onTemplateClick
+                PokedexCollectionsList(
+                    collections = state.pokedexCollections,
+                    onPokemonClick = onPokemonClick
                 )
             }
         }
@@ -196,50 +224,65 @@ fun TemplateScreen(
 ```
 
 ### Step 5: Wire Navigation via Feature Graph (`[Feature]Graph.kt`)
-Each feature module exposes a Composable `Graph` function (e.g. `TemplateGraph.kt` under `navigation/`). It hoists the Hilt ViewModel, binds state and side-effects, and maps the Navigation 3 Route entries.
+To preserve clean segregation of concerns, navigation and UI orchestration uses a **Two-Tier Hoisting Pattern**:
+1. **Screen-level Hoister (`PokedexRoute` inside `PokedexScreen.kt`)**: Hoists the ViewModel, collects Orbit MVI states, intercepts side-effects, and passes events to actions.
+2. **Feature Graph (`PokedexGraph.kt` under `navigation/`)**: Provides type-safe entry routing mapping without ViewModel direct logic, cleanly delegating to the Composable hoister screens.
 
+#### Tier 1: The Screen Hoisting Route (`PokedexRoute`)
 ```kotlin
 @Composable
-fun TemplateGraph(
-    backStack: NavBackStack<NavKey>,
+fun PokedexRoute(
     navigator: AppNavigator,
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: PokedexViewModel = hiltViewModel()
 ) {
-    // 1. Bind State & Side Effects
     val state by viewModel.collectAsState()
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is MainSideEffect.OpenTemplate -> {
-                navigator.navigate(Route.TemplateDetail(sideEffect.templateId))
+            is PokedexSideEffect.OpenPokedexDetail -> {
+                navigator.navigate(Route.PokedexDetail(sideEffect.pokedexId))
             }
         }
     }
 
-    // 2. Map Route objects to Composable screens
+    PokedexScreen(
+        state = state,
+        onRetry = { viewModel.onAction(PokedexAction.LoadPokedex) },
+        onLoadNextPage = { viewModel.onAction(PokedexAction.LoadNextPage) },
+        onSearchQueryChanged = { query -> viewModel.onAction(PokedexAction.OnSearchQueryChanged(query)) },
+        onPokemonClick = { pokemon ->
+            viewModel.onAction(PokedexAction.OnPokemonClicked(pokemon))
+        },
+        modifier = modifier
+    )
+}
+```
+
+#### Tier 2: The Orchestration Graph (`PokedexGraph`)
+```kotlin
+@Composable
+fun PokedexGraph(
+    backStack: NavBackStack<NavKey>,
+    navigator: AppNavigator,
+    modifier: Modifier = Modifier
+) {
     val entries = entryProvider<NavKey> {
-        entry<Route.Templates> {
-            TemplateScreen(
-                state = state,
-                onRetry = { viewModel.onAction(MainAction.LoadTemplates) },
-                onTemplateClick = { template ->
-                    viewModel.onAction(MainAction.OnTemplateClicked(template))
-                },
+        entry<Route.Pokedex> {
+            PokedexRoute(
+                navigator = navigator,
                 modifier = modifier
             )
         }
 
-        entry<Route.TemplateDetail> { destination ->
-            TemplateDetailScreen(
-                templateId = destination.templateId,
+        entry<Route.PokedexDetail> {
+            PokedexDetailRoute(
                 onBack = navigator::popIfPossible,
                 modifier = modifier
             )
         }
     }
 
-    // 3. Render current active screen
     NavDisplay(
         backStack = backStack,
         onBack = navigator::popIfPossible,
@@ -254,6 +297,7 @@ fun TemplateGraph(
 ## 💾 5. Data & Local Caching Flow
 
 1. **Repository Synchronization:** UseCases within `:core:domain` request data from repositories in `:core:data`.
-2. **Local Caching (Offline First):** The repositories check Tencent MMKV via `MMKVData.lastFetchTemplateTime` to see if cached data is still valid.
-3. **Database Read:** If cache is valid, the repo pulls `TemplateCollectionsEntity` from `TemplateCollectionsDao`.
-4. **Database Write:** If cache is expired or missing, Retrofit fetches `ResponseAITemplate` from the remote backend. On success, models are converted to local Room entities, stored in `TemplateDatabase`, and the last fetch time is written to `MMKVData.lastFetchTemplateTime`.
+2. **Local Caching (Offline First):** The repositories check Tencent MMKV via `MMKVData.lastFetchPokedexTime` to see if cached data is still valid.
+3. **Database Read:** If cache is valid, the repo pulls `PokedexCollectionsEntity` from `PokedexCollectionsDao` under `:core:database`.
+4. **Database Write:** If cache is expired or missing, Retrofit fetches pokemon list or detail remote data via `ApiService` from PokeAPI. On success, models are converted to local Room entities, stored in `PokedexDatabase` using `PokedexCollectionsDao`, and the last fetch time is written to `MMKVData.lastFetchPokedexTime`.
+

@@ -18,19 +18,24 @@ D:\Quest\CodebaseCompose\
 │   │   └── MainApplication.kt  # Android Application entry point (initializes MMKV)
 │   └── build.gradle.kts        # App build configurations and core/feature dependency imports
 ├── feature/                    # UI Screen feature modules implementing Orbit MVI
-│   ├── template/               # [Gold Standard Reference] Core template feature
-│   │   └── src/main/java/com/genesys/feature/template/
-│   │       ├── main/           # MVI classes (Contract, ViewModel, Composable Screens)
-│   │       │   ├── components/ # Sub-components (TemplateHero, TemplateCollectionsList, etc.)
-│   │       │   ├── MainContract.kt      # State, Actions, and Side Effects contracts
-│   │       │   ├── MainViewModel.kt     # Hilt ViewModel performing business logic
-│   │       │   ├── TemplateScreen.kt    # Stateless hoister for templates overview
-│   │       │   └── TemplateDetailScreen.kt # Details view Composable
+│   ├── pokedex/                # [Gold Standard Reference] Canonical Pokedex feature
+│   │   └── src/main/java/com/genesys/feature/pokedex/
+│   │       ├── presentation/   # MVI presentation layer
+│   │       │   ├── list/       # Pokemon List Screen
+│   │       │   │   ├── components/ # Custom components (PokedexHeader, PokemonCard, etc.)
+│   │       │   │   ├── PokedexContract.kt
+│   │       │   │   ├── PokedexViewModel.kt
+│   │       │   │   └── PokedexScreen.kt
+│   │       │   └── detail/     # Pokemon Detail Screen
+│   │       │       ├── components/ # Custom components (PokemonDetailContent, PokemonStatRow, etc.)
+│   │       │       ├── DetailContract.kt
+│   │       │       ├── DetailViewModel.kt
+│   │       │       └── PokedexDetailScreen.kt
 │   │       └── navigation/
-│   │           └── TemplateGraph.kt     # Entry provider wrapping Jetpack Navigation 3
-│   ├── projects/               # Projects-related feature module
-│   ├── inbox/                  # Inbox and messages feature module
-│   └── settings/               # App configuration and profile feature module
+│   │           └── PokedexGraph.kt     # Graph orchestration for Pokedex
+│   ├── feature1/               # Generic Projects feature module
+│   ├── feature2/               # Generic Inbox feature module
+│   └── feature3/               # Generic Settings feature module
 └── core/                       # Shared utility and architectural layers (Domain, Data, UI Design)
     ├── common/                 # Base classes, including BaseViewModel.kt and MVI traits
     ├── model/                  # Pure Kotlin data models (independent of Android or database)
@@ -53,7 +58,7 @@ D:\Quest\CodebaseCompose\
 
 ### 2. Feature Modules (`:feature:*`)
 * **Role:** Screen orchestration layer. Each module represents a high-level user flow.
-* **Reference Implementation:** **`:feature:template`**
+* **Reference Implementation:** **`:feature:pokedex`**
   * All feature additions should mimic the directory layout of this module. It provides a complete sandbox from contract boundary definition up to custom UI component segregation.
 
 ### 3. Core Modules (`:core:*`)

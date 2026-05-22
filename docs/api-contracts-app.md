@@ -17,58 +17,79 @@ This document catalogs the network contracts and endpoints used by the Mobile Ap
 
 All API definitions are located in the [ApiService.kt](file:///D:/Quest/CodebaseCompose/core/network/src/main/java/com/genesys/core/network/service/ApiService.kt) interface under the `:core:network` module.
 
-### 1. Get AI Templates Home
+### 1. Fetch Pokemon List
 
-Retrieves the structured lists of AI templates and layout categories (collections) displayed on the home page.
+Retrieves a paginated list of Pokemon.
 
-* **Endpoint:** `/content/api/and-remove-background/home`
+* **Endpoint:** `https://pokeapi.co/api/v2/pokemon`
 * **HTTP Method:** `GET`
-* **Serialization Model:** [ResponseAITemplate](file:///D:/Quest/CodebaseCompose/core/network/src/main/java/com/genesys/core/network/dto/template/ResponseAITemplate.kt)
+* **Query Parameters:**
+  * `limit` (Int): Maximum number of items to return in the page.
+  * `offset` (Int): Pagination offset index.
+* **Serialization Model:** [ResponsePokemonList](file:///D:/Quest/CodebaseCompose/core/network/src/main/java/com/genesys/core/network/dto/pokedex/ResponsePokemonList.kt)
 * **Function Signature:**
   ```kotlin
-  @GET("content/api/and-remove-background/home")
-  suspend fun getAITemplates(): ApiResponse<ResponseAITemplate>
+  @GET("https://pokeapi.co/api/v2/pokemon")
+  suspend fun fetchPokemonList(
+      @Query("limit") limit: Int,
+      @Query("offset") offset: Int
+  ): ApiResponse<ResponsePokemonList>
   ```
 
 #### Response Structure Details
 
-* **`ResponseAITemplate`**
-  * `data`: `List<ResponseTemplateCollections>` — Collections of template items grouped by categories.
-  * `meta`: `Meta` — Pagination metadata.
+* **`ResponsePokemonList`**
+  * `count`: `Int` — Total count of all available Pokemon.
+  * `next`: `String?` — URL path to retrieve the next page.
+  * `previous`: `String?` — URL path to retrieve the previous page.
+  * `results`: `List<ResponsePokemonItem>` — List of Pokemon summary items.
 
-* **`ResponseTemplateCollections`**
-  * `id`: `String` — Unique identifier of the collection.
-  * `code`: `String` — Machine-readable code for the category.
-  * `name`: `String` — User-friendly display name.
-  * `sort`: `Int` — Sorting hierarchy order.
-  * `items`: `List<ResponseTemplate>` — Nested array of templates under this collection.
-
-* **`ResponseTemplate`**
-  * `id`: `String` — Unique template identifier.
-  * `name`: `String` — Name of the template.
-  * `premium`: `Boolean` — Flag specifying if this is a paid/VIP template.
-  * `ratio`: `String` — Image aspect ratio (e.g. `"1:1"`, `"16:9"`).
-  * `thumbnail`: `String` — URL path to the thumbnail image asset.
-  * `resource`: `String` — Path to the source raw asset/file.
-  * `sort`: `Int` — Display sorting order.
-  * `categoryDocumentId`: `String` — Parent category reference document ID.
+* **`ResponsePokemonItem`**
+  * `name`: `String` — Name of the Pokemon.
+  * `url`: `String` — Details URL for the Pokemon.
 
 ---
 
-### 2. Download File (Streaming)
+### 2. Fetch Pokemon Info
 
-Performs a high-performance raw file streaming download for binary assets (such as template resource files or heavy media) bypassing in-memory buffer limits.
+Retrieves high-fidelity details about a specific Pokemon, including dimensions, base statistics, and elemental types.
 
-* **Endpoint:** Dynamic URL
+* **Endpoint:** `https://pokeapi.co/api/v2/pokemon/{name}`
 * **HTTP Method:** `GET`
-* **Annotations:** `@Streaming` (Prevents loading the entire payload directly into memory, streaming it to disk instead)
-* **Serialization Model:** `ResponseBody` (Raw binary stream)
+* **Path Parameters:**
+  * `name` (String): The case-sensitive name of the Pokemon.
+* **Serialization Model:** [ResponsePokemonDetail](file:///D:/Quest/CodebaseCompose/core/network/src/main/java/com/genesys/core/network/dto/pokedex/ResponsePokemonDetail.kt)
 * **Function Signature:**
   ```kotlin
-  @Streaming
-  @GET
-  suspend fun downloadFile(@Url fileUrl: String): ResponseBody
+  @GET("https://pokeapi.co/api/v2/pokemon/{name}")
+  suspend fun fetchPokemonInfo(
+      @Path("name") name: String
+  ): ApiResponse<ResponsePokemonDetail>
   ```
+
+#### Response Structure Details
+
+* **`ResponsePokemonDetail`**
+  * `id`: `Int` — Unique identifier/index of the Pokemon.
+  * `name`: `String` — Unique name.
+  * `height`: `Int` — Body height.
+  * `weight`: `Int` — Body weight.
+  * `baseExperience`: `Int` — Base experience yielded upon defeat.
+  * `stats`: `List<ResponseStatSlot>` — Statistics breakdown list.
+  * `types`: `List<ResponseTypeSlot>` — Types/elements breakdown list.
+
+* **`ResponseStatSlot`**
+  * `baseStat`: `Int` — Numerical statistic value.
+  * `stat`: `ResponseStatItem` — Associated statistic name/metadata.
+
+* **`ResponseStatItem`**
+  * `name`: `String` — Stat name (e.g. `"hp"`, `"attack"`, `"defense"`).
+
+* **`ResponseTypeSlot`**
+  * `type`: `ResponseTypeItem` — Associated type name/metadata.
+
+* **`ResponseTypeItem`**
+  * `name`: `String` — Element type name (e.g. `"grass"`, `"poison"`).
 
 ---
 

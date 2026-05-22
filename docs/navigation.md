@@ -11,40 +11,56 @@ Key features of this setup include:
 2. **Type-Safe Arguments**: Screen arguments are passed natively through data classes.
 3. **Decoupled Navigation**: Feature modules provide their own UI graphs and handle internal logic, while core modules provide the abstractions.
 
+---
+
 ## Core Components
 
 ### 1. `Route` (`core:navigation`)
 All screens in the application are defined in a single sealed interface `Route`, which extends `NavKey` and `Parcelable`.
 
-- **No Arguments**: Defined as `data object`.
-- **With Arguments**: Defined as `data class`.
+* **No Arguments**: Defined as `data object`.
+* **With Arguments**: Defined as `data class`.
 
 ```kotlin
 sealed interface Route : NavKey, Parcelable {
     @Serializable
     @Parcelize
-    data object Templates : Route
+    data object Pokedex : Route
 
     @Serializable
     @Parcelize
-    data class TemplateDetail(val templateId: String) : Route
+    data class PokedexDetail(val pokedexId: String) : Route
+
+    @Serializable
+    @Parcelize
+    data object Feature1 : Route
+
+    @Serializable
+    @Parcelize
+    data object Feature2 : Route
+
+    @Serializable
+    @Parcelize
+    data object Feature3 : Route
 }
 ```
 
 ### 2. `AppNavigator` (`core:navigation`)
 A lightweight wrapper around the active `NavBackStack`. It exposes the essential navigation functions to feature graphs and screens.
 
-- `navigate(route: Route)`: Adds a new screen to the back stack.
-- `popIfPossible()`: Removes the current screen if the stack has more than one item.
-- `popToRoot()`: Clears the stack back to the top-level destination.
-- `canPop`: Boolean property useful for showing/hiding back buttons or the bottom navigation bar.
+* `navigate(route: Route)`: Adds a new screen to the back stack.
+* `popIfPossible()`: Removes the current screen if the stack has more than one item.
+* `popToRoot()`: Clears the stack back to the top-level destination.
+* `canPop`: Boolean property useful for showing/hiding back buttons or the bottom navigation bar.
 
 ### 3. `AppState` and Multiple Back Stacks (`app` module)
-In `NavHost.kt`, `rememberAppState()` generates the state for the root application structure. For every `TopLevelDestination` (e.g., Templates, Inbox), it creates:
-- A dedicated `NavBackStack`
-- A dedicated `AppNavigatorImpl` wrapping that stack
+In `NavHost.kt`, `rememberAppState()` generates the state for the root application structure. For every `TopLevelDestination` (e.g., `Pokedex`, `Feature2`), it creates:
+* A dedicated `NavBackStack`
+* A dedicated `AppNavigatorImpl` wrapping that stack
 
 When the user selects a different bottom tab, `AppState` swaps out the `activeBackStack` and `activeNavigator`, preserving the state of the non-active tabs natively.
+
+---
 
 ## Feature Implementation Guide
 
@@ -100,14 +116,18 @@ fun MyFeatureGraph(
 }
 ```
 
+---
+
 ## UI Behaviors
 
-- **Bottom Bar Visibility**: The `AppBottomBar` is dynamically shown or hidden based on whether the `activeNavigator.canPop` is true. This means the bottom bar is only visible on the root screen of any tab, and hides when you navigate deeper into a stack.
-- **Back Handler**: The root `NavHost` automatically handles system back button presses, first attempting to pop the active stack (`appState.handleBack()`), and if that fails (meaning the user is at a root tab), it navigates back to the primary starting tab (`Templates`) before exiting the app.
+* **Bottom Bar Visibility**: The `AppBottomBar` is dynamically shown or hidden based on whether the `activeNavigator.canPop` is true. This means the bottom bar is only visible on the root screen of any tab, and hides when you navigate deeper into a stack.
+* **Back Handler**: The root `NavHost` automatically handles system back button presses, first attempting to pop the active stack (`appState.handleBack()`), and if that fails (meaning the user is at a root tab), it navigates back to the primary starting tab (`Pokedex`) before exiting the app.
+
+---
 
 ## Cross-Feature Navigation
 
-In a modularized architecture, feature modules (e.g., `feature-template`, `feature-projects`) should not depend on each other directly to prevent tight coupling and circular dependencies.
+In a modularized architecture, feature modules (e.g., `feature-pokedex`, `feature-feature1`) should not depend on each other directly to prevent tight coupling and circular dependencies.
 
 If a feature graph needs to navigate to or display a screen from another feature module, the orchestration must happen in the `app` module (where `NavHost` lives, as it depends on all features).
 
@@ -115,25 +135,25 @@ If a feature graph needs to navigate to or display a screen from another feature
 
 If a graph needs to display a specific screen from another module without switching tabs, inject that screen as a `@Composable` parameter. This allows the graph to render the route inside its own `entryProvider` without knowing about the other module.
 
-**1. Update the Target Graph:**
+#### 1. Update the Target Graph
 Update your feature graph to accept the external screen as a lambda parameter.
 
 ```kotlin
 @Composable
-fun TemplateGraph(
+fun PokedexGraph(
     backStack: NavBackStack<NavKey>,
     navigator: AppNavigator,
     // Inject the external screen here!
-    projectSelectorScreen: @Composable (projectId: String, onBack: () -> Unit) -> Unit,
+    externalFeatureScreen: @Composable (id: String, onBack: () -> Unit) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val entries = entryProvider<NavKey> {
         // ... existing local entries ...
         
         // Map the external route to the injected lambda
-        entry<Route.ProjectSelector> { destination ->
-            projectSelectorScreen(
-                projectId = destination.projectId, 
+        entry<Route.ExternalRoute> { destination ->
+            externalFeatureScreen(
+                id = destination.id, 
                 onBack = navigator::popIfPossible
             )
         }
@@ -142,22 +162,21 @@ fun TemplateGraph(
 }
 ```
 
-**2. Provide the Screen in `NavHost.kt`:**
+#### 2. Provide the Screen in `NavHost.kt`
 Because `NavHost.kt` resides in the `app` module, it has access to all feature module screens and can wire them together.
 
 ```kotlin
-TopLevelDestination.Templates -> TemplateGraph(
+TopLevelDestination.Pokedex -> PokedexGraph(
     backStack = backStack,
     navigator = navigator,
-    projectSelectorScreen = { projectId, onBack ->
+    externalFeatureScreen = { id, onBack ->
         // Directly call the composable from the other feature module
-        com.genesys.feature.projects.ui.ProjectSelectorScreen(
-            projectId = projectId,
-            onBack = onBack
+        com.genesys.feature.feature1.main.Feature1Screen(
+            modifier = fillModifier
         )
     },
     modifier = fillModifier
 )
 ```
 
-Alternatively, if you need to perform top-level navigation (i.e. switching bottom tabs), pass a standard callback like `onNavigateToProjects: () -> Unit` to your graph, and call `appState.selectDestination(TopLevelDestination.Projects)` from within `NavHost.kt`.
+Alternatively, if you need to perform top-level navigation (i.e. switching bottom tabs), pass a standard callback like `onNavigateToFeature1: () -> Unit` to your graph, and call `appState.selectDestination(TopLevelDestination.Feature1)` from within `NavHost.kt`.

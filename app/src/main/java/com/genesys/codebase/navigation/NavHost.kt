@@ -30,10 +30,10 @@ enum class TopLevelDestination(
     @StringRes val labelRes: Int,
     @StringRes val badgeRes: Int
 ) {
-    Templates(Route.Pokedex, R.string.nav_pokedex, R.string.nav_badge_pokedex),
-    Projects(Route.Feature1, R.string.nav_feature1, R.string.nav_badge_feature1),
-    Inbox(Route.Feature2, R.string.nav_feature2, R.string.nav_badge_feature2),
-    Settings(Route.Feature3, R.string.nav_feature3, R.string.nav_badge_feature3)
+    Pokedex(Route.Pokedex, R.string.nav_pokedex, R.string.nav_badge_pokedex),
+    Feature1(Route.Feature1, R.string.nav_feature1, R.string.nav_badge_feature1),
+    Feature2(Route.Feature2, R.string.nav_feature2, R.string.nav_badge_feature2),
+    Feature3(Route.Feature3, R.string.nav_feature3, R.string.nav_badge_feature3)
 }
 
 @Composable

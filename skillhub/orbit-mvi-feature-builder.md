@@ -1,6 +1,6 @@
 ---
 name: skillhub
-description: Build Orbit MVI feature flows for SkillHub using the canonical feature template and repo architecture rules. Use when the user asks to implement a new screen, feature flow, route, contract, ViewModel, stateless Compose screen, or graph in this codebase.
+description: Build Orbit MVI feature flows for SkillHub using the canonical pokedex feature and repo architecture rules. Use when the user asks to implement a new screen, feature flow, route, contract, ViewModel, stateless Compose screen, or graph in this codebase.
 ---
 
 # SkillHub Orbit MVI Feature Workflow
@@ -25,7 +25,7 @@ Do not use this skill when the request is limited to:
 
 **Primary reference:** `docs/feature_implementation.md`
 
-**Canonical implementation anchor:** `:feature:template`
+**Canonical implementation anchor:** `:feature:pokedex`
 
 ## Conventions
 
@@ -33,7 +33,7 @@ Do not use this skill when the request is limited to:
 - `{skill-root}` resolves to this skill's installed directory.
 - `{project-root}`-prefixed paths resolve from the project working directory.
 - `{skill-name}` resolves to the skill directory's basename.
-- Treat `:feature:template` as the gold-standard implementation unless the user explicitly instructs otherwise.
+- Treat `:feature:pokedex` as the gold-standard implementation unless the user explicitly instructs otherwise.
 - Prefer repository-local conventions over generic Android or Orbit MVI examples.
 
 ## On Activation
@@ -44,7 +44,7 @@ Inspect these sources before making structural decisions:
 - `{project-root}/docs/feature_implementation.md`
 - `{project-root}/docs/architecture.md`
 - `{project-root}/docs/navigation.md`
-- the target implementation in `:feature:template`
+- the target implementation in `:feature:pokedex`
 
 ### Step 2: Identify Scope
 
@@ -60,7 +60,7 @@ If a required detail is missing and cannot be safely inferred from neighboring f
 
 ### Step 3: Find the Closest Existing Pattern
 
-Inspect the nearest comparable feature module and `:feature:template`. Use the closest valid local pattern first, then fall back to the template.
+Inspect the nearest comparable feature module and `:feature:pokedex`. Use the closest valid local pattern first, then fall back to the pokedex.
 
 ### Step 4: Enter the Workflow
 
@@ -123,7 +123,7 @@ Create or update `[Feature]ViewModel.kt` using the project-standard Orbit MVI st
 - Do not bypass the established result handling pattern used by neighboring features.
 
 **Success criteria:**
-- ViewModel owns feature behavior, state transitions, and one-off effects in the same style as `:feature:template`.
+- ViewModel owns feature behavior, state transitions, and one-off effects in the same style as `:feature:pokedex`.
 
 ### Stage 4: Implement the Stateless Screen
 
@@ -211,7 +211,7 @@ Before considering the work complete, verify the implementation against the repo
 
 ## Guardrails
 
-- Always inspect `:feature:template` before implementing a new feature flow.
+- Always inspect `:feature:pokedex` before implementing a new feature flow.
 - Prefer the closest local feature pattern when it is clearly valid and consistent with the architecture.
 - Keep changes minimal and scoped to the requested flow.
 - Preserve typed navigation, stateless rendering, and graph-level orchestration boundaries.
