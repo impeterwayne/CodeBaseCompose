@@ -1,0 +1,12 @@
+<resources>
+    <string name="pokedex_error_generic">Something went wrong</string>
+    <string name="pokedex_count">%1$d templates</string>
+    <string name="pokedex_premium_label">Premium template</string>
+    <string name="pokedex_standard_label">Template</string>
+    <string name="pokedex_premium_chip">Premium</string>
+    <string name="pokedex_standard_chip">Standard</string>
+    <string name="pokedex_detail_back">Back to templates</string>
+    <string name="pokedex_detail_title">Template detail</string>
+    <string name="pokedex_open_label">Open template</string>
+    <string name="pokedex_back_label">Back to templates</string>
+</resources>

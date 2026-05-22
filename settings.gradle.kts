@@ -40,7 +40,7 @@ include(":core:navigation")
 include(":core:datastore")
 
 // Feature modules
-include(":feature:template")
-include(":feature:projects")
-include(":feature:inbox")
-include(":feature:settings")
+include(":feature:pokedex")
+include(":feature:feature1")
+include(":feature:feature2")
+include(":feature:feature3")

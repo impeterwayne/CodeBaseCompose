@@ -20,25 +20,25 @@ import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.navigation.AppNavigator
 import com.genesys.core.navigation.AppNavigatorImpl
 import com.genesys.core.navigation.Route
-import com.genesys.feature.inbox.navigation.InboxGraph
-import com.genesys.feature.projects.navigation.ProjectsGraph
-import com.genesys.feature.settings.navigation.SettingsGraph
-import com.genesys.feature.template.navigation.TemplateGraph
+import com.genesys.feature.feature2.navigation.Feature2Graph
+import com.genesys.feature.feature1.navigation.Feature1Graph
+import com.genesys.feature.feature3.navigation.Feature3Graph
+import com.genesys.feature.pokedex.navigation.PokedexGraph
 
 enum class TopLevelDestination(
     val screen: Route,
     @StringRes val labelRes: Int,
     @StringRes val badgeRes: Int
 ) {
-    Templates(Route.Templates, R.string.nav_templates, R.string.nav_badge_templates),
-    Projects(Route.Projects, R.string.nav_projects, R.string.nav_badge_projects),
-    Inbox(Route.Inbox, R.string.nav_inbox, R.string.nav_badge_inbox),
-    Settings(Route.Settings, R.string.nav_settings, R.string.nav_badge_settings)
+    Templates(Route.Pokedex, R.string.nav_pokedex, R.string.nav_badge_pokedex),
+    Projects(Route.Feature1, R.string.nav_feature1, R.string.nav_badge_feature1),
+    Inbox(Route.Feature2, R.string.nav_feature2, R.string.nav_badge_feature2),
+    Settings(Route.Feature3, R.string.nav_feature3, R.string.nav_badge_feature3)
 }
 
 @Composable
 fun rememberAppState(
-    initialDestination: TopLevelDestination = TopLevelDestination.Templates
+    initialDestination: TopLevelDestination = TopLevelDestination.Pokedex
 ): AppState {
     val currentDestinationState = rememberSaveable { mutableStateOf(initialDestination) }
     
@@ -82,8 +82,8 @@ class AppState(
         
     fun handleBack() {
         if (!activeNavigator.popIfPossible()) {
-            if (currentDestination != TopLevelDestination.Templates) {
-                currentDestination = TopLevelDestination.Templates
+            if (currentDestination != TopLevelDestination.Pokedex) {
+                currentDestination = TopLevelDestination.Pokedex
             }
         }
     }
@@ -100,7 +100,7 @@ fun NavHost(
 ) {
     val appState = rememberAppState()
 
-    BackHandler(enabled = appState.activeNavigator.canPop || appState.currentDestination != TopLevelDestination.Templates) {
+    BackHandler(enabled = appState.activeNavigator.canPop || appState.currentDestination != TopLevelDestination.Pokedex) {
         appState.handleBack()
     }
 
@@ -117,10 +117,10 @@ fun NavHost(
             val fillModifier = Modifier.fillMaxSize()
 
             when (appState.currentDestination) {
-                TopLevelDestination.Templates -> TemplateGraph(backStack, navigator, fillModifier)
-                TopLevelDestination.Projects -> ProjectsGraph(backStack, navigator, fillModifier)
-                TopLevelDestination.Inbox -> InboxGraph(backStack, navigator, fillModifier)
-                TopLevelDestination.Settings -> SettingsGraph(backStack, navigator, fillModifier)
+                TopLevelDestination.Pokedex -> PokedexGraph(backStack, navigator, fillModifier)
+                TopLevelDestination.Feature1 -> Feature1Graph(backStack, navigator, fillModifier)
+                TopLevelDestination.Feature2 -> Feature2Graph(backStack, navigator, fillModifier)
+                TopLevelDestination.Feature3 -> Feature3Graph(backStack, navigator, fillModifier)
             }
         }
 

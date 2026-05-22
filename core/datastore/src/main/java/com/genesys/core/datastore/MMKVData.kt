@@ -5,12 +5,12 @@ import com.tencent.mmkv.MMKV
 
 object MMKVData {
 
-    private const val KEY_LAST_FETCH_TEMPLATE_TIME = "key_last_fetch_template_time"
+    private const val KEY_LAST_FETCH_POKEDEX_TIME = "key_last_fetch_pokedex_time"
 
-    var lastFetchTemplateTime: Long
-        get() = MyMMKV.valueOf(KEY_LAST_FETCH_TEMPLATE_TIME, 0L)
+    var lastFetchPokedexTime: Long
+        get() = MyMMKV.valueOf(KEY_LAST_FETCH_POKEDEX_TIME, 0L)
         set(value) {
-            MyMMKV.setValue(KEY_LAST_FETCH_TEMPLATE_TIME, value)
+            MyMMKV.setValue(KEY_LAST_FETCH_POKEDEX_TIME, value)
         }
 
     object MyMMKV {

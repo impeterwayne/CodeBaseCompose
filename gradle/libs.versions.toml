@@ -28,6 +28,7 @@ startupRuntime = "1.2.0"
 timber = "5.0.1"
 utilcodex = "1.31.1"
 xxpermissionKtx = "1.0.2"
+landscapist = "2.4.4"
 
 # Compose
 composeBom = "2026.05.00"
@@ -71,6 +72,9 @@ sandwichRetrofit = { module = "com.github.skydoves:sandwich-retrofit", version.r
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 utilcodex = { module = "com.blankj:utilcodex", version.ref = "utilcodex" }
 xxpermissionKtx = { module = "io.github.impeterwayne:xxpermission-ktx", version.ref = "xxpermissionKtx" }
+landscapist-glide = { module = "com.github.skydoves:landscapist-glide", version.ref = "landscapist" }
+landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapist" }
+landscapist-animation = { module = "com.github.skydoves:landscapist-animation", version.ref = "landscapist" }
 
 # Compose
 composeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -84,6 +88,7 @@ activityCompose = { module = "androidx.activity:activity-compose", version.ref =
 navigation3Runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 navigation3Ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+hiltLifecycleViewModelCompose = { module = "androidx.hilt:hilt-lifecycle-viewmodel-compose", version.ref = "hiltNavigationCompose" }
 orbitViewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbitMvi" }
 orbitCompose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbitMvi" }
 orbitTest = { module = "org.orbit-mvi:orbit-test", version.ref = "orbitMvi" }

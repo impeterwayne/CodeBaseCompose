@@ -57,10 +57,10 @@ dependencies {
     implementation(project(":core:designsystem"))
 
     // Feature modules
-    implementation(project(":feature:template"))
-    implementation(project(":feature:projects"))
-    implementation(project(":feature:inbox"))
-    implementation(project(":feature:settings"))
+    implementation(project(":feature:pokedex"))
+    implementation(project(":feature:feature1"))
+    implementation(project(":feature:feature2"))
+    implementation(project(":feature:feature3"))
 
     // AndroidX
     implementation(libs.androidxCoreKtx)
@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.activityCompose)
     implementation(project(":core:navigation"))
     implementation(libs.hiltNavigationCompose)
+    implementation(libs.hiltLifecycleViewModelCompose)
     implementation(libs.androidxLifecycleRuntimeCompose)
     debugImplementation(libs.composeUiTooling)
 

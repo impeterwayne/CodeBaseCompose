@@ -2,9 +2,9 @@ package com.genesys.core.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.genesys.core.database.TemplateDatabase
-import com.genesys.core.database.converters.TemplateListConverter
-import com.genesys.core.database.dao.TemplateCollectionsDao
+import com.genesys.core.database.PokedexDatabase
+import com.genesys.core.database.converters.PokedexListConverter
+import com.genesys.core.database.dao.PokedexCollectionsDao
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -20,22 +20,22 @@ object DatabaseModule {
     @Singleton
     fun provideAppDatabase(
         @ApplicationContext appContext: Context,
-        templateListConverter: TemplateListConverter
-    ): TemplateDatabase {
+        pokedexListConverter: PokedexListConverter
+    ): PokedexDatabase {
         return Room.databaseBuilder(
             appContext,
-            TemplateDatabase::class.java,
-            "remover_database.db"
+            PokedexDatabase::class.java,
+            "pokedex_database.db"
         )
-            .addTypeConverter(templateListConverter)
+            .addTypeConverter(pokedexListConverter)
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideTemplateCollectionDao(removerDatabase: TemplateDatabase): TemplateCollectionsDao {
-        return removerDatabase.templateCollectionsDao()
+    fun providePokedexCollectionDao(pokedexDatabase: PokedexDatabase): PokedexCollectionsDao {
+        return pokedexDatabase.pokedexCollectionsDao()
     }
 
     @Provides

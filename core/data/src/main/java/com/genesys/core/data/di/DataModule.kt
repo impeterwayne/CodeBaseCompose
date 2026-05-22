@@ -1,7 +1,7 @@
 package com.genesys.core.data.di
 
-import com.genesys.core.data.repository.template.TemplateRepositoryImpl
-import com.genesys.core.domain.repository.template.TemplateRepository
+import com.genesys.core.data.repository.pokedex.PokedexRepositoryImpl
+import com.genesys.core.domain.repository.pokedex.PokedexRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal interface DataModule {
     @Binds
-    fun bindTemplateRepository(
-        templateRepositoryImpl: TemplateRepositoryImpl
-    ): TemplateRepository
+    fun bindPokedexRepository(
+        pokedexRepositoryImpl: PokedexRepositoryImpl
+    ): PokedexRepository
 }

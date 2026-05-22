@@ -8,12 +8,12 @@ import kotlinx.serialization.Serializable
 sealed interface Route : NavKey, Parcelable {
     @Serializable
     @Parcelize
-    data object Templates : Route
+    data object Pokedex : Route
 
     @Serializable
     @Parcelize
-    data class TemplateDetail(
-        val templateId: String
+    data class PokedexDetail(
+        val pokedexId: String
     ) : Route
 
     @Serializable
