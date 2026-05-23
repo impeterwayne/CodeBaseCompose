@@ -434,9 +434,8 @@ fun PokedexGraph(
             )
         }
 
-        entry<Route.PokedexDetail> { destination ->
+        entry<Route.PokedexDetail> {
             PokedexDetailRoute(
-                pokedexId = destination.pokedexId,
                 onBack = navigator::popIfPossible,
                 modifier = modifier
             )

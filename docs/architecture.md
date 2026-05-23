@@ -1,3 +1,6 @@
+[//]: # ( [MermaidChart: 7b5c2ed5-a3eb-41e8-a372-9f36c95a33a6]
+[//]: # ( [MermaidChart: 7b5c2ed5-a3eb-41e8-a372-9f36c95a33a6]
+[//]: # ( [MermaidChart: edb24f51-50ad-477b-ac92-82bbf4b61d55]
 # System Architecture Design
 
 SkillHub is structured around a decoupled, modularized modern Android codebase. It leverages **Modular Clean Architecture**, **Orbit MVI (Model-View-Intent)** for state management, **Jetpack Navigation 3** for type-safe native navigation, and **Dagger Hilt** for dependency injection.
@@ -123,18 +126,30 @@ Create your MVI contract in your feature package (e.g. `com.genesys.feature.poke
 
 ```kotlin
 data class PokedexUiState(
-    val pokedexCollections: List<PokedexCollections> = emptyList(),
+    val pokemonList: List<Pokemon> = emptyList(),
     val isLoading: Boolean = false,
+    val isLoadMoreLoading: Boolean = false,
+    val searchQuery: String = "",
+    val currentPage: Int = 0,
     val errorMessage: String? = null
-) : UiState
+) : UiState {
+    val filteredPokemon: List<Pokemon>
+        get() = if (searchQuery.isBlank()) {
+            pokemonList
+        } else {
+            pokemonList.filter { it.name.contains(searchQuery, ignoreCase = true) }
+        }
+}
 
 sealed interface PokedexAction : Action {
     data object LoadPokedex : PokedexAction
-    data class OnPokemonClicked(val name: String) : PokedexAction
+    data object LoadNextPage : PokedexAction
+    data class OnSearchQueryChanged(val query: String) : PokedexAction
+    data class OnPokemonClicked(val pokemon: Pokemon) : PokedexAction
 }
 
 sealed interface PokedexSideEffect : SideEffect {
-    data class OpenPokemonDetail(val name: String) : PokedexSideEffect
+    data class OpenPokedexDetail(val pokedexId: String) : PokedexSideEffect
 }
 ```
 
@@ -157,31 +172,77 @@ class PokedexViewModel @Inject constructor(
     override fun onAction(action: PokedexAction) {
         when (action) {
             PokedexAction.LoadPokedex -> loadPokedex()
-            is PokedexAction.OnPokemonClicked -> onPokemonClicked(action.name)
+            PokedexAction.LoadNextPage -> loadNextPage()
+            is PokedexAction.OnSearchQueryChanged -> updateSearchQuery(action.query)
+            is PokedexAction.OnPokemonClicked -> onPokemonClicked(action.pokemon)
         }
     }
 
-    private fun loadPokedex() = intent {
-        if (state.isLoading) return@intent
-        
-        getAllPokedexUseCase(page = 0).collect { result ->
-            when (result) {
-                is Result.Loading -> reduce {
-                    state.copy(isLoading = true, errorMessage = null)
+    private fun loadPokedex() {
+        intent {
+            if (state.isLoading) return@intent
+            
+            getAllPokedexUseCase(page = 0).collect { result ->
+                when (result) {
+                    is Result.Loading -> reduce {
+                        state.copy(isLoading = true, errorMessage = null)
+                    }
+                    is Result.Success -> reduce {
+                        val newPokemon = result.data.flatMap { it.pokemon }
+                        state.copy(
+                            pokemonList = newPokemon,
+                            currentPage = 0,
+                            isLoading = false,
+                            errorMessage = null
+                        )
+                    }
+                    is Result.Error -> reduce {
+                        state.copy(isLoading = false, errorMessage = result.msg ?: "Failed to load Pokedex")
+                    }
+                    is Result.Initial -> Unit
                 }
-                is Result.Success -> reduce {
-                    state.copy(pokedexCollections = result.data ?: emptyList(), isLoading = false, errorMessage = null)
-                }
-                is Result.Error -> reduce {
-                    state.copy(isLoading = false, errorMessage = result.msg ?: "Failed")
-                }
-                is Result.Initial -> Unit
             }
         }
     }
 
-    private fun onPokemonClicked(name: String) = intent {
-        postSideEffect(PokedexSideEffect.OpenPokemonDetail(name))
+    private fun loadNextPage() {
+        intent {
+            if (state.isLoadMoreLoading || state.isLoading) return@intent
+            val nextPage = state.currentPage + 1
+
+            getAllPokedexUseCase(page = nextPage).collect { result ->
+                when (result) {
+                    is Result.Loading -> reduce {
+                        state.copy(isLoadMoreLoading = true)
+                    }
+                    is Result.Success -> reduce {
+                        val newPokemon = result.data.flatMap { it.pokemon }
+                        val combined = (state.pokemonList + newPokemon).distinctBy { it.name }
+                        state.copy(
+                            pokemonList = combined,
+                            currentPage = nextPage,
+                            isLoadMoreLoading = false
+                        )
+                    }
+                    is Result.Error -> reduce {
+                        state.copy(isLoadMoreLoading = false)
+                    }
+                    is Result.Initial -> Unit
+                }
+            }
+        }
+    }
+
+    private fun updateSearchQuery(query: String) {
+        intent {
+            reduce { state.copy(searchQuery = query) }
+        }
+    }
+
+    private fun onPokemonClicked(pokemon: Pokemon) {
+        intent {
+            postSideEffect(PokedexSideEffect.OpenPokedexDetail(pokemon.name))
+        }
     }
 }
 ```
@@ -194,29 +255,56 @@ A purely stateless composable that receives a `UiState` and outputs events via c
 fun PokedexScreen(
     state: PokedexUiState,
     onRetry: () -> Unit,
-    onPokemonClick: (String) -> Unit,
+    onLoadNextPage: () -> Unit,
+    onSearchQueryChanged: (String) -> Unit,
+    onPokemonClick: (Pokemon) -> Unit,
     modifier: Modifier = Modifier
 ) {
     AppPageFrame(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize()
+            .background(AppTheme.colorScheme.colorBgLayout),
         contentPadding = PaddingValues(0.dp)
     ) {
-        when {
-            state.isLoading -> {
-                LoadingIndicator(modifier = Modifier.fillMaxSize())
-            }
-            state.errorMessage != null -> {
-                ErrorState(
-                    message = state.errorMessage ?: "Failed to load pokemon",
-                    onRetry = onRetry,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-            else -> {
-                PokedexCollectionsList(
-                    collections = state.pokedexCollections,
-                    onPokemonClick = onPokemonClick
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = AppTheme.spacing.md)
+        ) {
+            PokedexHeader()
+
+            PokemonSearchBar(
+                query = state.searchQuery,
+                onQueryChanged = onSearchQueryChanged
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                when {
+                    state.isLoading && state.pokemonList.isEmpty() -> {
+                        LoadingIndicator()
+                    }
+                    state.errorMessage != null && state.pokemonList.isEmpty() -> {
+                        ErrorState(
+                            message = state.errorMessage ?: stringResource(R.string.pokedex_error_generic),
+                            onRetry = onRetry
+                        )
+                    }
+                    else -> {
+                        PokemonGrid(
+                            pokemonList = state.filteredPokemon,
+                            isLoadMoreLoading = state.isLoadMoreLoading,
+                            showLoadMore = state.searchQuery.isBlank() && state.pokemonList.isNotEmpty(),
+                            onLoadNextPage = onLoadNextPage,
+                            onPokemonClick = onPokemonClick,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                }
             }
         }
     }

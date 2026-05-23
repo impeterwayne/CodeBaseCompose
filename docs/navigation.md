@@ -1,27 +1,34 @@
-# Navigation Architecture
+# 🧭 Jetpack Navigation 3 Architecture Guide
 
-This document outlines the navigation patterns and architecture used in the codebase.
-
-## Overview
-
-The app utilizes the experimental **Jetpack Navigation 3** (`androidx.navigation3`) library. This modern API completely abandons the string-based route approach in favor of a **strongly-typed, object-based** routing system. 
-
-Key features of this setup include:
-1. **Multiple Back Stacks**: The app maintains independent back stacks for each top-level tab, allowing users to switch tabs without losing their place.
-2. **Type-Safe Arguments**: Screen arguments are passed natively through data classes.
-3. **Decoupled Navigation**: Feature modules provide their own UI graphs and handle internal logic, while core modules provide the abstractions.
+This document outlines the modern, strongly-typed native navigation architecture utilized throughout the application.
 
 ---
 
-## Core Components
+## 🔍 Overview & Key Pillars
 
-### 1. `Route` (`core:navigation`)
-All screens in the application are defined in a single sealed interface `Route`, which extends `NavKey` and `Parcelable`.
+The application implements the modern **Jetpack Navigation 3** (`androidx.navigation3`) library. This setup abandons string-based routing, Uri matching, and argument bundle hacking in favor of a **strongly-typed, object-oriented** system based on Kotlin `Serializable` types.
 
-* **No Arguments**: Defined as `data object`.
-* **With Arguments**: Defined as `data class`.
+The three architecture pillars of this system are:
+1. **Multiple Back Stacks**: Independent back stacks are maintained for each top-level tab, preserving visual screen history when switching tabs natively.
+2. **Type-Safe Arguments**: Arguments are native properties of `@Serializable` `Route` objects, passed cleanly down to composables and automatically extracted via Hilt `SavedStateHandle`.
+3. **Decoupled Orchestration**: Feature modules do not depend on each other. Instead, all features interact through `:core:navigation`, and cross-feature routing is coordinated via composition at the `app` module boundary.
+
+---
+
+## 🧩 Core Architecture Components
+
+### 1. The `Route` Contract (`:core:navigation`)
+Every screen in the application is represented by a type extending the `Route` sealed interface. This interface inherits from Navigation 3 `NavKey` and Android `Parcelable`.
+
+> [!IMPORTANT]
+> - **No-argument screens** must be defined as `@Serializable @Parcelize data object`.
+> - **Screens with arguments** must be defined as `@Serializable @Parcelize data class`.
+>
+> All routes reside in [Route.kt](file:///d:/Quest/CodeBaseCompose/core/navigation/src/main/java/com/genesys/core/navigation/Route.kt).
 
 ```kotlin
+// Location: :core:navigation -> com.genesys.core.navigation.Route.kt
+
 sealed interface Route : NavKey, Parcelable {
     @Serializable
     @Parcelize
@@ -29,7 +36,9 @@ sealed interface Route : NavKey, Parcelable {
 
     @Serializable
     @Parcelize
-    data class PokedexDetail(val pokedexId: String) : Route
+    data class PokedexDetail(
+        val pokedexId: String
+    ) : Route
 
     @Serializable
     @Parcelize
@@ -45,40 +54,75 @@ sealed interface Route : NavKey, Parcelable {
 }
 ```
 
-### 2. `AppNavigator` (`core:navigation`)
-A lightweight wrapper around the active `NavBackStack`. It exposes the essential navigation functions to feature graphs and screens.
+### 2. The `AppNavigator` Abstraction (`:core:navigation`)
+A lightweight, reactive wrapper around the active back stack that abstracts common navigation controls away from Compose screens.
 
-* `navigate(route: Route)`: Adds a new screen to the back stack.
-* `popIfPossible()`: Removes the current screen if the stack has more than one item.
-* `popToRoot()`: Clears the stack back to the top-level destination.
-* `canPop`: Boolean property useful for showing/hiding back buttons or the bottom navigation bar.
+- `navigate(route: Route)`: Pushes a new screen onto the active stack.
+- `popIfPossible()`: Pops the top screen if the active stack contains more than one screen.
+- `popToRoot()`: Pops all screens back to the root of the active top-level stack.
+- `canPop`: A state property indicating whether the stack can be popped (useful for managing system back button behaviors and hiding/showing UI wrappers).
 
-### 3. `AppState` and Multiple Back Stacks (`app` module)
-In `NavHost.kt`, `rememberAppState()` generates the state for the root application structure. For every `TopLevelDestination` (e.g., `Pokedex`, `Feature2`), it creates:
-* A dedicated `NavBackStack`
-* A dedicated `AppNavigatorImpl` wrapping that stack
+### 3. Multiple Back Stacks & `AppState` (`app` module)
+The application maintains separate, independent back stacks for every bottom-tab destination. The orchestration is defined in [NavHost.kt](file:///d:/Quest/CodeBaseCompose/app/src/main/java/com/genesys/codebase/navigation/NavHost.kt) through `AppState`.
 
-When the user selects a different bottom tab, `AppState` swaps out the `activeBackStack` and `activeNavigator`, preserving the state of the non-active tabs natively.
+```mermaid
+graph TD
+    AppState[AppState Orchestrator] -->|Switch Tabs| ActiveBackStack[Active Back Stack]
+    AppState -->|Pokedex Stack| BackStack1[NavBackStack - Pokedex]
+    AppState -->|Feature 1 Stack| BackStack2[NavBackStack - Feature1]
+    AppState -->|Feature 2 Stack| BackStack3[NavBackStack - Feature2]
+    AppState -->|Feature 3 Stack| BackStack4[NavBackStack - Feature3]
+```
+
+When a user switches bottom tabs, `AppState` swaps out the active back stack and its associated `AppNavigator` instance, preserving the full navigation state and view hierarchy of inactive tabs.
 
 ---
 
-## Feature Implementation Guide
+## 🚀 Feature Implementation Flow
 
-To add a new screen or flow to the application, follow these steps:
+To add a new screen or flow to the application, follow this standardized flow:
 
-### Step 1: Define the Route
-Add your new destination to `com.genesys.core.navigation.Route`.
+### 📍 Step 1: Declare the Route
+Register your route in [Route.kt](file:///d:/Quest/CodeBaseCompose/core/navigation/src/main/java/com/genesys/core/navigation/Route.kt):
 ```kotlin
 @Serializable
 @Parcelize
-data class MyNewScreen(val myArgument: Int) : Route
+data class MyNewDetail(val itemId: Int) : Route
 ```
 
-### Step 2: Create the Feature Graph
-Each feature module defines a main composable that orchestrates its screens. It receives the `NavBackStack` and `AppNavigator` from the `NavHost`.
+### 🔌 Step 2: Establish the Two-Tier Screen Hoisting Pattern
+To keep navigation configuration and business logic separate from layout code, we use a **Two-Tier Hoisting Pattern**:
 
-Use `entryProvider` to map the `Route` classes to your specific Composables, and then pass this to `NavDisplay` to render the active screen.
+1. **`[Feature]Route` Composable (Screen-level Hoister)**: Hoists the ViewModel (`hiltViewModel()`), collects Orbit MVI states, handles side effects (such as displaying toasts, popups, or requesting navigation), and binds UI callback actions.
+2. **`[Feature]Graph` Composable (Navigation Graph)**: Maps type-safe `Route` classes to their associated screen-level hoisting routes inside the `entryProvider`.
 
+#### Tier 1: Screen-Level Hoister (`MyFeatureRoute`)
+```kotlin
+@Composable
+fun MyDetailRoute(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: MyDetailViewModel = hiltViewModel()
+) {
+    val state by viewModel.collectAsState()
+
+    // Handle MVI side-effects (e.g. system warnings or external actions)
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is MyDetailSideEffect.ShowToast -> { /* ... */ }
+        }
+    }
+
+    MyDetailScreen(
+        state = state,
+        onBack = onBack,
+        onAction = viewModel::onAction,
+        modifier = modifier
+    )
+}
+```
+
+#### Tier 2: The Orchestration Graph (`MyFeatureGraph`)
 ```kotlin
 @Composable
 fun MyFeatureGraph(
@@ -86,23 +130,20 @@ fun MyFeatureGraph(
     navigator: AppNavigator,
     modifier: Modifier = Modifier
 ) {
-    // Optional: Collect navigation side-effects from a ViewModel
-    // viewModel.collectSideEffect { effect -> 
-    //     when(effect) { is OpenDetail -> navigator.navigate(Route.MyNewScreen(effect.id)) }
-    // }
-
     val entries = entryProvider<NavKey> {
         entry<Route.MyRootScreen> {
-            MyRootComposable(
-                onNavigate = { id -> navigator.navigate(Route.MyNewScreen(id)) }
+            MyRootRoute(
+                navigator = navigator,
+                modifier = modifier
             )
         }
 
-        entry<Route.MyNewScreen> { destination ->
-            // The destination object contains your type-safe arguments natively
-            MyDetailComposable(
-                id = destination.myArgument,
-                onBack = navigator::popIfPossible
+        entry<Route.MyNewDetail> { destination ->
+            // Option A: Extract arguments directly from the destination object
+            MyDetailRoute(
+                itemId = destination.itemId,
+                onBack = navigator::popIfPossible,
+                modifier = modifier
             )
         }
     }
@@ -116,44 +157,72 @@ fun MyFeatureGraph(
 }
 ```
 
+> [!TIP]
+> **Option B (Recommended for Hilt)**: You can omit passing arguments manually to the Route composable. Hilt's `SavedStateHandle` automatically extracts properties (e.g. `itemId`) directly from the active Navigation 3 back stack entry state inside your ViewModel:
+> ```kotlin
+> @HiltViewModel
+> class MyDetailViewModel @Inject constructor(
+>     savedStateHandle: SavedStateHandle
+> ) : ViewModel() {
+>     private val itemId: Int = savedStateHandle["itemId"] ?: 0
+> }
+> ```
+
 ---
 
-## UI Behaviors
+## 🎨 UI Behaviors & Navigation Integration
 
-* **Bottom Bar Visibility**: The `AppBottomBar` is dynamically shown or hidden based on whether the `activeNavigator.canPop` is true. This means the bottom bar is only visible on the root screen of any tab, and hides when you navigate deeper into a stack.
-* **Back Handler**: The root `NavHost` automatically handles system back button presses, first attempting to pop the active stack (`appState.handleBack()`), and if that fails (meaning the user is at a root tab), it navigates back to the primary starting tab (`Pokedex`) before exiting the app.
+### 1. Bottom Bar Visibility
+The app's bottom bar visibility is driven dynamically by `AppState.showBottomBar`. It is calculated as:
+```kotlin
+val showBottomBar: Boolean get() = !activeNavigator.canPop
+```
+This ensures the bottom navigation bar is **only visible on the root screen** of any given tab. Whenever a user navigates deeper into a tab's back stack, the bar transitions away automatically to provide a fully focused content experience.
+
+### 2. System Back Handler
+A custom back handler at the root `NavHost` orchestrates system back-press events cleanly:
+```kotlin
+BackHandler(enabled = appState.activeNavigator.canPop || appState.currentDestination != TopLevelDestination.Pokedex) {
+    appState.handleBack()
+}
+```
+`appState.handleBack()` implements the following traversal pattern:
+1. **Try Pop Active Stack**: Pop the top screen of the active back stack if possible.
+2. **Tab Redirection**: If the active stack is at its root screen and is not the primary tab (`Pokedex`), switch the active destination back to `Pokedex`.
+3. **Exit App**: If the user is at the root screen of the primary tab, exit the application.
 
 ---
 
-## Cross-Feature Navigation
+## 🔀 Cross-Feature Navigation
 
-In a modularized architecture, feature modules (e.g., `feature-pokedex`, `feature-feature1`) should not depend on each other directly to prevent tight coupling and circular dependencies.
+To maintain maximum module separation, feature modules (e.g., `:feature:pokedex`, `:feature:feature1`) **must never depend directly on each other**. 
 
-If a feature graph needs to navigate to or display a screen from another feature module, the orchestration must happen in the `app` module (where `NavHost` lives, as it depends on all features).
+If a feature graph needs to transition to a screen in another module, the orchestration occurs through the `:core:navigation` routes and is wired together in the `app` module.
 
-### Injecting Screens via Composable Lambda (Recommended)
+### Approach A: Top-Level Tab Switching (Callbacks)
+If a screen needs to transition to a root screen on another bottom tab:
+1. Pass a callback function parameter (e.g., `onNavigateToFeature1: () -> Unit`) down through your feature graph.
+2. In [NavHost.kt](file:///d:/Quest/CodeBaseCompose/app/src/main/java/com/genesys/codebase/navigation/NavHost.kt), map this callback to `appState.selectDestination(TopLevelDestination.Feature1)`.
 
-If a graph needs to display a specific screen from another module without switching tabs, inject that screen as a `@Composable` parameter. This allows the graph to render the route inside its own `entryProvider` without knowing about the other module.
+### Approach B: Injected Screen Composable (Lambda Injection)
+If a graph needs to display a screen from another module *within* its own stack, it receives that screen as a `@Composable` lambda.
 
-#### 1. Update the Target Graph
-Update your feature graph to accept the external screen as a lambda parameter.
-
+#### 1. Define the Lambda Parameter in your Graph
 ```kotlin
 @Composable
 fun PokedexGraph(
     backStack: NavBackStack<NavKey>,
     navigator: AppNavigator,
-    // Inject the external screen here!
+    // Inject the external screen composable here!
     externalFeatureScreen: @Composable (id: String, onBack: () -> Unit) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val entries = entryProvider<NavKey> {
-        // ... existing local entries ...
-        
-        // Map the external route to the injected lambda
+        // ... local screen mappings ...
+
         entry<Route.ExternalRoute> { destination ->
             externalFeatureScreen(
-                id = destination.id, 
+                id = destination.id,
                 onBack = navigator::popIfPossible
             )
         }
@@ -162,21 +231,22 @@ fun PokedexGraph(
 }
 ```
 
-#### 2. Provide the Screen in `NavHost.kt`
-Because `NavHost.kt` resides in the `app` module, it has access to all feature module screens and can wire them together.
-
+#### 2. Wire the Screens inside the `app` module
+Because `NavHost` in the `app` module depends on all features, it can wire screens together seamlessly:
 ```kotlin
+import com.genesys.feature.feature1.main.Feature1Screen
+
+// ...
+
 TopLevelDestination.Pokedex -> PokedexGraph(
     backStack = backStack,
     navigator = navigator,
     externalFeatureScreen = { id, onBack ->
-        // Directly call the composable from the other feature module
-        com.genesys.feature.feature1.main.Feature1Screen(
+        // Call the composable from the target feature module directly
+        Feature1Screen(
             modifier = fillModifier
         )
     },
     modifier = fillModifier
 )
 ```
-
-Alternatively, if you need to perform top-level navigation (i.e. switching bottom tabs), pass a standard callback like `onNavigateToFeature1: () -> Unit` to your graph, and call `appState.selectDestination(TopLevelDestination.Feature1)` from within `NavHost.kt`.
