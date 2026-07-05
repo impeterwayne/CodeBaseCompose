@@ -56,4 +56,38 @@
     <!-- Neubrutalism Design System Colors -->
     <color name="neo_primary_yellow">#FEDE4B</color>
     <color name="neo_selected_orange">#FF5A26</color>
+    <color name="neo_border_light">#000000</color>
+    <color name="neo_shadow_light">#000000</color>
+    <color name="neo_text_light">#000000</color>
+    <color name="neo_border_dark">#FFFFFF</color>
+    <color name="neo_shadow_dark">#FFFFFF</color>
+    <color name="neo_text_dark">#FFFFFF</color>
+    <color name="neo_action_button_bg">#FFE000</color>
+
+    <!-- Pokemon Type Colors -->
+    <color name="pokemon_type_fire">#FFFF5722</color>
+    <color name="pokemon_type_water">#FF2196F3</color>
+    <color name="pokemon_type_grass">#FF4CAF50</color>
+    <color name="pokemon_type_electric">#FFFFEB3B</color>
+    <color name="pokemon_type_poison">#FF9C27B0</color>
+    <color name="pokemon_type_flying">#FF03A9F4</color>
+    <color name="pokemon_type_bug">#FF8BC34A</color>
+    <color name="pokemon_type_normal">#FF9E9E9E</color>
+    <color name="pokemon_type_ground">#FFFFC107</color>
+    <color name="pokemon_type_fairy">#FFE91E63</color>
+    <color name="pokemon_type_fighting">#FFD32F2F</color>
+    <color name="pokemon_type_psychic">#FFFF4081</color>
+    <color name="pokemon_type_rock">#FF795548</color>
+    <color name="pokemon_type_steel">#FF607D8B</color>
+    <color name="pokemon_type_ice">#FF00BCD4</color>
+    <color name="pokemon_type_ghost">#FF673AB7</color>
+    <color name="pokemon_type_dragon">#FF3F51B5</color>
+    <color name="pokemon_type_default">#FF009688</color>
+
+    <!-- Pokemon Stat Colors -->
+    <color name="pokemon_stat_hp">#FF4CAF50</color>
+    <color name="pokemon_stat_attack">#FFFF5722</color>
+    <color name="pokemon_stat_defense">#FF2196F3</color>
+    <color name="pokemon_stat_speed">#FFFFEB3B</color>
+    <color name="pokemon_stat_experience">#FF9C27B0</color>
 </resources>

@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.genesys.feature.pokedex.presentation.list.components
 
 import androidx.compose.foundation.Image
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +35,10 @@ import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.Pokemon
 import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.skydoves.landscapist.glide.GlideImage
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.runtime.remember
 
 @Composable
 fun PokemonCard(
@@ -39,6 +46,7 @@ fun PokemonCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     AppPanel(
         modifier = modifier
             .fillMaxWidth()
@@ -50,6 +58,7 @@ fun PokemonCard(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .clip(AppTheme.shapes.shape6)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
@@ -90,7 +99,7 @@ fun PokemonCard(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(Color(0x0FFFFFFF)),
+                                .background(AppTheme.colorScheme.colorBgFill),
                             contentAlignment = Alignment.Center
                         ) {
                             CustomCircularProgressIndicator(

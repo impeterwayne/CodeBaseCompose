@@ -41,14 +41,14 @@ fun PokemonSearchBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .neoShadow(color = Color.Black, shape = shape)
+                    .neoShadow(color = AppTheme.colorScheme.neoBorder, shape = shape)
                     .background(
                         color = AppTheme.colorScheme.colorBgElevated,
                         shape = shape
                     )
                     .border(
                         width = AppTheme.strokes.stroke2,
-                        color = Color.Black,
+                        color = AppTheme.colorScheme.neoBorder,
                         shape = shape
                     )
                     .padding(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.md),

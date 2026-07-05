@@ -1,8 +1,8 @@
+@file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.genesys.core.designsystem.component
 
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -11,43 +11,36 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import com.genesys.core.designsystem.theme.AppTheme
 import androidx.compose.ui.graphics.Color
-import com.genesys.core.designsystem.theme.neoShadow
-import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.style.*
+import androidx.compose.ui.unit.dp
+
 
 @Composable
-fun AppPrimaryButton(
+fun AppButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    style: Style,
     contentPadding: PaddingValues? = null,
     enabled: Boolean = true,
     onClickLabel: String? = text
 ) {
-    val colors = AppTheme.colorScheme
     val resolvedContentPadding = contentPadding ?: PaddingValues(
         horizontal = AppTheme.spacing.lg,
         vertical = AppTheme.spacing.sm
     )
     val interactionSource = remember { MutableInteractionSource() }
-    val shape = AppTheme.shapes.shape6
+    val styleState = rememberUpdatedStyleState(interactionSource)
 
     Box(
         modifier = modifier
-            .neoShadow(color = Color.Black, shape = shape)
-            .background(colors.colorPrimary, shape)
-            .border(
-                width = AppTheme.strokes.stroke2,
-                color = Color.Black,
-                shape = shape
-            )
-            .clip(shape)
+            .styleable(styleState, style)
             .clickable(
                 interactionSource = interactionSource,
-                indication = LocalIndication.current,
+                indication = null,
                 enabled = enabled,
                 onClickLabel = onClickLabel,
                 role = Role.Button,
@@ -57,10 +50,34 @@ fun AppPrimaryButton(
     ) {
         AppText(
             text = text,
-            style = AppTheme.typography.labelLarge,
-            color = colors.colorTextOnPrimary
+            style = AppTheme.typography.labelLarge
         )
     }
+}
+
+@Composable
+fun AppPrimaryButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues? = null,
+    enabled: Boolean = true,
+    onClickLabel: String? = text,
+    style: Style = rememberNeoButtonStyle(
+        backgroundColor = AppTheme.colorScheme.colorPrimary,
+        contentColor = AppTheme.colorScheme.colorTextOnPrimary,
+        shape = AppTheme.shapes.shape6
+    )
+) {
+    AppButton(
+        text = text,
+        onClick = onClick,
+        modifier = modifier,
+        style = style,
+        contentPadding = contentPadding,
+        enabled = enabled,
+        onClickLabel = onClickLabel
+    )
 }
 
 @Composable
@@ -70,42 +87,22 @@ fun AppSecondaryButton(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues? = null,
     enabled: Boolean = true,
-    onClickLabel: String? = text
-) {
-    val colors = AppTheme.colorScheme
-    val resolvedContentPadding = contentPadding ?: PaddingValues(
-        horizontal = AppTheme.spacing.lg,
-        vertical = AppTheme.spacing.sm
+    onClickLabel: String? = text,
+    style: Style = rememberNeoButtonStyle(
+        backgroundColor = AppTheme.colorScheme.colorBgContainer,
+        contentColor = AppTheme.colorScheme.neoText,
+        shape = AppTheme.shapes.shape6
     )
-    val interactionSource = remember { MutableInteractionSource() }
-    val shape = AppTheme.shapes.shape6
-
-    Box(
-        modifier = modifier
-            .neoShadow(color = Color.Black, shape = shape)
-            .background(colors.colorBgContainer, shape)
-            .border(
-                width = AppTheme.strokes.stroke2,
-                color = Color.Black,
-                shape = shape
-            )
-            .clip(shape)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = LocalIndication.current,
-                enabled = enabled,
-                onClickLabel = onClickLabel,
-                role = Role.Button,
-                onClick = onClick
-            )
-            .padding(resolvedContentPadding)
-    ) {
-        AppText(
-            text = text,
-            style = AppTheme.typography.labelLarge,
-            color = Color.Black
-        )
-    }
+) {
+    AppButton(
+        text = text,
+        onClick = onClick,
+        modifier = modifier,
+        style = style,
+        contentPadding = contentPadding,
+        enabled = enabled,
+        onClickLabel = onClickLabel
+    )
 }
 
 @Preview

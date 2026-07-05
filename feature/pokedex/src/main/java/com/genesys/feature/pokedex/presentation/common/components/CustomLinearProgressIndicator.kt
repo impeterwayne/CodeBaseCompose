@@ -42,8 +42,8 @@ fun CustomLinearProgressIndicatorPreview() {
         Box(modifier = Modifier.padding(16.dp)) {
             CustomLinearProgressIndicator(
                 progress = 0.7f,
-                color = Color(0xFF4CAF50),
-                trackColor = Color.LightGray.copy(alpha = 0.2f),
+                color = AppTheme.colorScheme.colorPrimary,
+                trackColor = AppTheme.colorScheme.colorBorder.copy(alpha = 0.2f),
                 modifier = Modifier
                     .width(200.dp)
                     .height(10.dp)

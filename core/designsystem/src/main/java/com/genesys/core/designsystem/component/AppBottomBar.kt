@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,9 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
@@ -34,7 +40,7 @@ fun AppBottomBar(
     content: @Composable RowScope.() -> Unit
 ) {
     val barShape = RoundedCornerShape(20.dp)
-    val outlineColor = Color.Black
+    val outlineColor = AppTheme.colorScheme.neoBorder
 
     Row(
         modifier = modifier
@@ -66,16 +72,28 @@ fun AppBottomTabItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    activeColor: Color = colorResource(id = R.color.neo_selected_orange),
-    inactiveColor: Color = Color.Black
+    activeColor: Color = AppTheme.colorScheme.neoSelectedOrange,
+    inactiveColor: Color = AppTheme.colorScheme.neoText
 ) {
     val tintColor = if (selected) activeColor else inactiveColor
     val fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium
 
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.9f else 1.0f,
+        label = "scale"
+    )
+
     Column(
         modifier = modifier
+            .scale(scale)
             .clip(RoundedCornerShape(8.dp))
-            .clickable(onClick = onClick)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick
+            )
             .padding(vertical = AppTheme.spacing.xxs),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp)

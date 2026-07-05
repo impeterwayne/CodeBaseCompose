@@ -33,7 +33,13 @@ data class AppColorScheme(
     val colorTextOnWarning: Color,
 
     val colorInfo: Color,
-    val colorTextOnInfo: Color
+    val colorTextOnInfo: Color,
+
+    val neoBorder: Color,
+    val neoShadow: Color,
+    val neoText: Color,
+    val neoPrimaryYellow: Color,
+    val neoSelectedOrange: Color
 )
 
 @Composable
@@ -55,7 +61,12 @@ internal fun lightColorScheme() = AppColorScheme(
     colorWarning = colorResource(id = R.color.antd_light_warning),
     colorTextOnWarning = colorResource(id = R.color.antd_light_text_on_warning),
     colorInfo = colorResource(id = R.color.antd_light_info),
-    colorTextOnInfo = colorResource(id = R.color.antd_light_text_on_info)
+    colorTextOnInfo = colorResource(id = R.color.antd_light_text_on_info),
+    neoBorder = colorResource(id = R.color.neo_border_light),
+    neoShadow = colorResource(id = R.color.neo_shadow_light),
+    neoText = colorResource(id = R.color.neo_text_light),
+    neoPrimaryYellow = colorResource(id = R.color.neo_primary_yellow),
+    neoSelectedOrange = colorResource(id = R.color.neo_selected_orange)
 )
 
 @Composable
@@ -77,7 +88,12 @@ internal fun darkColorScheme() = AppColorScheme(
     colorWarning = colorResource(id = R.color.antd_dark_warning),
     colorTextOnWarning = colorResource(id = R.color.antd_dark_text_on_warning),
     colorInfo = colorResource(id = R.color.antd_dark_info),
-    colorTextOnInfo = colorResource(id = R.color.antd_dark_text_on_info)
+    colorTextOnInfo = colorResource(id = R.color.antd_dark_text_on_info),
+    neoBorder = colorResource(id = R.color.neo_border_dark),
+    neoShadow = colorResource(id = R.color.neo_shadow_dark),
+    neoText = colorResource(id = R.color.neo_text_dark),
+    neoPrimaryYellow = colorResource(id = R.color.neo_primary_yellow),
+    neoSelectedOrange = colorResource(id = R.color.neo_selected_orange)
 )
 
 internal val LocalAppColorScheme = staticCompositionLocalOf<AppColorScheme> {

@@ -38,32 +38,34 @@ import com.genesys.feature.pokedex.R
 import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.skydoves.landscapist.glide.GlideImage
 
+import androidx.compose.ui.res.colorResource
 import com.genesys.core.designsystem.theme.neoShadow
 
 /**
- * Extension property to map a Pokemon type string to its corresponding theme color.
+ * Helper to map a Pokemon type string to its corresponding color resource ID.
  */
-private val String.pokemonTypeColor: Color
-    get() = when (this.lowercase()) {
-        "fire" -> Color(0xFFFF5722)
-        "water" -> Color(0xFF2196F3)
-        "grass" -> Color(0xFF4CAF50)
-        "electric" -> Color(0xFFFFEB3B)
-        "poison" -> Color(0xFF9C27B0)
-        "flying" -> Color(0xFF03A9F4)
-        "bug" -> Color(0xFF8BC34A)
-        "normal" -> Color(0xFF9E9E9E)
-        "ground" -> Color(0xFFFFC107)
-        "fairy" -> Color(0xFFE91E63)
-        "fight", "fighting" -> Color(0xFFD32F2F)
-        "psychic" -> Color(0xFFFF4081)
-        "rock" -> Color(0xFF795548)
-        "steel" -> Color(0xFF607D8B)
-        "ice" -> Color(0xFF00BCD4)
-        "ghost" -> Color(0xFF673AB7)
-        "dragon" -> Color(0xFF3F51B5)
-        else -> Color(0xFF009688)
+private fun getPokemonTypeColorResourceId(type: String): Int {
+    return when (type.lowercase()) {
+        "fire" -> com.genesys.core.designsystem.R.color.pokemon_type_fire
+        "water" -> com.genesys.core.designsystem.R.color.pokemon_type_water
+        "grass" -> com.genesys.core.designsystem.R.color.pokemon_type_grass
+        "electric" -> com.genesys.core.designsystem.R.color.pokemon_type_electric
+        "poison" -> com.genesys.core.designsystem.R.color.pokemon_type_poison
+        "flying" -> com.genesys.core.designsystem.R.color.pokemon_type_flying
+        "bug" -> com.genesys.core.designsystem.R.color.pokemon_type_bug
+        "normal" -> com.genesys.core.designsystem.R.color.pokemon_type_normal
+        "ground" -> com.genesys.core.designsystem.R.color.pokemon_type_ground
+        "fairy" -> com.genesys.core.designsystem.R.color.pokemon_type_fairy
+        "fight", "fighting" -> com.genesys.core.designsystem.R.color.pokemon_type_fighting
+        "psychic" -> com.genesys.core.designsystem.R.color.pokemon_type_psychic
+        "rock" -> com.genesys.core.designsystem.R.color.pokemon_type_rock
+        "steel" -> com.genesys.core.designsystem.R.color.pokemon_type_steel
+        "ice" -> com.genesys.core.designsystem.R.color.pokemon_type_ice
+        "ghost" -> com.genesys.core.designsystem.R.color.pokemon_type_ghost
+        "dragon" -> com.genesys.core.designsystem.R.color.pokemon_type_dragon
+        else -> com.genesys.core.designsystem.R.color.pokemon_type_default
     }
+}
 
 /**
  * Main detail screen content for displaying Pokémon details.
@@ -74,9 +76,12 @@ fun PokemonDetailContent(
     pokemonInfo: PokemonInfo,
     modifier: Modifier = Modifier
 ) {
-    val primaryTypeColor = remember(pokemonInfo.types) {
-        pokemonInfo.types.firstOrNull()?.pokemonTypeColor ?: Color(0xFF009688)
-    }
+    val primaryTypeColor = colorResource(
+        id = remember(pokemonInfo.types) {
+            pokemonInfo.types.firstOrNull()?.let { getPokemonTypeColorResourceId(it) }
+                ?: com.genesys.core.designsystem.R.color.pokemon_type_default
+        }
+    )
 
     Column(
         modifier = modifier
@@ -122,7 +127,7 @@ private fun PokemonArtworkSection(
         modifier = modifier
             .fillMaxWidth()
             .height(280.dp)
-            .neoShadow(color = Color.Black, shape = shape)
+            .neoShadow(color = AppTheme.colorScheme.neoBorder, shape = shape)
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
@@ -134,7 +139,7 @@ private fun PokemonArtworkSection(
             )
             .border(
                 width = AppTheme.strokes.stroke2,
-                color = Color.Black,
+                color = AppTheme.colorScheme.neoBorder,
                 shape = shape
             )
             .clip(shape),
@@ -226,7 +231,7 @@ private fun PokemonIdentitySection(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 pokemonInfo.types.forEach { type ->
-                    val typeColor = type.pokemonTypeColor
+                    val typeColor = colorResource(id = getPokemonTypeColorResourceId(type))
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
@@ -330,11 +335,11 @@ private fun PokemonStatsSection(
             AppDivider(color = AppTheme.colorScheme.colorBorder.copy(alpha = 0.2f))
 
             // Stats rows
-            PokemonStatRow(name = stringResource(R.string.pokedex_hp), value = pokemonInfo.hp, max = 150, color = Color(0xFF4CAF50))
-            PokemonStatRow(name = stringResource(R.string.pokedex_attack), value = pokemonInfo.attack, max = 150, color = Color(0xFFFF5722))
-            PokemonStatRow(name = stringResource(R.string.pokedex_defense), value = pokemonInfo.defense, max = 150, color = Color(0xFF2196F3))
-            PokemonStatRow(name = stringResource(R.string.pokedex_speed), value = pokemonInfo.speed, max = 150, color = Color(0xFFFFEB3B))
-            PokemonStatRow(name = stringResource(R.string.pokedex_experience), value = pokemonInfo.baseExperience, max = 300, color = Color(0xFF9C27B0))
+            PokemonStatRow(name = stringResource(R.string.pokedex_hp), value = pokemonInfo.hp, max = 150, color = colorResource(id = com.genesys.core.designsystem.R.color.pokemon_stat_hp))
+            PokemonStatRow(name = stringResource(R.string.pokedex_attack), value = pokemonInfo.attack, max = 150, color = colorResource(id = com.genesys.core.designsystem.R.color.pokemon_stat_attack))
+            PokemonStatRow(name = stringResource(R.string.pokedex_defense), value = pokemonInfo.defense, max = 150, color = colorResource(id = com.genesys.core.designsystem.R.color.pokemon_stat_defense))
+            PokemonStatRow(name = stringResource(R.string.pokedex_speed), value = pokemonInfo.speed, max = 150, color = colorResource(id = com.genesys.core.designsystem.R.color.pokemon_stat_speed))
+            PokemonStatRow(name = stringResource(R.string.pokedex_experience), value = pokemonInfo.baseExperience, max = 300, color = colorResource(id = com.genesys.core.designsystem.R.color.pokemon_stat_experience))
         }
     }
 }

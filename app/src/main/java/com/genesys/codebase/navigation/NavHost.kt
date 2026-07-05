@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.foundation.style.ExperimentalFoundationStyleApi::class)
+
 package com.genesys.codebase.navigation
 
 import android.widget.Toast
@@ -157,8 +159,8 @@ fun NavHost(
                 AppBottomBar {
                     val currentDestination = appState.currentDestination
                     val onDestinationSelected = appState::selectDestination
-                    val neoOrange = colorResource(id = com.genesys.core.designsystem.R.color.neo_selected_orange)
-                    val outlineColor = Color.Black
+                    val neoOrange = AppTheme.colorScheme.neoSelectedOrange
+                    val outlineColor = AppTheme.colorScheme.neoBorder
 
                     // Left Items
                     AppBottomTabItem(
@@ -212,11 +214,7 @@ fun NavHost(
             val context = LocalContext.current
             AddActionButton(
                 onClick = {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.nav_primary_clicked),
-                        Toast.LENGTH_SHORT
-                    ).show()
+
                 },
                 contentDescription = stringResource(id = R.string.nav_primary),
                 modifier = Modifier.align(Alignment.BottomCenter)

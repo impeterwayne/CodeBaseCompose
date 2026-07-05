@@ -75,7 +75,7 @@ fun PokemonStatRowPreview() {
                 name = "HP",
                 value = 45,
                 max = 150,
-                color = Color(0xFF4CAF50)
+                color = AppTheme.colorScheme.colorPrimary
             )
         }
     }

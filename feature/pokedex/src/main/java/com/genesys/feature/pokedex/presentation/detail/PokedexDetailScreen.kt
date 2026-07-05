@@ -27,7 +27,11 @@ import com.genesys.core.designsystem.component.AppPanelTone
 import com.genesys.core.designsystem.component.AppText
 import com.genesys.core.designsystem.component.ErrorState
 import com.genesys.core.designsystem.theme.AppTheme
-import com.genesys.core.designsystem.theme.neoShadow
+import com.genesys.core.designsystem.component.rememberNeoButtonStyle
+import androidx.compose.foundation.style.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.unit.DpOffset
 import com.genesys.core.model.pokedex.PokemonInfo
 import com.genesys.feature.pokedex.R
 import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
@@ -107,25 +111,34 @@ fun PokedexDetailScreen(
 }
 
 @Composable
+private fun defaultBackActionButtonStyle(): Style {
+    val colors = AppTheme.colorScheme
+    return rememberNeoButtonStyle(
+        backgroundColor = colors.colorBgContainer,
+        contentColor = colors.colorText,
+        shape = CircleShape,
+        shadowOffset = 4.dp,
+        pressedTranslation = 4f
+    )
+}
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
 private fun BackActionButton(
     onBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    style: Style = defaultBackActionButtonStyle()
 ) {
-    val outlineColor = Color.Black
-    val shape = CircleShape
+    val interactionSource = remember { MutableInteractionSource() }
+    val styleState = rememberUpdatedStyleState(interactionSource)
 
     Box(
         modifier = modifier
             .size(48.dp)
-            .neoShadow(color = outlineColor, offsetX = 4.dp, offsetY = 4.dp, shape = shape)
-            .background(AppTheme.colorScheme.colorBgContainer, shape)
-            .border(
-                width = AppTheme.strokes.stroke2,
-                color = outlineColor,
-                shape = shape
-            )
-            .clip(shape)
+            .styleable(styleState, style)
             .clickable(
+                interactionSource = interactionSource,
+                indication = null,
                 onClick = onBack,
                 onClickLabel = stringResource(R.string.pokedex_back_label),
                 role = Role.Button
