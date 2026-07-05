@@ -10,11 +10,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.genesys.core.designsystem.component.AppSecondaryButton
 import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.Pokemon
@@ -28,7 +31,26 @@ fun PokemonGrid(
     onPokemonClick: (Pokemon) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val gridState = rememberLazyGridState()
+
+    val shouldLoadMore = remember {
+        derivedStateOf {
+            val layoutInfo = gridState.layoutInfo
+            val totalItemsCount = layoutInfo.totalItemsCount
+            val lastVisibleItemIndex = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+            
+            showLoadMore && !isLoadMoreLoading && totalItemsCount > 0 && lastVisibleItemIndex >= (totalItemsCount - 4)
+        }
+    }
+
+    LaunchedEffect(shouldLoadMore.value) {
+        if (shouldLoadMore.value) {
+            onLoadNextPage()
+        }
+    }
+
     LazyVerticalGrid(
+        state = gridState,
         columns = GridCells.Fixed(2),
         modifier = modifier,
         contentPadding = PaddingValues(
@@ -48,8 +70,7 @@ fun PokemonGrid(
         if (showLoadMore) {
             item(span = { GridItemSpan(2) }) {
                 LoadMoreSection(
-                    isLoading = isLoadMoreLoading,
-                    onLoadNextPage = onLoadNextPage
+                    isLoading = isLoadMoreLoading
                 )
             }
         }
@@ -59,25 +80,18 @@ fun PokemonGrid(
 @Composable
 private fun LoadMoreSection(
     isLoading: Boolean,
-    onLoadNextPage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = AppTheme.spacing.lg),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (isLoading) {
+    if (isLoading) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = AppTheme.spacing.lg),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             CustomCircularProgressIndicator(
                 modifier = Modifier.size(40.dp),
                 strokeWidth = 4.dp
-            )
-        } else {
-            AppSecondaryButton(
-                text = "Load More Pokémon",
-                onClick = onLoadNextPage,
-                modifier = Modifier.fillMaxWidth(0.6f)
             )
         }
     }

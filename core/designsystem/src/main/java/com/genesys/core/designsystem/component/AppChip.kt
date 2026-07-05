@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationStyleApi::class)
+
 package com.genesys.core.designsystem.component
 
 import androidx.compose.ui.tooling.preview.Preview
