@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.genesys.core.designsystem.component.AppSecondaryButton
-import com.genesys.core.designsystem.component.LoadingIndicator
+import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.Pokemon
 
@@ -31,7 +31,10 @@ fun PokemonGrid(
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = modifier,
-        contentPadding = PaddingValues(bottom = AppTheme.spacing.lg),
+        contentPadding = PaddingValues(
+            top = AppTheme.spacing.md,
+            bottom = AppTheme.spacing.lg
+        ),
         horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md),
         verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
     ) {
@@ -66,7 +69,10 @@ private fun LoadMoreSection(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (isLoading) {
-            LoadingIndicator(modifier = Modifier.size(40.dp))
+            CustomCircularProgressIndicator(
+                modifier = Modifier.size(40.dp),
+                strokeWidth = 4.dp
+            )
         } else {
             AppSecondaryButton(
                 text = "Load More Pokémon",

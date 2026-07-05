@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,9 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.genesys.core.designsystem.component.AppPageFrame
+import com.genesys.core.designsystem.component.AppGradientTransition
 import com.genesys.core.designsystem.component.ErrorState
-import com.genesys.core.designsystem.component.LoadingIndicator
+import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.Pokemon
 import com.genesys.core.navigation.AppNavigator
@@ -65,11 +67,11 @@ fun PokedexScreen(
     onPokemonClick: (Pokemon) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    AppPageFrame(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .background(AppTheme.colorScheme.colorBgLayout),
-        contentPadding = PaddingValues(0.dp)
+            .background(AppTheme.colorScheme.colorBgLayout)
+            .statusBarsPadding()
     ) {
         Column(
             modifier = Modifier
@@ -92,7 +94,10 @@ fun PokedexScreen(
             ) {
                 when {
                     state.isLoading && state.pokemonList.isEmpty() -> {
-                        LoadingIndicator()
+                        CustomCircularProgressIndicator(
+                            modifier = Modifier.size(48.dp),
+                            strokeWidth = 4.dp
+                        )
                     }
 
                     (state.errorMessage != null || state.errorResId != null) && state.pokemonList.isEmpty() -> {
@@ -113,6 +118,12 @@ fun PokedexScreen(
                         )
                     }
                 }
+
+                // Add gradient transition at the top of the data section
+                AppGradientTransition(
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    height = AppTheme.spacing.md
+                )
             }
         }
     }

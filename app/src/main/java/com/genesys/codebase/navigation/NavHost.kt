@@ -1,5 +1,6 @@
 package com.genesys.codebase.navigation
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -7,16 +8,32 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.genesys.codebase.R
+import com.genesys.core.designsystem.component.AddActionButton
+import com.genesys.core.designsystem.component.AppBottomBar
+import com.genesys.core.designsystem.component.AppBottomTabItem
+import com.genesys.core.designsystem.component.AppGradientTransition
+import com.genesys.core.designsystem.component.GradientDirection
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.navigation.AppNavigator
 import com.genesys.core.navigation.AppNavigatorImpl
@@ -105,31 +122,104 @@ fun NavHost(
         appState.handleBack()
     }
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .background(AppTheme.colorScheme.colorBgElevated)
+            .background(AppTheme.colorScheme.colorBgLayout)
     ) {
-        Box(
-            modifier = Modifier.weight(1f)
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            val backStack = appState.activeBackStack
-            val navigator = appState.activeNavigator
-            val fillModifier = Modifier.fillMaxSize()
+            Box(
+                modifier = Modifier.weight(1f)
+            ) {
+                val backStack = appState.activeBackStack
+                val navigator = appState.activeNavigator
+                val fillModifier = Modifier.fillMaxSize()
 
-            when (appState.currentDestination) {
-                TopLevelDestination.Pokedex -> PokedexGraph(backStack, navigator, fillModifier)
-                TopLevelDestination.Feature1 -> Feature1Graph(backStack, navigator, fillModifier)
-                TopLevelDestination.Feature2 -> Feature2Graph(backStack, navigator, fillModifier)
-                TopLevelDestination.Feature3 -> Feature3Graph(backStack, navigator, fillModifier)
-                else -> {}
+                when (appState.currentDestination) {
+                    TopLevelDestination.Pokedex -> PokedexGraph(backStack, navigator, fillModifier)
+                    TopLevelDestination.Feature1 -> Feature1Graph(backStack, navigator, fillModifier)
+                    TopLevelDestination.Feature2 -> Feature2Graph(backStack, navigator, fillModifier)
+                    TopLevelDestination.Feature3 -> Feature3Graph(backStack, navigator, fillModifier)
+                }
+
+                if (appState.showBottomBar) {
+                    AppGradientTransition(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        height = 48.dp,
+                        direction = GradientDirection.BottomToTop
+                    )
+                }
+            }
+
+            if (appState.showBottomBar) {
+                AppBottomBar {
+                    val currentDestination = appState.currentDestination
+                    val onDestinationSelected = appState::selectDestination
+                    val neoOrange = colorResource(id = com.genesys.core.designsystem.R.color.neo_selected_orange)
+                    val outlineColor = Color.Black
+
+                    // Left Items
+                    AppBottomTabItem(
+                        painter = painterResource(id = TopLevelDestination.Pokedex.iconRes),
+                        label = stringResource(id = TopLevelDestination.Pokedex.labelRes),
+                        selected = currentDestination == TopLevelDestination.Pokedex,
+                        onClick = { onDestinationSelected(TopLevelDestination.Pokedex) },
+                        activeColor = neoOrange,
+                        inactiveColor = outlineColor,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    AppBottomTabItem(
+                        painter = painterResource(id = TopLevelDestination.Feature1.iconRes),
+                        label = stringResource(id = TopLevelDestination.Feature1.labelRes),
+                        selected = currentDestination == TopLevelDestination.Feature1,
+                        onClick = { onDestinationSelected(TopLevelDestination.Feature1) },
+                        activeColor = neoOrange,
+                        inactiveColor = outlineColor,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    // Middle Placeholder Item (Spacer)
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    // Right Items
+                    AppBottomTabItem(
+                        painter = painterResource(id = TopLevelDestination.Feature2.iconRes),
+                        label = stringResource(id = TopLevelDestination.Feature2.labelRes),
+                        selected = currentDestination == TopLevelDestination.Feature2,
+                        onClick = { onDestinationSelected(TopLevelDestination.Feature2) },
+                        activeColor = neoOrange,
+                        inactiveColor = outlineColor,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    AppBottomTabItem(
+                        painter = painterResource(id = TopLevelDestination.Feature3.iconRes),
+                        label = stringResource(id = TopLevelDestination.Feature3.labelRes),
+                        selected = currentDestination == TopLevelDestination.Feature3,
+                        onClick = { onDestinationSelected(TopLevelDestination.Feature3) },
+                        activeColor = neoOrange,
+                        inactiveColor = outlineColor,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
         }
 
         if (appState.showBottomBar) {
-            AppBottomBar(
-                currentDestination = appState.currentDestination,
-                onDestinationSelected = appState::selectDestination
+            val context = LocalContext.current
+            AddActionButton(
+                onClick = {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.nav_primary_clicked),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                },
+                contentDescription = stringResource(id = R.string.nav_primary),
+                modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
     }

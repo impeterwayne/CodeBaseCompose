@@ -41,4 +41,5 @@
     <string name="inbox_read">Read</string>
     <string name="inbox_select_filter_label">Select filter</string>
     <string name="nav_primary">Primary</string>
+    <string name="nav_primary_clicked">Primary Clicked!</string>
 </resources>
