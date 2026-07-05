@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import com.genesys.core.designsystem.theme.AppTheme
+import androidx.compose.ui.graphics.Color
+import com.genesys.core.designsystem.theme.neoShadow
 import androidx.compose.foundation.LocalIndication
 
 @Composable
@@ -31,11 +33,18 @@ fun AppPrimaryButton(
         vertical = AppTheme.spacing.sm
     )
     val interactionSource = remember { MutableInteractionSource() }
+    val shape = AppTheme.shapes.shape6
 
     Box(
         modifier = modifier
-            .clip(AppTheme.shapes.shape6)
-            .background(colors.colorPrimary)
+            .neoShadow(color = Color.Black, shape = shape)
+            .background(colors.colorPrimary, shape)
+            .border(
+                width = AppTheme.strokes.stroke2,
+                color = Color.Black,
+                shape = shape
+            )
+            .clip(shape)
             .clickable(
                 interactionSource = interactionSource,
                 indication = LocalIndication.current,
@@ -69,16 +78,18 @@ fun AppSecondaryButton(
         vertical = AppTheme.spacing.sm
     )
     val interactionSource = remember { MutableInteractionSource() }
+    val shape = AppTheme.shapes.shape6
 
     Box(
         modifier = modifier
-            .clip(AppTheme.shapes.shape6)
-            .background(colors.colorBgContainer)
+            .neoShadow(color = Color.Black, shape = shape)
+            .background(colors.colorBgContainer, shape)
             .border(
                 width = AppTheme.strokes.stroke2,
-                color = colors.colorPrimary,
-                shape = AppTheme.shapes.shape6
+                color = Color.Black,
+                shape = shape
             )
+            .clip(shape)
             .clickable(
                 interactionSource = interactionSource,
                 indication = LocalIndication.current,
@@ -92,7 +103,7 @@ fun AppSecondaryButton(
         AppText(
             text = text,
             style = AppTheme.typography.labelLarge,
-            color = colors.colorPrimary
+            color = Color.Black
         )
     }
 }

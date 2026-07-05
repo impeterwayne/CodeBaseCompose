@@ -30,11 +30,16 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun PokedexDetailRoute(
+    pokedexId: String,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.collectAsState()
+
+    LaunchedEffect(pokedexId) {
+        viewModel.loadPokemon(pokedexId)
+    }
 
     PokedexDetailScreen(
         uiState = uiState,
@@ -94,13 +99,13 @@ private fun BackActionHeader(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = android.R.drawable.ic_menu_revert),
-                contentDescription = "Back",
+                contentDescription = stringResource(R.string.pokedex_back),
                 colorFilter = ColorFilter.tint(AppTheme.colorScheme.colorText),
                 modifier = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(AppTheme.spacing.sm))
             AppText(
-                text = "Back to Pokedex",
+                text = stringResource(R.string.pokedex_back_to_pokedex),
                 style = AppTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
                 color = AppTheme.colorScheme.colorText
             )
@@ -134,7 +139,7 @@ private fun DetailStateContent(
                 contentAlignment = Alignment.Center
             ) {
                 ErrorState(
-                    message = uiState.message,
+                    message = uiState.message ?: uiState.messageResId?.let { stringResource(it) }.orEmpty(),
                     onRetry = onRetry
                 )
             }

@@ -12,6 +12,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawOutline
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.unit.Dp
 
 @Immutable
 data class AppShapes(
@@ -24,13 +30,31 @@ data class AppShapes(
 
 internal val defaultShapes = AppShapes(
     shape2 = RoundedCornerShape(2.dp),
-    shape4 = RoundedCornerShape(4.dp),
-    shape6 = RoundedCornerShape(6.dp),
-    shape8 = RoundedCornerShape(8.dp),
-    shape12 = RoundedCornerShape(12.dp)
+    shape4 = RoundedCornerShape(14.dp),
+    shape6 = RoundedCornerShape(14.dp),
+    shape8 = RoundedCornerShape(14.dp),
+    shape12 = RoundedCornerShape(14.dp)
 )
 
 internal val LocalAppShapes = staticCompositionLocalOf { defaultShapes }
+
+fun Modifier.neoShadow(
+    color: Color = Color.Black,
+    offsetX: Dp = 2.dp,
+    offsetY: Dp = 2.dp,
+    shape: Shape
+): Modifier = this.drawBehind {
+    val outline = shape.createOutline(size, layoutDirection, this)
+    drawIntoCanvas { canvas ->
+        canvas.save()
+        canvas.translate(offsetX.toPx(), offsetY.toPx())
+        drawOutline(
+            outline = outline,
+            color = color
+        )
+        canvas.restore()
+    }
+}
 
 object AppTheme {
     val colorScheme: AppColorScheme

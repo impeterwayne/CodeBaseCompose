@@ -12,8 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.graphics.Color
+import com.genesys.core.designsystem.theme.neoShadow
+import androidx.compose.ui.draw.clip
 import com.genesys.core.designsystem.theme.AppTheme
 import androidx.compose.foundation.LocalIndication
+
 @Composable
 fun AppChip(
     text: String,
@@ -30,13 +34,16 @@ fun AppChip(
         vertical = AppTheme.spacing.xs
     )
     val backgroundColor = if (selected) colors.colorPrimary else colors.colorBgContainer
-    val contentColor = if (selected) colors.colorTextOnPrimary else colors.colorPrimary
+    val contentColor = if (selected) colors.colorTextOnPrimary else Color.Black
     val interactionSource = remember { MutableInteractionSource() }
+    val shape = AppTheme.shapes.shape4
 
     Box(
         modifier = modifier
-            .background(backgroundColor)
-            .border(AppTheme.strokes.stroke1, colors.colorPrimary, AppTheme.shapes.shape4)
+            .neoShadow(color = Color.Black, shape = shape)
+            .background(backgroundColor, shape)
+            .border(AppTheme.strokes.stroke2, Color.Black, shape)
+            .clip(shape)
             .then(
                 if (onClick != null) {
                     Modifier.clickable(

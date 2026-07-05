@@ -22,7 +22,6 @@ import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.Pokemon
 import com.genesys.core.navigation.AppNavigator
 import com.genesys.core.navigation.Route
-import com.genesys.feature.pokedex.R
 import com.genesys.feature.pokedex.presentation.list.components.PokemonGrid
 import com.genesys.feature.pokedex.presentation.list.components.PokemonSearchBar
 import com.genesys.feature.pokedex.presentation.list.components.PokedexHeader
@@ -96,9 +95,9 @@ fun PokedexScreen(
                         LoadingIndicator()
                     }
 
-                    state.errorMessage != null && state.pokemonList.isEmpty() -> {
+                    (state.errorMessage != null || state.errorResId != null) && state.pokemonList.isEmpty() -> {
                         ErrorState(
-                            message = state.errorMessage ?: stringResource(R.string.pokedex_error_generic),
+                            message = state.errorMessage ?: state.errorResId?.let { stringResource(it) }.orEmpty(),
                             onRetry = onRetry
                         )
                     }

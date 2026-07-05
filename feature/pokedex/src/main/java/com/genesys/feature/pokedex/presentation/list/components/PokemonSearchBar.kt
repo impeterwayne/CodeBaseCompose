@@ -13,7 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import com.genesys.core.designsystem.component.AppText
+import androidx.compose.ui.graphics.Color
+import com.genesys.core.designsystem.theme.neoShadow
 import com.genesys.core.designsystem.theme.AppTheme
+import androidx.compose.ui.res.stringResource
+import com.genesys.feature.pokedex.R
 
 @Composable
 fun PokemonSearchBar(
@@ -33,24 +37,26 @@ fun PokemonSearchBar(
         cursorBrush = SolidColor(AppTheme.colorScheme.colorPrimary),
         singleLine = true,
         decorationBox = { innerTextField ->
+            val shape = RoundedCornerShape(14.dp)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .neoShadow(color = Color.Black, shape = shape)
                     .background(
                         color = AppTheme.colorScheme.colorBgElevated,
-                        shape = RoundedCornerShape(16.dp)
+                        shape = shape
                     )
                     .border(
-                        width = 1.dp,
-                        color = AppTheme.colorScheme.colorBorder.copy(alpha = 0.5f),
-                        shape = RoundedCornerShape(16.dp)
+                        width = AppTheme.strokes.stroke2,
+                        color = Color.Black,
+                        shape = shape
                     )
                     .padding(horizontal = AppTheme.spacing.md, vertical = AppTheme.spacing.md),
                 contentAlignment = Alignment.CenterStart
             ) {
                 if (query.isEmpty()) {
                     AppText(
-                        text = "Search Pokémon...",
+                        text = stringResource(R.string.pokedex_search_placeholder),
                         color = AppTheme.colorScheme.colorBorder
                     )
                 }

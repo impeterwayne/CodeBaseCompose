@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import com.genesys.core.designsystem.theme.neoShadow
 import com.genesys.core.designsystem.theme.AppTheme
 import androidx.compose.foundation.LocalIndication
 
@@ -45,48 +46,36 @@ fun AppPanel(
     val resolvedContentPadding = contentPadding ?: PaddingValues(AppTheme.spacing.md)
     val interactionSource = remember { MutableInteractionSource() }
     val backgroundColor: Color
-    val borderColor: Color
-    val borderWidth = when (tone) {
-        AppPanelTone.Frame -> strokes.stroke1
-        AppPanelTone.Raised -> strokes.stroke1
-        AppPanelTone.Heavy -> strokes.stroke2
-        AppPanelTone.Error -> strokes.stroke1
-        AppPanelTone.Warning -> strokes.stroke1
-        AppPanelTone.Success -> strokes.stroke1
-    }
+    val borderColor = Color.Black
+    val borderWidth = strokes.stroke2
 
     when (tone) {
         AppPanelTone.Frame -> {
             backgroundColor = colors.colorBgContainer
-            borderColor = colors.colorBorderSecondary
         }
         AppPanelTone.Raised -> {
             backgroundColor = colors.colorBgContainer
-            borderColor = colors.colorBorder
         }
         AppPanelTone.Heavy -> {
             backgroundColor = colors.colorPrimary
-            borderColor = colors.colorPrimary
         }
         AppPanelTone.Error -> {
             backgroundColor = colors.colorBgElevated
-            borderColor = colors.colorError
         }
         AppPanelTone.Warning -> {
             backgroundColor = colors.colorBgElevated
-            borderColor = colors.colorWarning
         }
         AppPanelTone.Success -> {
             backgroundColor = colors.colorBgElevated
-            borderColor = colors.colorSuccess
         }
     }
 
     Column(
         modifier = modifier
-            .clip(shape)
-            .background(backgroundColor)
+            .neoShadow(color = Color.Black, shape = shape)
+            .background(backgroundColor, shape)
             .border(borderWidth, borderColor, shape)
+            .clip(shape)
             .then(
                 if (onClick != null) {
                     Modifier.clickable(

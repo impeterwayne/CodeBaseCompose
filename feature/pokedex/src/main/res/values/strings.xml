@@ -9,4 +9,21 @@
     <string name="pokedex_detail_title">Template detail</string>
     <string name="pokedex_open_label">Open template</string>
     <string name="pokedex_back_label">Back to templates</string>
+    <string name="pokedex_invalid_name">Invalid Pokemon Name</string>
+    <string name="pokedex_failed_to_load_details">Failed to load details</string>
+    <string name="pokedex_failed_to_load_pokedex">Failed to load Pokedex</string>
+    <string name="pokedex_back">Back</string>
+    <string name="pokedex_back_to_pokedex">Back to Pokedex</string>
+    <string name="pokedex_pokedex">Pokedex</string>
+    <string name="pokedex_search_subtitle">Search Pokémon to view stats</string>
+    <string name="pokedex_search_placeholder">Search Pokémon…</string>
+    <string name="pokedex_failed_to_load_image">Failed to load image</string>
+    <string name="pokedex_height">HEIGHT</string>
+    <string name="pokedex_weight">WEIGHT</string>
+    <string name="pokedex_base_stats">Base Stats</string>
+    <string name="pokedex_hp">HP</string>
+    <string name="pokedex_attack">Attack</string>
+    <string name="pokedex_defense">Defense</string>
+    <string name="pokedex_speed">Speed</string>
+    <string name="pokedex_experience">Experience</string>
 </resources>

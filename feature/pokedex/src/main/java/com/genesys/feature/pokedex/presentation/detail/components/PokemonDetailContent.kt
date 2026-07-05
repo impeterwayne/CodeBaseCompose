@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,8 +34,11 @@ import com.genesys.core.designsystem.component.AppPanelTone
 import com.genesys.core.designsystem.component.AppText
 import com.genesys.core.designsystem.theme.AppTheme
 import com.genesys.core.model.pokedex.PokemonInfo
+import com.genesys.feature.pokedex.R
 import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.skydoves.landscapist.glide.GlideImage
+
+import com.genesys.core.designsystem.theme.neoShadow
 
 /**
  * Extension property to map a Pokemon type string to its corresponding theme color.
@@ -113,24 +117,27 @@ private fun PokemonArtworkSection(
     primaryTypeColor: Color,
     modifier: Modifier = Modifier
 ) {
+    val shape = AppTheme.shapes.shape6
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(280.dp)
-            .clip(RoundedCornerShape(24.dp))
+            .neoShadow(color = Color.Black, shape = shape)
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
                         primaryTypeColor.copy(alpha = 0.25f),
                         primaryTypeColor.copy(alpha = 0.05f)
                     )
-                )
+                ),
+                shape = shape
             )
             .border(
-                width = 1.dp,
-                color = primaryTypeColor.copy(alpha = 0.3f),
-                shape = RoundedCornerShape(24.dp)
-            ),
+                width = AppTheme.strokes.stroke2,
+                color = Color.Black,
+                shape = shape
+            )
+            .clip(shape),
         contentAlignment = Alignment.Center
     ) {
         // Radial glow effect behind the artwork
@@ -168,7 +175,7 @@ private fun PokemonArtworkSection(
             failure = {
                 Image(
                     painter = painterResource(id = android.R.drawable.ic_menu_gallery),
-                    contentDescription = "Failed to load image",
+                    contentDescription = stringResource(R.string.pokedex_failed_to_load_image),
                     modifier = Modifier.size(60.dp),
                     colorFilter = ColorFilter.tint(AppTheme.colorScheme.colorBorder)
                 )
@@ -252,12 +259,12 @@ private fun PokemonMetricsSection(
         horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
     ) {
         MetricPanel(
-            title = "HEIGHT",
+            title = stringResource(R.string.pokedex_height),
             value = pokemonInfo.getFormattedHeight(),
             modifier = Modifier.weight(1f)
         )
         MetricPanel(
-            title = "WEIGHT",
+            title = stringResource(R.string.pokedex_weight),
             value = pokemonInfo.getFormattedWeight(),
             modifier = Modifier.weight(1f)
         )
@@ -315,7 +322,7 @@ private fun PokemonStatsSection(
             verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
         ) {
             AppText(
-                text = "Base Stats",
+                text = stringResource(R.string.pokedex_base_stats),
                 style = AppTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                 color = AppTheme.colorScheme.colorText
             )
@@ -323,11 +330,11 @@ private fun PokemonStatsSection(
             AppDivider(color = AppTheme.colorScheme.colorBorder.copy(alpha = 0.2f))
 
             // Stats rows
-            PokemonStatRow(name = "HP", value = pokemonInfo.hp, max = 150, color = Color(0xFF4CAF50))
-            PokemonStatRow(name = "Attack", value = pokemonInfo.attack, max = 150, color = Color(0xFFFF5722))
-            PokemonStatRow(name = "Defense", value = pokemonInfo.defense, max = 150, color = Color(0xFF2196F3))
-            PokemonStatRow(name = "Speed", value = pokemonInfo.speed, max = 150, color = Color(0xFFFFEB3B))
-            PokemonStatRow(name = "Experience", value = pokemonInfo.baseExperience, max = 300, color = Color(0xFF9C27B0))
+            PokemonStatRow(name = stringResource(R.string.pokedex_hp), value = pokemonInfo.hp, max = 150, color = Color(0xFF4CAF50))
+            PokemonStatRow(name = stringResource(R.string.pokedex_attack), value = pokemonInfo.attack, max = 150, color = Color(0xFFFF5722))
+            PokemonStatRow(name = stringResource(R.string.pokedex_defense), value = pokemonInfo.defense, max = 150, color = Color(0xFF2196F3))
+            PokemonStatRow(name = stringResource(R.string.pokedex_speed), value = pokemonInfo.speed, max = 150, color = Color(0xFFFFEB3B))
+            PokemonStatRow(name = stringResource(R.string.pokedex_experience), value = pokemonInfo.baseExperience, max = 300, color = Color(0xFF9C27B0))
         }
     }
 }

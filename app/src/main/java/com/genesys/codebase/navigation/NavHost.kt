@@ -1,6 +1,7 @@
 package com.genesys.codebase.navigation
 
 import androidx.activity.compose.BackHandler
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,12 +29,12 @@ import com.genesys.feature.pokedex.navigation.PokedexGraph
 enum class TopLevelDestination(
     val screen: Route,
     @StringRes val labelRes: Int,
-    @StringRes val badgeRes: Int
+    @DrawableRes val iconRes: Int
 ) {
-    Pokedex(Route.Pokedex, R.string.nav_pokedex, R.string.nav_badge_pokedex),
-    Feature1(Route.Feature1, R.string.nav_feature1, R.string.nav_badge_feature1),
-    Feature2(Route.Feature2, R.string.nav_feature2, R.string.nav_badge_feature2),
-    Feature3(Route.Feature3, R.string.nav_feature3, R.string.nav_badge_feature3)
+    Pokedex(Route.Pokedex, R.string.nav_pokedex, R.drawable.ic_nav_templates),
+    Feature1(Route.Feature1, R.string.nav_feature1, R.drawable.ic_nav_projects),
+    Feature2(Route.Feature2, R.string.nav_feature2, R.drawable.ic_nav_inbox),
+    Feature3(Route.Feature3, R.string.nav_feature3, R.drawable.ic_nav_settings)
 }
 
 @Composable

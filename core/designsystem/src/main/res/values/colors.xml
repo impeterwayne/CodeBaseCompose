@@ -12,7 +12,7 @@
     <color name="antd_light_border">#D9D9D9</color>
     <color name="antd_light_border_secondary">#F0F0F0</color>
     
-    <color name="antd_light_primary">#1677FF</color>
+    <color name="antd_light_primary">#4cbb17</color>
     <color name="antd_light_text_on_primary">#FFFFFF</color>
 
     <color name="antd_light_error">#FF4D4F</color>
@@ -39,7 +39,7 @@
     <color name="antd_dark_border">#424242</color>
     <color name="antd_dark_border_secondary">#303030</color>
     
-    <color name="antd_dark_primary">#1668DC</color>
+    <color name="antd_dark_primary">#4cbb17</color>
     <color name="antd_dark_text_on_primary">#FFFFFF</color>
 
     <color name="antd_dark_error">#D9363E</color>
@@ -53,4 +53,7 @@
 
     <color name="antd_dark_info">#1668DC</color>
     <color name="antd_dark_text_on_info">#FFFFFF</color>
+    <!-- Neubrutalism Design System Colors -->
+    <color name="neo_primary_yellow">#FEDE4B</color>
+    <color name="neo_selected_orange">#FF5A26</color>
 </resources>

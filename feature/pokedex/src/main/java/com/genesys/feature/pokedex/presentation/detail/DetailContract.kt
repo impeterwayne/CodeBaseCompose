@@ -8,7 +8,7 @@ import com.genesys.core.model.pokedex.PokemonInfo
 sealed interface DetailUiState : UiState {
     data object Loading : DetailUiState
     data class Success(val pokemonInfo: PokemonInfo) : DetailUiState
-    data class Error(val message: String) : DetailUiState
+    data class Error(val message: String? = null, val messageResId: Int? = null) : DetailUiState
 }
 
 sealed interface DetailAction : Action {

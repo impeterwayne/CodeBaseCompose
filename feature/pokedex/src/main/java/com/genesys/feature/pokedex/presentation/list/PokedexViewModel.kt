@@ -4,6 +4,7 @@ import com.genesys.core.common.base.BaseViewModel
 import com.genesys.core.common.base.Result
 import com.genesys.core.domain.usecase.pokedex.GetAllPokedexUseCase
 import com.genesys.core.model.pokedex.Pokemon
+import com.genesys.feature.pokedex.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import org.orbitmvi.orbit.viewmodel.container
@@ -37,7 +38,8 @@ class PokedexViewModel @Inject constructor(
                     is Result.Loading -> reduce {
                         state.copy(
                             isLoading = true,
-                            errorMessage = null
+                            errorMessage = null,
+                            errorResId = null
                         )
                     }
 
@@ -47,14 +49,16 @@ class PokedexViewModel @Inject constructor(
                             pokemonList = newPokemon,
                             currentPage = 0,
                             isLoading = false,
-                            errorMessage = null
+                            errorMessage = null,
+                            errorResId = null
                         )
                     }
 
                     is Result.Error -> reduce {
                         state.copy(
                             isLoading = false,
-                            errorMessage = result.msg ?: "Failed to load Pokedex"
+                            errorMessage = result.msg,
+                            errorResId = if (result.msg == null) R.string.pokedex_failed_to_load_pokedex else null
                         )
                     }
 
