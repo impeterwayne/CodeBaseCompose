@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.genesys.core.designsystem.R
 import com.genesys.core.designsystem.theme.AppTheme
@@ -72,6 +73,7 @@ fun AppBottomTabItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    showLabel: Boolean = false,
     activeColor: Color = AppTheme.colorScheme.neoSelectedOrange,
     inactiveColor: Color = AppTheme.colorScheme.neoText
 ) {
@@ -85,6 +87,8 @@ fun AppBottomTabItem(
         label = "scale"
     )
 
+    val verticalPadding = if (showLabel) AppTheme.spacing.xxs else AppTheme.spacing.sm
+
     Column(
         modifier = modifier
             .scale(scale)
@@ -94,7 +98,7 @@ fun AppBottomTabItem(
                 indication = null,
                 onClick = onClick
             )
-            .padding(vertical = AppTheme.spacing.xxs),
+            .padding(vertical = verticalPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
@@ -105,13 +109,17 @@ fun AppBottomTabItem(
             modifier = Modifier.size(26.dp)
         )
 
-        AppText(
-            text = label,
-            style = AppTheme.typography.labelMedium.copy(
-                fontWeight = fontWeight,
-                textAlign = TextAlign.Center
-            ),
-            color = tintColor
-        )
+        if (showLabel) {
+            AppText(
+                text = label,
+                style = AppTheme.typography.labelMedium.copy(
+                    fontWeight = fontWeight,
+                    textAlign = TextAlign.Center
+                ),
+                color = tintColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }

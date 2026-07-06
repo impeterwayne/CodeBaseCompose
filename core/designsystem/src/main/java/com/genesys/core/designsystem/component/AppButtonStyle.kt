@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.genesys.core.designsystem.theme.AppTheme
-
+import androidx.compose.animation.core.tween
 
 
 @OptIn(ExperimentalFoundationStyleApi::class)

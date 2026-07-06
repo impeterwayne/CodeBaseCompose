@@ -2,7 +2,6 @@
 
 package com.genesys.codebase.navigation
 
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -21,7 +20,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -51,7 +49,7 @@ enum class TopLevelDestination(
     @DrawableRes val iconRes: Int
 ) {
     Pokedex(Route.Pokedex, R.string.nav_pokedex, R.drawable.ic_nav_templates),
-    Feature1(Route.Feature1, R.string.nav_feature1, R.drawable.ic_nav_projects),
+    Feature1(Route.Feature1, R.string.nav_feature1, R.drawable.ic_nav_components),
     Feature2(Route.Feature2, R.string.nav_feature2, R.drawable.ic_nav_inbox),
     Feature3(Route.Feature3, R.string.nav_feature3, R.drawable.ic_nav_settings)
 }
@@ -211,7 +209,6 @@ fun NavHost(
         }
 
         if (appState.showBottomBar) {
-            val context = LocalContext.current
             AddActionButton(
                 onClick = {
 

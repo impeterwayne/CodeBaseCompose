@@ -1,8 +1,28 @@
 <resources>
     <string name="feature1_current_work_title">Current work</string>
     <string name="feature1_current_work_subtitle">Projects</string>
-    <string name="feature1_title">Projects</string>
-    <string name="feature1_hero_message">Three delivery lanes have pending milestones this week.</string>
+    <string name="feature1_title">Components</string>
+    <string name="feature1_hero_message">Displaying all components from the design system.</string>
     <string name="feature1_create_brief_unavailable">Brief creation unavailable</string>
     <string name="feature1_calendar_unavailable">Calendar unavailable</string>
+
+    <!-- Component Showcase Strings -->
+    <string name="component_showcase_title">Design System Showcase</string>
+    <string name="component_showcase_subtitle">Components</string>
+    <string name="component_showcase_typography_title">Typography</string>
+    <string name="component_showcase_buttons_title">Buttons</string>
+    <string name="component_showcase_chips_title">Chips</string>
+    <string name="component_showcase_panels_title">Panels</string>
+    <string name="component_showcase_dividers_title">Dividers</string>
+    <string name="component_showcase_section_headers_title">Section Headers</string>
+    <string name="component_showcase_error_states_title">Error States</string>
+    <string name="component_showcase_gradient_transitions_title">Gradient Transitions</string>
+    
+    <string name="component_showcase_btn_primary">Primary Button</string>
+    <string name="component_showcase_btn_secondary">Secondary Button</string>
+    <string name="component_showcase_btn_warning">Warning Button</string>
+    <string name="component_showcase_chip_selected">Selected</string>
+    <string name="component_showcase_chip_unselected">Unselected</string>
+    <string name="component_showcase_error_msg">This is a sample error message showcasing the error state component.</string>
+    <string name="component_showcase_error_retry">Retry Action</string>
 </resources>

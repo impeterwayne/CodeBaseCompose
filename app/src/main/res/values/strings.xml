@@ -2,8 +2,8 @@
     <string name="app_name">AppCompose</string>
     <string name="nav_pokedex">Templates</string>
     <string name="nav_badge_pokedex">TM</string>
-    <string name="nav_feature1">Projects</string>
-    <string name="nav_badge_feature1">PR</string>
+    <string name="nav_feature1">Component</string>
+    <string name="nav_badge_feature1">CP</string>
     <string name="nav_feature2">Inbox</string>
     <string name="nav_badge_feature2">IN</string>
     <string name="nav_feature3">Settings</string>

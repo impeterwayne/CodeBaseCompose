@@ -12,8 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
 import com.genesys.core.designsystem.theme.AppTheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.style.*
 import androidx.compose.ui.unit.dp
 
@@ -46,11 +49,14 @@ fun AppButton(
                 role = Role.Button,
                 onClick = onClick
             )
-            .padding(resolvedContentPadding)
+            .padding(resolvedContentPadding),
+        contentAlignment = Alignment.Center
     ) {
         AppText(
             text = text,
-            style = AppTheme.typography.labelLarge
+            style = AppTheme.typography.labelLarge.copy(textAlign = TextAlign.Center),
+            maxLines = 1,
+            modifier = Modifier.basicMarquee()
         )
     }
 }
@@ -105,6 +111,31 @@ fun AppSecondaryButton(
     )
 }
 
+@Composable
+fun AppWarningButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues? = null,
+    enabled: Boolean = true,
+    onClickLabel: String? = text,
+    style: Style = rememberNeoButtonStyle(
+        backgroundColor = AppTheme.colorScheme.colorError,
+        contentColor = AppTheme.colorScheme.colorTextOnError,
+        shape = AppTheme.shapes.shape6
+    )
+) {
+    AppButton(
+        text = text,
+        onClick = onClick,
+        modifier = modifier,
+        style = style,
+        contentPadding = contentPadding,
+        enabled = enabled,
+        onClickLabel = onClickLabel
+    )
+}
+
 @Preview
 @Composable
 private fun AppPrimaryButtonPreview() {
@@ -118,5 +149,13 @@ private fun AppPrimaryButtonPreview() {
 private fun AppSecondaryButtonPreview() {
     AppTheme {
         AppSecondaryButton(text = "Secondary Button", onClick = {})
+    }
+}
+
+@Preview
+@Composable
+private fun AppWarningButtonPreview() {
+    AppTheme {
+        AppWarningButton(text = "Warning Button", onClick = {})
     }
 }
