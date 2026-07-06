@@ -45,7 +45,7 @@ landscapist-animation = { module = "com.github.skydoves:landscapist-animation", 
 
 ## 2. Standard Usage Pattern
 
-Below is the canonical implementation pattern for `GlideImage`, as demonstrated in `:feature:pokedex` (e.g., [PokemonCard.kt](file:///d:/Quest/CodeBaseCompose/feature/pokedex/src/main/java/com/genesys/feature/pokedex/presentation/list/components/PokemonCard.kt) and [PokemonDetailContent.kt](file:///d:/Quest/CodeBaseCompose/feature/pokedex/src/main/java/com/genesys/feature/pokedex/presentation/detail/components/PokemonDetailContent.kt)).
+Below is the canonical implementation pattern for `GlideImage`, as demonstrated in `:feature:pokedex` (e.g., [PokemonCard.kt](file:///D:/Infinity/Learn_English_2/feature/pokedex/src/main/java/com/genesys/feature/pokedex/presentation/list/components/PokemonCard.kt) and [PokemonDetailContent.kt](file:///D:/Infinity/Learn_English_2/feature/pokedex/src/main/java/com/genesys/feature/pokedex/presentation/detail/components/PokemonDetailContent.kt)).
 
 ```kotlin
 import androidx.compose.foundation.Image
@@ -62,8 +62,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.genesys.core.designsystem.theme.AppTheme
-import com.genesys.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
+import global.infinitytech.linguai.app.core.designsystem.theme.AppTheme
+import global.infinitytech.linguai.app.feature.pokedex.presentation.common.components.CustomCircularProgressIndicator
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable

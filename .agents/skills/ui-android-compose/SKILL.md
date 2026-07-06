@@ -20,9 +20,9 @@ When receiving a request to build UI for Android with Compose:
 
 This is the most critical rule when working with Android UI:
 
-| Rule | Do                                                                                                                                                   | Don't |
-|------|------------------------------------------------------------------------------------------------------------------------------------------------------|----- |
-| **No hardcoded values** | Extract strings, colors, fonts, and dimensions to corresponding files (`res/values/strings.xml`, `res/font/`, `Color.kt`, or constant file).           | Hardcode strings (`"Hello"`), colors (`Color(0xFF0000)`), fonts, or dimensions directly in UI code. |
+| Rule | Do | Don't |
+|------|----|----- |
+| **No hardcoded values** | Extract strings, colors, fonts, and dimensions to corresponding files (`res/values/strings.xml`, `res/font/`, `Color.kt`, or constant file). | Hardcode strings (`"Hello"`), colors (`Color(0xFF0000)`), fonts, or dimensions directly in UI code. |
 | **Reuse Assets & Resources** | **MINIMIZE USE OF ANDROID'S BUILT-IN ICON/STRING/COLOR/DIMEN. BROWSE PROJECT RES DIRECTORIES TO FIND SUITABLE RESOURCES FIRST. IF AVAILABLE USE IT, ONLY USE ANDROID'S IF NOT AVAILABLE.** | Use Android/Material icons/colors/strings directly without checking project resources. |
 | **Use AppTheme (Don't use MaterialTheme)** | Use the design system's `AppTheme` design tokens (e.g., `AppTheme.colorScheme.colorText`, `AppTheme.spacing.md`). | Use standard `MaterialTheme` or define isolated color constant files. |
 | **Use Icons** | **MANDATORY** browse for suitable icons in `drawable` directory first. Only when TRULY NOT AVAILABLE use `Icons` from compose material/Android default. | Always use `Icons.Default...` or `@android:drawable/...` without checking `drawable`. |

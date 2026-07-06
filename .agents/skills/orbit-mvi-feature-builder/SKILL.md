@@ -1,5 +1,5 @@
 ---
-name: skillhub
+name: orbit-mvi-feature-builder
 description: Build Orbit MVI feature flows for SkillHub using the canonical pokedex feature and repo architecture rules. Use when the user asks to implement a new screen, feature flow, route, contract, ViewModel, stateless Compose screen, or graph in this codebase.
 ---
 
@@ -177,7 +177,7 @@ Create or update `[Feature]Graph.kt` as the navigation and orchestration boundar
 - Do not mix cross-feature orchestration into a feature unless the app-level wiring pattern explicitly requires it.
 
 **Success criteria:**
-- Graph owns routing, state collection, side-effect handling, and route-to-screen mapping.
+- Graph owns routing, state collection, side-effects, and route mapping.
 
 ### Stage 7: Handle Cross-Feature Navigation Correctly
 
