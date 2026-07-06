@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.genesys.core.designsystem.R as DesignR
 import com.genesys.core.designsystem.component.AddActionButton
 import com.genesys.core.designsystem.component.AppDivider
 import com.genesys.core.designsystem.component.AppGradientTransition
@@ -28,6 +29,10 @@ import com.genesys.core.designsystem.component.AppPanelTone
 import com.genesys.core.designsystem.component.AppPrimaryButton
 import com.genesys.core.designsystem.component.AppSecondaryButton
 import com.genesys.core.designsystem.component.AppWarningButton
+import com.genesys.core.designsystem.component.AppCircleButton
+import com.genesys.core.designsystem.component.AppPrimaryCircleButton
+import com.genesys.core.designsystem.component.AppSecondaryCircleButton
+import com.genesys.core.designsystem.component.AppWarningCircleButton
 import com.genesys.core.designsystem.component.AppChip
 import com.genesys.core.designsystem.component.AppSectionHeader
 import com.genesys.core.designsystem.component.AppText
@@ -101,10 +106,24 @@ fun Feature1Screen(
                     onClick = {},
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                AppPrimaryButton(
+                    text = "Primary with Icon",
+                    onClick = {},
+                    iconResId = DesignR.drawable.ic_nav_primary,
+                    modifier = Modifier.fillMaxWidth()
+                )
                 
                 AppSecondaryButton(
                     text = stringResource(R.string.component_showcase_btn_secondary),
                     onClick = {},
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                AppSecondaryButton(
+                    text = "Secondary with Icon",
+                    onClick = {},
+                    iconResId = DesignR.drawable.ic_arrow_back,
                     modifier = Modifier.fillMaxWidth()
                 )
                 
@@ -113,6 +132,28 @@ fun Feature1Screen(
                     onClick = {},
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                AppText("Circle Buttons", style = AppTheme.typography.titleMedium)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.md, Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    AppPrimaryCircleButton(
+                        onClick = {},
+                        iconResId = DesignR.drawable.ic_nav_primary
+                    )
+                    
+                    AppSecondaryCircleButton(
+                        onClick = {},
+                        iconResId = DesignR.drawable.ic_arrow_back
+                    )
+                    
+                    AppWarningCircleButton(
+                        onClick = {},
+                        iconResId = DesignR.drawable.ic_arrow_back
+                    )
+                }
 
                 // AddActionButton Demo Box
                 Box(
