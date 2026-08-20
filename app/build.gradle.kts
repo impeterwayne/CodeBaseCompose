@@ -12,12 +12,12 @@ plugins {
 
 android {
     namespace = "com.genesys.codebase"
-    compileSdk = 37
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.genesys.codebase"
         minSdk = 24
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -37,16 +37,21 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
+        freeCompilerArgs += listOf("-opt-in=androidx.compose.foundation.style.ExperimentalFoundationStyleApi")
     }
 }
 
 dependencies {
+    // Core Library Desugaring
+    coreLibraryDesugaring(libs.desugarJdkLibs)
+
     // Core modules
     implementation(project(":core:model"))
     implementation(project(":core:network"))

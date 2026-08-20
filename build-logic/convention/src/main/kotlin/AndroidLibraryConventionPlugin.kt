@@ -3,6 +3,8 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
+import libsCatalog
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -13,19 +15,28 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
 
             extensions.configure<LibraryExtension> {
-                compileSdk = 37
+                compileSdk = 36
 
                 defaultConfig {
                     minSdk = 24
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                    consumerProguardFiles("consumer-rules.pro")
+                    val consumerRulesFile = target.file("consumer-rules.pro")
+                    if (consumerRulesFile.exists()) {
+                        consumerProguardFiles("consumer-rules.pro")
+                    }
                 }
 
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_11
-                    targetCompatibility = JavaVersion.VERSION_11
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
+                    isCoreLibraryDesugaringEnabled = true
                 }
             }
+
+            dependencies {
+                add("coreLibraryDesugaring", libsCatalog.findLibrary("desugarJdkLibs").get())
+            }
+
             configureKotlinJvm()
         }
     }

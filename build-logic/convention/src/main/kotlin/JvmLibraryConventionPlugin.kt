@@ -13,7 +13,7 @@ class JvmLibraryConventionPlugin : Plugin<Project> {
 
             extensions.configure<JavaPluginExtension> {
                 toolchain {
-                    languageVersion.set(JavaLanguageVersion.of(11))
+                    languageVersion.set(JavaLanguageVersion.of(17))
                 }
             }
 

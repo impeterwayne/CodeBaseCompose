@@ -3,6 +3,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class AndroidComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -12,6 +14,12 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 buildFeatures {
                     compose = true
+                }
+            }
+
+            tasks.withType<KotlinCompile>().configureEach {
+                compilerOptions {
+                    freeCompilerArgs.add("-opt-in=androidx.compose.foundation.style.ExperimentalFoundationStyleApi")
                 }
             }
 
