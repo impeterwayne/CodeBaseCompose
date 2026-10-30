@@ -100,6 +100,9 @@ dependencies {
     // Timber
     implementation(libs.timber)
 
+    // DeviceCompat
+    implementation(libs.deviceCompat)
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidxJunit)
